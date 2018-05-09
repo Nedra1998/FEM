@@ -1,16 +1,24 @@
 \documentclass[10pt]{article}
 
+\usepackage{subfiles}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{nameref}
+\usepackage{amsfonts}
+\usepackage{amsthm}
 \usepackage{amsmath}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
+\usepackage{amscd}
 \usepackage{hyperref}
 \usepackage[english]{babel}
 \usepackage[margin=1in]{geometry}
+\usepackage{tikz}
+\usepackage{pgfplots}
 \usepackage{csquotes}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
-\usepackage{listings}
-\usepackage[normalem]{ulem}
+\usepackage{etoolbox}
+\usepackage[explicit]{titlesec}
 
 \pagestyle{fancy}
 
@@ -24,16 +32,40 @@ $endif$
 $if(author)$
 \author{$for(author)$$author$$sep$ \and $endfor$}
 $endif$
-$if(institute)$
-\providecommand{\institute}[1]{}
-\institute{$for(institute)$$institute$$sep$ \and $endfor$}
-$endif$
-\date{$date$}
+\date{\today}
+
+\newcommand{\sep}[2]{\noindent\rule{\textwidth}{#1pt}\vspace{#2pt}}
+
+\newcommand{\usec}[1]{\section{#1}\noindent\rule{\textwidth}{2pt}\vspace{10pt}}
+\newcommand{\usub}[1]{\subsection{#1}\noindent\rule{\textwidth}{1pt}\vspace{5pt}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+\newcommand{\der}[2]{\frac{d #1}{d #2}}
+\newcommand{\sder}[2]{\frac{d^2 #1}{d {#2}^2}}
+\newcommand{\pder}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\spder}[2]{\frac{\partial^2 #1}{\partial{#2}^2}}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{corollary}{Corallary}[thm]
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{case}{Case}
+\AtEndEnvironment{proof}{\setcounter{case}{0}}
+
+\titleformat{\section}
+{\normalfont\Large\bf}{}{0em}{\thesection\hspace{1em}#1\\\sep{2}{10}}
+\titleformat{\subsection}
+{\normalfont\large\bf}{}{0em}{\thesubsection\hspace{1em}#1\\\sep{1}{5}}
 
 
 \begin{document}
 $if(title)$
 \maketitle
+\sep{5}{20}
 $endif$
 $if(abstract)$
 \begin{abstract}
