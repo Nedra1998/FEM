@@ -52,4 +52,32 @@ and be *unique*.
 
 ## Error Estimates ##
 
+Observing the fundamental *orthogonality* between $u$ and $u_S$ implies
+$$
+a(u-u_S,w)=0\quad \forall w\in S
+$$
+
+Now we define the energy norm as
+
+$$
+\norm{v}_E=\sqrt{a(v,v)}
+$$
+Using this norm, the Schwarz' inequality relates the energy norm and
+inner-product
+
+$$
+\abs{a(v,w)}\leq \norm{v}_E\norm{w}_E\quad \forall v,w \in V
+$$
+
+## Piecewise Polynomial Spaces ##
+
+## Relationship to Difference Methods ##
+
+## Computer Implementation of FInite Element Methods ##
+
+## Local Estimates ##
+
+## Adaptive Approximation ##
+
+## Weighted Norm Estimates ##
 

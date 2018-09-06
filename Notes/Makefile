@@ -1,4 +1,4 @@
-SOURCE = $(shell find -name "*.md")
+SOURCE = $(sort $(shell find -name "*.md"))
 CHAPTERS = $(SOURCE:%.md=%.pdf)
 
 all: $(CHAPTERS)
