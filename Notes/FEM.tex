@@ -22,16 +22,8 @@
 
 \pagestyle{fancy}
 
-$if(title)$
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
-$endif$
-$if(subtitle)$
-\providecommand{\subtitle}[1]{}
-\subtitle{$subtitle$}
-$endif$
-$if(author)$
-\author{$for(author)$$author$$sep$ \and $endfor$}
-$endif$
+\title{The Mathematical Theory of Finite Element Methods}
+\author{Arden Rasmussen}
 \date{\today}
 
 \newcommand{\sep}[2]{\noindent\rule{\textwidth}{#1pt}\vspace{#2pt}}
@@ -63,20 +55,11 @@ $endif$
 
 
 \begin{document}
-$if(title)$
 \maketitle
 \sep{5}{20}
-$endif$
-$if(abstract)$
-\begin{abstract}
-$abstract$
-\end{abstract}
-$endif$
-$if(toc)$
 \tableofcontents
 \newpage
-$endif$
 
-$body$
+\subfile{chapters/00_basic_concepts}
 
 \end{document}
