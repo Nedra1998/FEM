@@ -1,13 +1,14 @@
 \documentclass[../FEM.tex]{subfiles}
 
 \begin{document}
-\section{Basic Concepts}\label{basic-concepts}
+\section{Basic Concepts}
+\label{sec:basic-concepts}
 
 The finite element method provides a method for generating algorithms
 for approximating the solutions of differential equations.
 
-\subsection{Weak Formulation of Boundary Value
-Problem}\label{weak-formulation-of-boundary-value-problem}
+\subsection{Weak Formulation of Boundary Value Problem}
+\label{sub:weak-formulation-of-boundary-value-problem}
 
 Considering the two-point boundary value problem
 
@@ -32,7 +33,7 @@ V \equiv \left\{ v\in L^2(0,1):\quad a(v,v)< \infty \ \text{and}\ v(0) = 0\right
 \]
 
 Using this we can characterize the solution to the differential equation
-as any function \(u\in V\) that satisifes the boundary condition and
+as any function \(u\in V\) that satisfies the boundary condition and
 that satisfies
 
 \[
@@ -42,11 +43,11 @@ a(u,v)=(f,v)\quad \forall v\in V
 This is called the \emph{variational} or \emph{weak} formulation of the
 differential equation. It is variational because \(v\) is allowed to
 vary arbitrarily. It is called weak, because there are other ways in
-which to interpret the equation with less restrictives assumptions on
+which to interpret the equation with less restrictive assumptions on
 \(f\).
 
-\subsection{Ritz-Galrkin
-Approximation}\label{ritz-galrkin-approximation}
+\subsection{Ritz-Galrkin Approximation}
+\label{sub:ritz-galrkin-approximation}
 
 Let \(S \subset V\) be any (finite dimensional) subspace. Then when we
 replace \(V\) in the previous declaration we find
@@ -58,7 +59,8 @@ u_S \in S\quad a(u_S,v)=(f,v)\quad \forall v\in S
 With this approximation, it can be shown that the solution \(u_S\) must
 \emph{exist} and be \emph{unique}.
 
-\subsection{Error Estimates}\label{error-estimates}
+\subsection{Error Estimates}
+\label{error-estimates}
 
 Observing the fundamental \emph{orthogonality} between \(u\) and \(u_S\)
 implies \[
@@ -76,18 +78,21 @@ inner-product
 \abs{a(v,w)}\leq \norm{v}_E\norm{w}_E\quad \forall v,w \in V
 \]
 
-\subsection{Piecewise Polynomial
-Spaces}\label{piecewise-polynomial-spaces}
+\subsection{Piecewise Polynomial Spaces}
+\label{sub:piecewise-polynomial-spaces}
 
-\subsection{Relationship to Difference
-Methods}\label{relationship-to-difference-methods}
+\subsection{Relationship to Difference Methods}
+\label{sub:relationship-to-difference-methods}
 
-\subsection{Computer Implementation of FInite Element
-Methods}\label{computer-implementation-of-finite-element-methods}
+\subsection{Computer Implementation of Finite Element Methods}
+\label{sub:computer-implementation-of-finite-element-methods}
 
-\subsection{Local Estimates}\label{local-estimates}
+\subsection{Local Estimates}
+\label{sub:local-estimates}
 
-\subsection{Adaptive Approximation}\label{adaptive-approximation}
+\subsection{Adaptive Approximation}
+\label{sub:adaptive-approximation}
 
-\subsection{Weighted Norm Estimates}\label{weighted-norm-estimates}
+\subsection{Weighted Norm Estimates}
+\label{sub:weighted-norm-estimates}
 \end{document}
