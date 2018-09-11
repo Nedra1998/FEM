@@ -21,10 +21,17 @@
 \usepackage[explicit]{titlesec}
 
 \pagestyle{fancy}
-\rhead{}
 
-\title{The Mathematical Theory of Finite Element Methods}
-\author{Arden Rasmussen}
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+\providecommand{\subtitle}[1]{}
+\subtitle{$subtitle$}
+$endif$
+$if(author)$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
 \date{\today}
 
 \newcommand{\sep}[2]{\noindent\rule{\textwidth}{#1pt}\vspace{#2pt}}
@@ -49,18 +56,27 @@
 \newtheorem{case}{Case}
 \AtEndEnvironment{proof}{\setcounter{case}{0}}
 
-\titleformat{\section}
-{\normalfont\Large\bf}{}{0em}{\newpage\thesection\hspace{1em}#1\\\sep{2}{10}}
+% \titleformat{\section}
+% {\normalfont\Large\bf}{}{0em}{\thesection\hspace{1em}#1\\\sep{2}{10}}
 % \titleformat{\subsection}
 % {\normalfont\large\bf}{}{0em}{\thesubsection\hspace{1em}#1\\\sep{1}{5}}
 
 
 \begin{document}
+$if(title)$
 \maketitle
 \sep{5}{20}
+$endif$
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+$if(toc)$
 \tableofcontents
+\newpage
+$endif$
 
-\subfile{chapters/00_basic_concepts}
-\subfile{chapters/01_sobolev_spaces}
+$body$
 
 \end{document}

@@ -37,4 +37,4 @@ independent study.
 # 5
 
 We have arranged to meet weekly on Thursday morning, then we are also able to
-communicate over email.
+communicate over email. Does it work? Hello Why is it not updating?
