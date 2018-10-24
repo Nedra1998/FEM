@@ -1,0 +1,42 @@
+<svg width="1000" height="1000">
+  <pattern id="crossHatch2" width="2" height="2" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="2" stroke="black" stroke-width="1" />
+    <line x1="0" y1="0" x2="2" y2="0" stroke="black" stroke-width="1" />
+  </pattern>
+  <pattern id="leftHatch2" width="2" height="2" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="2" stroke="black" stroke-width="1" />
+  </pattern>
+  <pattern id="rightHatch2" width="2" height="2" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="2" y2="0" stroke="black" stroke-width="1" />
+  </pattern>
+  <pattern id="crossHatch4" width="4" height="4" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="4" stroke="black" stroke-width="1" />
+    <line x1="0" y1="0" x2="4" y2="0" stroke="black" stroke-width="1" />
+  </pattern>
+  <pattern id="leftHatch4" width="4" height="4" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="4" stroke="black" stroke-width="1" />
+  </pattern>
+  <pattern id="rightHatch4" width="4" height="4" patternTransform="rotate(44 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="4" y2="0" stroke="black" stroke-width="1" />
+  </pattern>
+  <pattern id="crossHatch6" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="6" stroke="black" stroke-width="1" />
+    <line x1="0" y1="0" x2="6" y2="0" stroke="black" stroke-width="1" />
+  </pattern>
+  <pattern id="leftHatch6" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="6" stroke="black" stroke-width="1" />
+  </pattern>
+  <pattern id="rightHatch6" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="6" y2="0" stroke="black" stroke-width="1" />
+  </pattern>
+  <rect fill="white" x="0" y="0" width="1000" height="1000" />
+  <circle cx="100" cy="100" r="100" fill="url(#crossHatch2)" stroke="black" stroke-weight="1" />
+  <circle cx="100" cy="300" r="100" fill="url(#leftHatch2)" stroke="black" stroke-weight="1" />
+  <circle cx="100" cy="500" r="100" fill="url(#rightHatch2)" stroke="black" stroke-weight="1" />
+  <circle cx="300" cy="100" r="100" fill="url(#crossHatch4)" stroke="black" stroke-weight="1" />
+  <circle cx="300" cy="300" r="100" fill="url(#leftHatch4)" stroke="black" stroke-weight="1" />
+  <circle cx="300" cy="500" r="100" fill="url(#rightHatch4)" stroke="black" stroke-weight="1" />
+  <circle cx="500" cy="100" r="100" fill="url(#crossHatch6)" stroke="black" stroke-weight="1" />
+  <circle cx="500" cy="300" r="100" fill="url(#leftHatch6)" stroke="black" stroke-weight="1" />
+  <circle cx="500" cy="500" r="100" fill="url(#rightHatch6)" stroke="black" stroke-weight="1" />
+</svg>

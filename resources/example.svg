@@ -1,0 +1,15 @@
+<svg width="1000" height="1000">
+  <polygon fill="none" points="582,818 604,689 896,248" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="112,369 175,418 195,670" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="454,786 582,818 350,807" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="454,786 604,689 582,818" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="454,786 350,807 195,670" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="630,443 896,248 604,689" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="630,443 112,369 896,248" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="630,443 175,418 112,369" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="505,494 454,786 195,670" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="505,494 604,689 454,786" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="505,494 195,670 175,418" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="505,494 175,418 630,443" stroke="black" stroke-weight="1" />
+  <polygon fill="none" points="505,494 630,443 604,689" stroke="black" stroke-weight="1" />
+</svg>
