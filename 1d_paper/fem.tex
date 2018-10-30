@@ -1,0 +1,848 @@
+\documentclass[10pt]{amsart}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amscd}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[draft]{todonotes}
+
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{nameref}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\title{1D Finite Element Methods}
+\author{Arden Rasmussen}
+\date{\today}
+
+\numberwithin{equation}{section}
+\definecolor{red}{RGB}{244,67,54}
+\definecolor{pink}{RGB}{233,30,99}
+\definecolor{purple}{RGB}{156,39,176}
+\definecolor{deep-purple}{RGB}{103,58,183}
+\definecolor{indigo}{RGB}{117,125,232}
+\definecolor{blue}{RGB}{110,198,255}
+\definecolor{pale-blue}{RGB}{103,218,255}
+\definecolor{cyan}{RGB}{98,239,255}
+\definecolor{teal}{RGB}{82,199,184}
+\definecolor{green}{RGB}{128,226,126}
+\definecolor{pale-green}{RGB}{190,246,122}
+\definecolor{lime}{RGB}{255,255,110}
+\definecolor{yellow}{RGB}{255,255,114}
+\definecolor{amber}{RGB}{255,243,80}
+\definecolor{orange}{RGB}{255,201,71}
+\definecolor{deep-orange}{RGB}{255,138,80}
+\definecolor{brown}{RGB}{169,130,116}
+
+\newenvironment{Figure}
+{\par\medskip\noindent\minipage{\linewidth}}
+{\endminipage\par\medskip}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+
+\newcommand{\rtodo}[1]{\todo[inline, color=red]{#1}}
+% \newcommand{\pitodo}[1]{\todo[inline, color=pink]{#1}}
+% \newcommand{\putodo}[1]{\todo[inline, color=purple]{#1}}
+% \newcommand{\itodo}[1]{\todo[inline, color=indigo]{#1}}
+% \newcommand{\btodo}[1]{\todo[inline, color=blue]{#1}}
+% \newcommand{\ctodo}[1]{\todo[inline, color=cyan]{#1}}
+% \newcommand{\ttodo}[1]{\todo[inline, color=teal]{#1}}
+% \newcommand{\gtodo}[1]{\todo[inline, color=green]{#1}}
+% \newcommand{\ltodo}[1]{\todo[inline, color=lime]{#1}}
+% \newcommand{\ytodo}[1]{\todo[inline, color=yellow]{#1}}
+% \newcommand{\atodo}[1]{\todo[inline, color=amber]{#1}}
+% \newcommand{\otodo}[1]{\todo[inline, color=orange]{#1}}
+% \newcommand{\btodo}[1]{\todo[inline, color=brown]{#1}}
+
+\newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
+\newcommand{\spder}[2][]{\frac{\partial^2 #1}{\partial#2^2}}
+
+\newcommand{\N}{\mathbb{N}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Finite Element Methods (FEM) is a process that is utilized to numerically
+  approximate solutions to other wise impossible partial differential equations.
+  This paper will serve as an explanation and introduction to the concept of
+  FEM localized in one dimension.
+\end{abstract}
+
+\begin{multicols}{2}
+
+  \section{Introduction}%
+  \label{sec:introduction}
+
+  For simplicity we will only examine FEM in one dimension. There ten stages for
+  the implementation of the finite element analysis. The first four of which are
+  theoretical, and must be done prior to numerical computation. These theoretical
+  stages is used to setup the general mathematical formulas for computation, and
+  is significantly more difficult to automate, and thus must be done
+  analytically. The ten stages are listed below.
+
+  \begin{enumerate}[label=(\roman*)]
+    \item Problem Statement
+    \item Variational Formulation
+    \item Discretization
+    \item Localization
+    \item Mesh Generation
+    \item Assembly of the Global System
+    \item Incorporating Boundary Conditions
+    \item Numerically Solving Algebraic System
+    \item Repeating appropriate steps for time-dependent problems.
+    \item Post processing.
+  \end{enumerate}
+
+  Due to the close dependence on the specific partial differential equation
+  considered with the theoretical stages of the process, the results from these
+  stages is closely dependent on the problem at hand. Because of this, we will use
+  the steady 1D heat transfer model as our problem statement for this
+  explanation.
+
+  \section{Problem Statement}%
+  \label{sec:problem_statement}
+
+  We consider the steady 1D heat equation, which is a simplification of the
+  unsteady multidimensional heat transfer model. Since the time derivative is
+  neglected, there is no need for an initial condition, only a boundary condition
+  for $T$ or $\pder[T]{x}$ at the endpoints of our considered interval is
+  necessary.
+
+  \begin{equation}\label{eq:1d_heat_eq}
+    \rho c_p u \pder[T]{x}-\pder{x}\left(k\pder[T]{x}\right)=f
+  \end{equation}
+
+  Where $\rho$, $c_p$, $u$, and $k$ are constant. We consider this on the domain
+  $\Omega=(0,c)$. And we will prescribe the Dirichlet boundary conditions.
+
+  \begin{align*}
+    T(0) = T_0\\
+    T(c) = T_c
+  \end{align*}
+
+  \section{Variational Formulation}%
+  \label{sec:variational_formulation}
+
+  We will define the residual of equation \eqref{eq:1d_heat_eq} as
+
+  \begin{equation*}
+    R(x) = \rho c_p u\pder[T]{x}-\spder[T]{x}-f
+  \end{equation*}
+
+  Clearly this equals $0$ if and only if $T$ is the exact solution. We then
+  multiply the residual by some test function $w$ obtaining what is called the
+  weighted residual.
+
+  \begin{equation*}
+    \int_0^cw(x)R(x)dx=0
+  \end{equation*}
+
+  This can be rewritten using integration by parts to obtain.
+
+  \begin{equation*}
+    \rho c_p
+    u\int_0^cw\pder[T]{x}dx+k\int_0^c\pder[w]{x}\pder[T]{x}dx-kw\pder[T]{x}\Bigr|_0^c=\int_0^cwfdx
+  \end{equation*}
+
+  We now revise our problem to be finding a function $T$ that satisfies this
+  expression. Because we apply our boundary conditions to the test function $w$
+  we know that $w(0)=w(c)=0$.
+
+  \begin{equation}\label{eq:cvp}
+    \rho c_p
+    u\int_0^cw\pder[T]{x}dx+k\int_0^c\pder[w]{x}\pder[T]{x}dx=\int_0^cwfdx
+  \end{equation}
+
+
+  This is the continuous variational problem, and the solution to this is the
+  generalized solution to \eqref{eq:1d_heat_eq}.
+
+  \section{Discretization}%
+  \label{sec:discretization}
+
+  Since the Sobolev spaces that the solution is contained in is infinitely
+  dimensional, we will take the finite dimensional subspace $V_h\subset
+  H^1((0,c))$. We will take a set of basis function $\left\{\varphi_j\right\}$.
+  We can then write our approximation of $T$ as a linear combination of this
+  finite subspace.
+
+  \begin{equation}\label{eq:th}
+    T_h=\sum_{i=j}^{N}T_j\varphi_j(x)
+  \end{equation}
+
+  Substituting this into \eqref{eq:cvp} and taking $w_h=\varphi_i$ as the test
+  function, we find
+
+  \begin{align*}
+    \sum_{j=1}^{N}\left[\rho c_pu \int_0^c\varphi_i\pder[\varphi_j]{x}dx\right]T_j
+  &+ \sum_{j=1}^{N}\left[k\int_0^c\pder[\varphi_i]{x}\pder[\varphi_j]{x}dx\right]T_j\\
+  &=\int_0^c\varphi_ifdx
+  \end{align*}
+
+  We can write this system of equations for $i=1,\ldots,N$ as
+
+  \begin{equation}\label{eq:matrix}
+    (C+K)T=F
+  \end{equation}
+
+  Where the elements of the matrices are given defined as
+
+  \begin{align*}
+    c_{ij}&=\rho c_p u\int_0^c\varphi_i\pder[\varphi_j]{x}dx\quad &i,j&=1,\ldots,N\\
+    k_{ij}&=k\int_0^c\pder[\varphi_i]{x}\pder[\varphi_j]{x}dx\quad &i,j&=1,\ldots,N\\
+    F_i&=\int_0^c\varphi_ifdx &i&=1,\ldots,N
+  \end{align*}
+
+  Note that it is simpler to consider the matrix $A=C+K$ and use $A$ instead.
+
+  \section{Localization}%
+  \label{sec:localization}
+
+  It is possible to find these matrices on the global domain, but that proves to
+  be extremely difficult in higher dimensions, so we will use a generalizable
+  method for the generation of these matrices. We will split out domain into a
+  finite number of elements, and determine the matrices on each individual
+  element, then using the element matrix, it possible to construct the global
+  matrices.
+
+  We discretize the domain using $N$ grid points $x_1<x_2<\cdots<x_N$ such that
+  $x_1=0$ and $x_N=c$. This will allow us to construct a mesh of $N-1$ elements
+  defined as
+
+  \begin{align*}
+    E_e=\left[x_e,x_{e+1}\right]\quad\quad e=1,\ldots,N-1
+  \end{align*}
+
+  For simplicity we will assume that all elements have the same size $h$,
+  although different sizes can be easily handled.
+
+  In order to construct our approximate solution, we define the shape function.
+
+  \begin{align*}
+    T_h^{(e)}=T_h\Bigr|_{E_e}\quad\quad e=1,\ldots,N-1
+  \end{align*}
+
+  We approximate this shape function as some first-order polynomial. Note that
+  for higher accuracy it is possible to approximate the shape function as a
+  higher order polynomial, but for simplicity we utilize first-order polynomials.
+
+  \begin{align}\label{eq:the}
+    T_h^{(e)}(x)=\alpha_1^{(e)}+\alpha_2^{(e)}x\quad\quad x\in\left[x_e,x_{e+1}\right]
+  \end{align}
+
+  Then because we want $T_h$ to be continuous, then we must apply the boundries
+  of the element to the shape function.
+
+  \begin{align*}
+  &T_h^{(e)}(x_e)=T_1^{(e)}\equiv T_h(x_e)\\
+  &T_h^{(e)}(x_{e+1})=T_2^{(e)}\equiv T_h(x_{e+1})
+  \end{align*}
+
+  Evaluating this expression and solving for $\alpha_1^{(e)}$ and
+  $\alpha_2^{(e)}$ results in
+
+  \begin{align*}
+    \alpha_1^{(e)}&=eT_1^{(e)}-(e-1)T_2^{(e)}\\
+    \alpha_2^{(e)}&=\frac{1}{h}\left(T_2^{(e)}-T_1^{(e)}\right)
+  \end{align*}
+
+  Using these results we substitute them into \eqref{eq:the}, and find
+
+  \begin{align*}
+    T_h^{(e)}&=eT_1^{(e)}-(e-1)T_2^{(e)}+\frac{1}{h}\left(T_2^{(e)}-T_1^{(e)}\right)x\\
+             &=T_1^{(e)}\left(\frac{-x}{h}+e\right)+T_2^{(e)}\left(\frac{x}{h}-e+1\right)\\
+             &=T_1^{(e)}\varphi_1^{(e)}(x)+T_2^{(e)}\varphi_2^{(e)}(x)
+  \end{align*}
+
+  Thus we define our local basis functions $\varphi_1^{(e)}$ and
+  $\varphi_2^{(e)}$ as
+
+  \begin{align}\label{eq:local_basis}
+    \varphi_1^{(e)}&=\frac{-x}{h}+e\\
+    \varphi_2^{(e)}&=\frac{x}{h}-e+1
+  \end{align}
+
+  Thus for every element there is a pair of local basis functions, and a local
+  shape function. A plot of these local basis functions is shown in
+  figure \ref{fig:local_basis}.
+
+  \begin{Figure}
+    \begin{center}
+      \begin{tikzpicture}[scale=4]
+        \draw (-0.2,0) -- (0,0) node[below]{$e$} -- node[above]{$E_e$} (1,0) node[below]{$e+1$} -- (1.2,0);
+        \draw (0,1) node[above]{$\varphi_1^{(e)}$} -- (1,0);
+        \draw (0,0) -- (1,1) node[above]{$\varphi_2^{(e)}$};
+        \draw[dotted] (0,0) -- node[left]{$1$} (0,1);
+        \draw[dotted] (1,0) -- node[right]{$1$} (1,1);
+        % \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+      \end{tikzpicture}
+    \end{center}
+    \captionof{figure}{Local basis functions $\varphi_1^{(e)}$ and
+    $\varphi_2^{(e)}$ on element $e$.}
+    \label{fig:local_basis}
+  \end{Figure}
+
+  The global approximation is then found as a linear combination
+  of global basis functions, which we now define as a piecewise combination of
+  local basis functions. We construct our global basis functions $\varphi_j(x)$
+  as the combination of local basis functions such that at grid point $j$ it is
+  equal to $1$ and at all other grid points is zero, as seen in figure
+  \ref{fig:global_basis}.
+
+  \begin{Figure}
+    \begin{center}
+      \begin{tikzpicture}[scale=1, transform shape]
+        \draw (-0.2,0)--(0,0)--(5,0)--(5.2,0);
+        \draw[dotted] (0,3) node[above]{$\varphi_1$}--(1,0)--(2,0)--(3,0)--(5,0);
+        \draw[dashed] (0,0)--(1,3) node[above]{$\varphi_2$}--(2,0)--(3,0)--(5,0);
+        \draw[dashdotted] (0,0)--(1,0)--(2,3) node[above]{$\varphi_3$}--(3,0)--(5,0);
+        \draw (0,0)--(1,0)--(2,0)--(3,3)--(4,0)--(5,0);
+        \draw (0,0)--(1,0)--(2,0)--(3,0)--(4,3) node[above]{$\varphi_{N-1}$}--(5,0);
+        \draw (0,0)--(1,0)--(2,0)--(3,0)--(4,0)--(5,3)node[above]{$\varphi_N$};
+    \end{tikzpicture}
+  \end{center}
+  \captionof{figure}{Global basis functions $\varphi_j(x)$.}
+  \label{fig:global_basis}
+\end{Figure}
+
+Because of this construction of the global basis functions, we are able to
+represent them in terms of our local basis functions.
+
+\begin{align*}
+  \varphi_1(x)&=\begin{cases}
+    \varphi_1^{(1)}(x) & x\in E_1=(0,h)\\
+    \0 & elsewhere
+  \end{cases}\\
+  \varphi_2(x)&=\begin{cases}
+    \varphi_2^{(1)}(x) & x\in E_1=(0,h)\\
+    \varphi_1^{(2)}(x) & x\in E_2=(h,2h)\\
+    0 & elsewhere
+  \end{cases}\\
+              &\vdots\\
+  \varphi_N(x)&=\begin{cases}
+    \varphi_2^{(N-1)}(x) & x\in E_{N-1}\\
+    0 & elsewhere
+  \end{cases}
+\end{align*}
+
+Thus from this construction we find that our general expression for the global
+basis function which is not on a boundary such as $j=0$ and $j=N$ is as follows
+
+\begin{align}
+  \varphi_j(x)=\begin{cases}
+    \frac{x}{h}-j+2 & x \in ((j-2)h,(j-1)h)\\
+    \frac{-x}{h}+j & x \in ((j-1)h,jh)\\
+    0 & elsewhere
+  \end{cases}
+\end{align}
+
+We are now able to use this definition of our basis function to apply in the
+construction of an element specific system of equations from \eqref{eq:matrix}.
+
+Thus we construct
+
+\begin{align}
+  \left(C^{(e)}+K^{(e)}\right)T^{(e)}=F^{(e)}
+\end{align}
+
+Here the elements of each matrix is determined by out local basis functions, and
+the size of the matrix is equivalent to the number of local degrees of freedom,
+which in this case is two (One for each end point of an element). The elements
+of these matrices are found through the following
+
+\begin{align*}
+  c_{ij}^{(e)}&=\rho c_p u\int_{E_e}\varphi_i^{(e)}\pder[\varphi_j^{(e)}]{x}dx\quad
+              &i,j&=1,2\\
+  k_{ij}^{(e)}&=k\int_{E_e}\pder[\varphi_i^{(e)}]{x}\pder[\varphi_j^{(e)}]{x}dx\quad
+              &i,j&=1,2\\
+  F_i^{(e)}&=\int_{E_e}\varphi_i^{(e)}fdx &i&=1,2
+\end{align*}
+
+\section{Mesh Generation}%
+\label{sec:mesh_generation}
+
+To generate a mesh in 1D is to simply split the domain of our problem into a
+set of finite elements. We select the number of grid points that are desired
+$N$. Then the number of element that will be produced is $N-1$. For the 1D
+problem we will simply divide the domain $\Omega=(0,c)$ into $N-1$ evenly sized
+elements. Thus each interval with have length $h=\frac{c}{N-1}$. Note that the
+greater the number of elements will results in a higher accuracy approximation,
+but will be at the cost of computational complexity.
+
+\section{Assembly of the Global System}%
+\label{sec:assembly_of_the_global_system}
+
+It is possible to directly construct the global matrix based, however this
+method is ineffective for practical computation and so in this introduction will
+be ignored.
+
+The method that will be used is an incremental construction of the global
+matrix, by the addition of elements from the local matrices. We begin by
+initializing the matrix $A=C+K$ and $F$ of zeros, in one dimension both of these
+matrices are $NxN$. Then the corresponding contributions of the element
+matrices $A^{(e)}=C^{(e)}+K^{(e)}$ and $F^{(e)}$ are added in a loop over all
+elements.
+
+\begin{algorithm}[H]
+  \caption{element-by-element assembly}
+  \begin{algorithmic}
+    \State{Let $A$ be a $N\times N$ matrix of zeros.}
+    \State{Let $F$ be a $N\times 1$ matrix of zeros.}
+    \ForAll{$E_e$}
+    \State{Let $A^{(e)}$ be a $2\times 2$ matrix, such that}
+    \State{$A_{IJ}^{(e)}=c_{IJ}^{(e)}+k_{IJ}^{(e)},\quad I,J=1,2$}
+    \State{Determine relation between global and local node numbers.}
+    \State{$i=node(e,I)\quad j=node(e,J)\quad I,J=1,2$}
+    \State{Update the global $A$ matrix.}
+    \State{$A_{ij}=A_{ij}+A_{IJ}^{(e)}\quad I,J=1,2$}
+    \State{Update the global $F$ matrix.}
+    \State{$F_i=F_i+F_I^{(e)}\quad I=1,2$}
+    \State{In our construction of the element mesh the relation between
+    global and local is given like so}
+    \State{$node(e,1)=e\quad node(e,2)=e+1$}
+    \EndFor
+    \State{\Return{$A$, and $F$.}}
+  \end{algorithmic}
+\end{algorithm}
+
+We demonstrate the results of this algorithm with an example.
+
+\begin{example}
+  We will construct a global matrix for the element mesh with three elements.
+  Thus $N=4$.
+
+  We take $A^{(e)}$ to be a $2\times 2$ matrix with elements defined as
+
+  \begin{align*}
+    A_{ij}^{(e)}=\rho c_p u \int_{E_e}\varphi_i^{(e)}\pder[\varphi_j^{(e)}]{x}dx+
+    k\int_{E_e}\pder[\varphi_i^{(e)}]{x}\pder[\varphi_j^{(e)}]{x}dx
+  \end{align*}
+
+  And $F^{(e)}$ is a $2\times 1$ matrix with elements defined as
+
+  \begin{align*}
+    F_i^{(e)}=\int_{E_e}\varphi_i^{(e)}fdx
+  \end{align*}
+
+  Using these two matrices, we construct the global matrix for $N=4$ to be
+
+  \begin{align*}
+    A&=\begin{pmatrix}
+      A_{11}^{(1)} & A_{12}^{(1)} & 0 & 0\\
+      A_{21}^{(1)} & A_{22}^{(1)}+A_{11}^{(2)} & A_{12}^{(2)} & 0\\
+      0 & A_{21}^{(2)} & A_{22}^{(2)}+A_{11}^{(3)} & A_{12}^{(3)}\\
+      0 & 0 & A_{21}^{(3)} & A_{22}^{(3)}
+    \end{pmatrix}\\
+    F&=\begin{pmatrix}
+      F_1^{(1)}\\
+      F_2^{(1)}+F_1^{(2)}\\
+      F_2^{(2)}+F_1^{(3)}\\
+      F_2^{(3)}
+    \end{pmatrix}
+  \end{align*}
+\end{example}
+
+Using this algorithm, it is simple to construct the global $A$, and $F$
+matrices. It also becomes clear that the matrix of $A$ is a tridiagonal
+matrix (At least in this one dimensional case).
+
+\section{Dirichlet Boundary Conditions}%
+\label{sec:section_name}
+
+With our global system of equations constructed in the general form of
+
+\begin{align}\label{eq:global_sys}
+  \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1N}\\
+    a_{21} & a_{22} & \cdots & a_{2N}\\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{N1} & a_{N2} & \cdots & a_{NN}
+  \end{pmatrix}
+  \begin{pmatrix}
+    T_1 \\ T_2 \\ \vdots \\ T_N
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    F_1 \\ F_2 \\ \vdots \\ F_N
+  \end{pmatrix}
+\end{align}
+
+This solution is not well behaved, as we have neglected the prescribed boundary
+conditions until now. As we know from our Dirichlet boundary conditions that
+
+\begin{align*}
+  T_1=T_0\\
+  T_N=T_c
+\end{align*}
+
+There are several ways of applying these boundary conditions to the system of
+equations, but we will focus on a single method. This method is to leave the
+boundary values of $T_i$ as if they were unknown, and simply modify the system
+of equations such that they are forced to appear. This can be done like so
+
+\begin{align*}
+  \begin{pmatrix}
+    1 & 0 & \cdots & 0\\
+    a_{21} & a_{22} & \cdots & a_{2N}\\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{(N-1)1} & a_{(N-1)2} & \cdots & a_{(N-1)N}\\
+    0 & 0 & \cdots & 1
+  \end{pmatrix}
+  \begin{pmatrix}
+    T_1 \\ T_2 \\ \vdots \\ T_{N-1} \\ T_N
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    T_0 \\ F_2 \\ \vdots \\ F_{N-1} \\ T_c
+  \end{pmatrix}
+\end{align*}
+
+Using this system of equations is easy to implement, and allows for easy
+solving as it retains the tridiagonal nature of the matrix $A$.
+
+\section{Solving the Algebraic System}%
+\label{sec:solving_the_algebraic_system}
+
+In order to solve the system of equations we must find the values for all
+$a_{ij}$ and the values for $F_{i}$. The process for finding each of these is
+given, and since $f(x)$ is given as an input as the forcing function, we are
+able to numerically solve for all of these values.
+
+Due to the tridiagonal nature of the matrix, it allows the implementation of
+extremely efficient algorithms to find the solution, that can obtain a solution
+in $O(n)$ operations instead of the normal $O\left(n^3\right)$ required by
+Gaussian elimination.
+
+This algorithm is outlined below for a system of equations of the general form
+
+\begin{align*}
+  \begin{pmatrix}
+    b_1 & c_1 & 0 & \cdots & 0 \\
+    a_2 & b_2 & c_2 & \cdots & 0\\
+    0 & a_3 & b_3 & \ddots & \vdots\\
+    \vdots & \vdots & \ddots & \ddots & c_{n-1}\\
+    0 & 0 & \cdots & a_n & b_n
+  \end{pmatrix}
+  \begin{pmatrix}
+    x_1 \\ x_2 \\ x_3 \\ \vdots \\ x_n
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    d_1 \\ d_2 \\ d_3 \\ \vdots \\ d_n
+  \end{pmatrix}
+\end{align*}
+
+\begin{algorithm}[H]
+  \caption{Thomas algorithm}
+  \begin{algorithmic}
+    \For{$i \in 1,2,\ldots,n-1$}
+    \If{$i=1$}
+    \State{$c_i=\frac{c_i}{b_i}$}
+    \State{$d_i=\frac{d_i}{b_i}$}
+    \ElsIf{$i\neq n$}
+    \State{$c_i=\frac{c_i}{b_i-a_ic_{i-1}}$}
+    \State{$d_i=\frac{d_i-a_id_{i-1}}{b_i-a_ic_{i-1}}$}
+    \ElsIf{$i=n$}
+    \State{$d_i=\frac{d_i-a_id_{i-1}}{b_i-a_ic_{i-1}}$}
+    \EndIf
+    \EndFor
+    \For{$i \in n,\ldots,1$}
+    \If{$i=n$}
+    \State{$x_i=d_i$}
+    \Else
+    \State{$x_i=d_i-c_ix_{i+1}$}
+    \EndIf
+    \EndFor
+    \State{\Return $X$}
+  \end{algorithmic}
+\end{algorithm}
+
+This algorithm will efficiently determine the solution to our system of
+equations. We can then construct our final approximation of $T$ like so
+
+\begin{align}
+  T_h(x) = T_0\varphi_1(x)+T_c\varphi_N(x)+\sum_{j=2}^{N-1}T_j\varphi_j(x)
+\end{align}
+
+A note about tridiagonal matrices is they are extremely efficient
+computationally. As only the three diagonals are needed to be stored as all
+other elements are zero. Because of this the memory for an $N\times N$ matrix
+can be reduced to the memory needed for a $N\times 3$ matrix. Which for very
+large number of elements will be extremely substantial.
+
+This along with the efficiency of computing solutions to tridiagonal systems of
+equations indicates that maintaining the tridiagonality of the matrix is very
+useful.
+
+\section{Further Iterations}%
+\label{sec:further_iterations}
+
+Because of our choice of differential equation, and our decision to neglect the
+time derivative, indicates that $T_h(x)$ is our final solution.
+
+\section{Postprocessing}%
+\label{sec:postprocessing}
+
+This stage is to display the approximation of the solution, and to generate
+graphs or calculate errors. This step is entirely dependent on the example at
+hand and the desired use of FEA. Due to this we will skip this step for now.
+
+\section{Example Problem}%
+\label{sec:example_problem}
+
+For additional clarity we will implement this process on an example problem to
+demonstrate the stages, and the problem specific steps.
+
+\subsection{Problem Statement}%
+\label{sub:problem_statement}
+
+We will continue to use the steady 1D heat equation
+
+\begin{align*}
+  \rho c_p y\pder[T]{x}-\pder{x}\left(k\pder[T]{x}\right)=f
+\end{align*}
+
+We will use the domain $\Omega=(0,c)=(0,5)$.
+
+We will define $f(x)$ to be
+
+\begin{align*}
+  f(x)=\frac{\xi\pi}{c}\left[\rho c_p
+  u\cos\left(\frac{\xi\pi}{c}x\right)+k\frac{\xi\pi}{c}\sin\left(\frac{\xi\pi}{c}x\right)\right]
+\end{align*}
+
+Where $\xi \in \N$, in our example we will take $\xi=2$. And we will take
+$N=4$. And finally we apply our Dirichlet boundary conditions to be
+
+\begin{align*}
+  T_1=T(0)=0\\
+  T_2=T(5)=0
+\end{align*}
+
+\subsection{Variational Formulation}%
+\label{sub:variational_formulation}
+
+As the variational formulation only depended on the differential equation,
+which we have kept the same, this step is identical to as it was in the
+explanation.
+
+\subsection{Discretization}%
+\label{sub:discretization}
+
+Again, the discretization of the problem was only dependent on the differential
+equation. Thus we can use the same expression for the global system $(C+K)T=F$
+that were found in the explanation.
+
+\subsection{Localization}%
+\label{sub:localization}
+
+The localization process is only dependent on the dimension of the problem. So
+for any FEA contained in one dimension will utilize the same
+$\varphi_i^{(e)}(x)$ and $\varphi_i(x)$. The only difference could come from
+the construction of the local matrix $C^{(e)}$, $K^{(e)}$, and $F^{(e)}$. But
+this process stems from the discretization process, and thus only depends on
+the differential equation. Which in our case has remained the same.
+
+\subsection{Mesh Generation}%
+\label{sub:mesh_generation}
+
+This is the first stage where some difference occurs, as it is the first
+computational stage. We are able to generate the mesh of elements, which in the
+one dimensional case is trivial. We take the set of node points
+
+\begin{align*}
+  x = \left\{0, \frac{5}{3}, \frac{10}{3}, 5\right\}
+\end{align*}
+
+\subsection{Assembly of the Global System}%
+\label{sub:assembly_of_the_global_system}
+
+The process for assembling the global system is identical as in the
+explanation. However, with our example problem we are able to numerically solve
+for our global $A$ and $F$ matrices. These matrices become
+
+\begin{align*}
+  A&=\begin{pmatrix}
+    0.1 & -0.1 & 0.0 & 0.0 \\
+    -1.1 & 1.2 & -0.1 & 0.0 \\
+    0.0 & -1.1 & 1.2 & -0.1 \\
+    0.0  & 0.0 & -1.1 & 1.1
+  \end{pmatrix}\\
+  F&=\begin{pmatrix}
+    1.453 \\ 0.842 \\ -2.275 \\ -0.021
+  \end{pmatrix}
+\end{align*}
+
+Thus our global system can be represented as
+
+\begin{align*}
+  \begin{pmatrix}
+    0.1 & -0.1 & 0.0 & 0.0 \\
+    -1.1 & 1.2 & -0.1 & 0.0 \\
+    0.0 & -1.1 & 1.2 & -0.1 \\
+    0.0  & 0.0 & -1.1 & 1.1
+  \end{pmatrix}
+  \begin{pmatrix}
+    T_1 \\ T_2 \\ T_3 \\ T_4
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    1.453 \\ 0.842 \\ -2.275 \\ -0.021
+  \end{pmatrix}
+\end{align*}
+
+\subsection{Dirichlet Boundary Conditions}%
+\label{sub:dirichlet_boundary_conditions}
+
+Once again we use the process to apply our Dirichlet boundary conditions to the
+system of equations. Thus obtaining
+
+\begin{align*}
+  \begin{pmatrix}
+    1.0 &  0.0 & 0.0 & 0.0 \\
+    -1.1 & 1.2 & -0.1 & 0.0 \\
+    0.0 & -1.1 & 1.2 & -0.1 \\
+    0.0 &  0.0 & 0.0 & 1.0
+  \end{pmatrix}
+  \begin{pmatrix}
+    T_1 \\ T_2 \\ T_3 \\ T_4
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    0.000 \\ 0.842 \\ -2.275 \\ 0.000
+  \end{pmatrix}
+\end{align*}
+
+\subsection{Solving the Algebraic System}%
+\label{sub:solving_the_algebraic_system}
+
+Using our algorithm for solving tridiagonal matrices, we are able to find the
+values for $T_i$ to be
+
+\begin{align*}
+  T=\begin{pmatrix}
+    0.000000 \\ 0.589228 \\ -1.355743 \\ 0.000000
+  \end{pmatrix}
+\end{align*}
+
+Thus resulting in our final approximation to be
+
+\begin{align*}
+  T_h(x) = 0.589228\varphi_2(x)-1.355743\varphi_3(x)
+\end{align*}
+
+\subsection{Further Iterations}%
+\label{sub:further_iterations}
+
+Again as we neglect the time derivative $T_h(x)$ is our final solution.
+
+\subsection{Postprocessing}%
+\label{sub:postprocessing}
+
+Now that we have an actual solution to our expression we are able to do some
+post processing.
+
+We claim that a solution to this differential equation can be found analytically
+to be
+
+\begin{align*}
+  T(x) = \sin\left(\frac{\xi\pi}{c}x\right)
+\end{align*}
+
+Using the analytical solution, and our FEM approximation, we are able to plot
+each solution and compare the error function between the actual and our
+approximate solutions.
+
+\begin{Figure}
+   \begin{center}
+     \input{example_4.tikz}
+   \end{center}
+  \captionof{figure}{$T_h(x)$ compared to $\sin\left(\frac{2\pi}{5}x\right)$,
+  when $N=4$.}
+\end{Figure}
+
+We can clearly see that the error at this number of grid points is quite
+substantial. We will compute the error by using $L^2$.
+
+\begin{align*}
+  err = {\left(\int_0^c{\left|T_h(x)-\sin\left(\frac{2\pi}{5}x\right)\right|}^2dx\right)}^{\frac{1}{2}}
+\end{align*}
+
+With our approximation of $T_h(x)$ we find that $err=0.802665$. This amount of
+error is unacceptable in our problem. That is why FEA is much more effective
+with larger numbers of elements. We can directly view this, by automating the
+construction of $T_h$ for many different $N$.
+
+Using computational power to generate the plot of errors for each
+approximation.
+
+\begin{Figure}
+   \begin{center}
+     \input{error.tikz}
+   \end{center}
+   \captionof{figure}{\label{fig:error}Plot of $err(n)$ for $n\in(2,16)$.}
+\end{Figure}
+
+The plot of the error function in figure \ref{fig:error} clearly shows that
+even with a few number of elements, the approximation quickly converges to the
+analytical solution. However, as it is only an approximation the error never
+reaches zero. Even with over $200$ elements the error still is still
+$1.49\times 10^{-4}$, which for most situations is more than sufficient.
+However, with more complicated analytical solutions, the error function will
+take significantly longer to converge to zero.
+
+In our one dimensional problem, the computational complexity for more $N$ is
+linear. This is due to the fact that there the overall complexity of this
+process in one dimension is $\approx O(3N)$ Thus the increase in $N$ results in
+an approximately linear increase in computation time. This can be seen in the
+graph in figure \ref{fig:time}.
+
+\begin{Figure}
+   \begin{center}
+     \input{time.tikz}
+   \end{center}
+   \captionof{figure}{\label{fig:time}Plot of the time in seconds required to
+   compute the approximation for $n\in(2,502)$.}
+\end{Figure}
+
+This can be somewhat decreased through parallel processing, as the computation
+of the local system of equations is independent. Thus this process can be
+split into multiple processes. However, due to the efficiency of this system on
+one dimension, this will only reduce the complexity to $\approx O(2N)$.
+
+\begin{Figure}
+   \begin{center}
+     \input{example_500.tikz}
+   \end{center}
+  \captionof{figure}{$T_h(x)$ compared to $\sin\left(\frac{2\pi}{5}x\right)$,
+  when $N=500$.}
+  \label{fig:example_500}
+\end{Figure}
+
+Figure \ref{fig:example_500} demonstrates the accuracy of the approximation for
+very large $N$ values. In this case with $N=500$ the error can be neglected, as
+it is on the order of $10^{-5}$. This simple demonstration shows the strength
+of FEA, and how it can be applied to a simple one dimensional differential
+equation.
+
+\section{Conclusion}%
+\label{sec:conclusion}
+
+The method of finite element analysis constrained in one dimension is not
+extensively useful, as the analytic solutions for most differential equations is
+possible to compute without much difficulty. However, this demonstration and
+explanation of FEA shows the ability of of the process in comparison to an
+actual solution. And provides a generalizable process that can be expanded to
+higher dimensional problems.
+
+\end{multicols}
+
+\end{document}
