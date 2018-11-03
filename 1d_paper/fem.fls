@@ -320,6 +320,8 @@ INPUT time.tikz
 INPUT time.tikz
 INPUT example_500.tikz
 INPUT example_500.tikz
+INPUT fem.bbl
+INPUT fem.bbl
 INPUT fem.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb

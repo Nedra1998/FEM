@@ -2,7 +2,7 @@
 \definecolor{color0}{RGB}{0,0,0}
 \begin{axis}[axis lines = middle, xmin=2.000000, xmax=501.000000,
 x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
-y label style={at={(axis description cs:-0.1,.5)},rotate=90,anchor=south},
+y label style={at={(axis description cs:-0.15,.5)},rotate=90,anchor=south},
 ymin=0.002947, ymax=0.302547, xlabel={$n$}, ylabel={$time$}]
 \addplot[color0,  forget plot]
 table{%

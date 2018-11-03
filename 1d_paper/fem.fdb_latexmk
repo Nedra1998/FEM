@@ -1,5 +1,13 @@
 # Fdb version 3
-["pdflatex"] 1540923540 "fem.tex" "fem.pdf" "fem" 1540923540
+["bibtex fem"] 1541285693 "fem.aux" "fem.bbl" "fem" 1541286085
+  "/usr/share/texlive/texmf-dist/bibtex/bst/base/alpha.bst" 1480098433 23907 a5f93555796fb564b924339521f10a7c ""
+  "fem.aux" 1541286083 6013 62af905ac0f29411b4e4853d6c6ea83c ""
+  "fem.bcf" 0 -1 0 ""
+  "fem.bib" 1541284205 249 bfd43e62f6f5d19f02b00ae65a7d64b3 ""
+  (generated)
+  "fem.blg"
+  "fem.bbl"
+["pdflatex"] 1541286085 "fem.tex" "fem.pdf" "fem" 1541286085
   "/dev/null" 1540912557 0 d41d8cd98f00b204e9800998ecf8427e ""
   "/etc/texmf/web2c/texmf.cnf" 1519595310 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -210,13 +218,14 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1540879405 164837 f472f40ab643c6b1fa7fff8b04d446df ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1540879408 812202 25783cba341afdd861ce0564f1877cad ""
-  "error.tikz" 1540923119 1768 51ce5fa85a3a66ca122847a3f9ffafe7 ""
+  "error.tikz" 1541284022 10325 7da7ba88475ac89fe267a28202da083d ""
   "example_4.tikz" 1540921014 7712 20c68065e959698f34d8ab216c5520e3 ""
   "example_500.tikz" 1540923208 7701 4179d814a14ca50a5c7707f2f4d0fae9 ""
-  "fem.aux" 1540923536 5853 923caae934214205d409b13c61b00679 ""
-  "fem.tex" 1540923539 29123 b75efbf91a7a508e9de593d2da2e86ec ""
-  "time.tikz" 1540923114 10297 ee5e3e89757d6e5debedd125cae4b071 ""
+  "fem.aux" 1541286083 6013 62af905ac0f29411b4e4853d6c6ea83c ""
+  "fem.bbl" 1541285693 271 2616eb0b157e11d67826e8127f07395e "bibtex fem"
+  "fem.tex" 1541286083 30757 579aaf7edefd5ad19ec6d4275c931ddb ""
+  "time.tikz" 1541285909 10298 dff2031ff28e49f1234c62b099d86d07 ""
   (generated)
   "fem.aux"
-  "fem.pdf"
   "fem.log"
+  "fem.pdf"
