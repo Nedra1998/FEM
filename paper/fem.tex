@@ -1,41 +1,95 @@
-\documentclass[10pt]{amsart}
-% \documentclass[10pt]{article}
+\documentclass[draft,10pt]{amsart}
 \usepackage{amsfonts}
-\usepackage{amsthm}
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage{amscd}
 
 \usepackage[margin=1in]{geometry}
+\usepackage[obeyDraft]{todonotes}
 
 \usepackage{csquotes}
 \usepackage{enumitem}
 \usepackage{multicol}
 \usepackage{caption}
-\usepackage{subfiles}
-\usepackage{minted}
 \usepackage{tikz}
+\usepackage{pgfplots}
+% \usepackage{minted}
 \usepackage{nameref}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{graphics}
+\usepackage{subfiles}
+\usepackage{fancyhdr}
 
-\newenvironment{Figure}
-  {\par\medskip\noindent\minipage{\linewidth}}
-  {\endminipage\par\medskip}
-
-\title{Finite Element Methods}
+\title{An Introduction to Finite Element Methods for Solving Partial
+Differential Equations on Arbatrairy Boundaries}
+\newcommand\shortitle{FINITE ELEMENT METHODS}
 \author{Arden Rasmussen}
 \date{\today}
+
+\fancyhf{}
+\fancyhead[LE,RO]{\footnotesize \scshape \thepage}
+\fancyhead[CO]{\footnotesize \scshape \shortitle}
+\fancyhead[CE]{\footnotesize \scshape ARDEN RASMUSSEN}
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+
+\numberwithin{equation}{section}
+\definecolor{red}{RGB}{244,67,54}
+\definecolor{pink}{RGB}{233,30,99}
+\definecolor{purple}{RGB}{156,39,176}
+\definecolor{deep-purple}{RGB}{103,58,183}
+\definecolor{indigo}{RGB}{117,125,232}
+\definecolor{blue}{RGB}{110,198,255}
+\definecolor{pale-blue}{RGB}{103,218,255}
+\definecolor{cyan}{RGB}{98,239,255}
+\definecolor{teal}{RGB}{82,199,184}
+\definecolor{green}{RGB}{128,226,126}
+\definecolor{pale-green}{RGB}{190,246,122}
+\definecolor{lime}{RGB}{255,255,110}
+\definecolor{yellow}{RGB}{255,255,114}
+\definecolor{amber}{RGB}{255,243,80}
+\definecolor{orange}{RGB}{255,201,71}
+\definecolor{deep-orange}{RGB}{255,138,80}
+\definecolor{brown}{RGB}{169,130,116}
+
+\newcommand{\rtodo}[1]{\todo[inline, color=red]{#1}}
+\newcommand{\ptodo}[1]{\todo[inline, color=purple]{#1}}
+\newcommand{\btodo}[1]{\todo[inline, color=blue]{#1}}
+\newcommand{\gtodo}[1]{\todo[inline, color=green]{#1}}
+\newcommand{\otodo}[1]{\todo[inline, color=orange]{#1}}
+
+\newenvironment{Figure}
+{\par\medskip\noindent\minipage{\linewidth}}
+{\endminipage\par\medskip}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+\newtheorem{definition}{Definition}[section]
+
+
+\newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
+\newcommand{\spder}[2][]{\frac{\partial^2 #1}{\partial#2^2}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
 
 \begin{document}
 \maketitle
 
-\begin{abstract}
-  Finite Element Methods (FEM) is extremely useful across many different fields
-  of research, due to the versatility that it is able to supply.
-\end{abstract}
+\rtodo{Error}
+\ptodo{Remove}
+\btodo{Appendix/Citation}
+\gtodo{Addition}
+\otodo{Revise}
 
 \begin{multicols}{2}
-\subfile{introduction}
-\subfile{generate_mesh}
-\end{multicols}
+  \subfile{sections/introduction}
+  \subfile{sections/mesh_gen}
 
+  \nocite{*}
+  \bibliographystyle{alpha}
+  \bibliography{fem}
+\end{multicols}
 
 \end{document}
