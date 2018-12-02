@@ -122,9 +122,9 @@ def main():
         '--svg', action='store_true', help="Generates svg image")
     parser.add_argument('-o', nargs='?', help="Output file name")
     parser.add_argument(
-        '--width', default=1000, help='Sets image width for svg')
+        '--width', default=1000, type=int, help='Sets image width for svg')
     parser.add_argument(
-        '--height', default=1000, help='Sets image height for svg')
+        '--height', default=1000, type=int, help='Sets image height for svg')
     args = parser.parse_args()
     if args.o == None:
         args.o = args.file

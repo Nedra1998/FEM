@@ -13,7 +13,8 @@
 \usepackage{caption}
 \usepackage{tikz}
 \usepackage{pgfplots}
-% \usepackage{minted}
+\usepgfplotslibrary{fillbetween}
+\usepackage{minted}
 \usepackage{nameref}
 \usepackage{algpseudocode}
 \usepackage{algorithm}
@@ -86,6 +87,7 @@ Differential Equations on Arbatrairy Boundaries}
 \begin{multicols}{2}
   \subfile{sections/introduction}
   \subfile{sections/mesh_gen}
+  \subfile{sections/linear_sys}
 
   \nocite{*}
   \bibliographystyle{alpha}

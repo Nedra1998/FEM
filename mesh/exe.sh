@@ -8,4 +8,4 @@ DIR=$(basename "$1" .poly).$ID
 mkdir "$DIR"
 ./triangle "$@"
 mv $(basename "$1" .poly).1.* "$DIR"
-./gtikz.py "$DIR"/$(basename "$1" .poly).1 -o "$DIR"/$(basename "$1" .poly).1 --svg
+./gtikz.py "$DIR"/$(basename "$1" .poly).1 -o "$DIR"/$(basename "$1" .poly).1 --width=5000 --height=5000 --svg
