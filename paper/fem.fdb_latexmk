@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex fem"] 1543782159 "fem.aux" "fem.bbl" "fem" 1543782322
+["bibtex fem"] 1543802694 "fem.aux" "fem.bbl" "fem" 1543802696
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/alpha.bst" 1480098433 23907 a5f93555796fb564b924339521f10a7c ""
-  "fem.aux" 1543782322 7990 be668196a5e8edf59bcaeb730241db89 ""
+  "fem.aux" 1543802696 8673 2055db50b0c04134f7d654e5039d4c96 ""
   "fem.bcf" 0 -1 0 ""
-  "fem.bib" 1543708843 3200 88e0658bd7b7adf6765290a63b3eb228 ""
+  "fem.bib" 1543797918 3512 0ca8fb2c483a663a0b62c76d4ddb7fb2 ""
   (generated)
   "fem.bbl"
   "fem.blg"
-["pdflatex"] 1543782320 "fem.tex" "fem.pdf" "fem" 1543782322
+["pdflatex"] 1543802694 "fem.tex" "fem.pdf" "fem" 1543802696
   "/dev/null" 1543251060 0 d41d8cd98f00b204e9800998ecf8427e ""
   "/etc/texmf/web2c/texmf.cnf" 1519595310 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -230,14 +230,15 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1540879405 164837 f472f40ab643c6b1fa7fff8b04d446df ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1541823953 812183 a7a3e5235c25b265dfd255028ea467d6 ""
-  "fem.aux" 1543782322 7990 be668196a5e8edf59bcaeb730241db89 ""
-  "fem.bbl" 1543782159 2839 4ea90c803621fe3bf47085602d8e3b32 "bibtex fem"
-  "fem.tex" 1543781883 2604 6a45f5609d0f41462c71851e02e1cd4c ""
+  "fem.aux" 1543802696 8673 2055db50b0c04134f7d654e5039d4c96 ""
+  "fem.bbl" 1543802694 3114 bd8fd3b26d65901d3e85a5c899f974d5 "bibtex fem"
+  "fem.tex" 1543802691 2923 01ce4257497ce2ea4ee6204fe6bb468b ""
   "sections/introduction.tex" 1543428092 448 a016bacb7168e6be6c1d7135f59ac2b3 ""
-  "sections/linear_sys.tex" 1543782320 9809 3a2ee6c1995c00424bb09dd683d88eee ""
+  "sections/linear_sys.tex" 1543801826 12637 6c371a30c805a89a9a00e444e5bd6fe5 ""
   "sections/mesh_gen.tex" 1543707682 15615 e71a6b834193155efcc88592b0ee1986 ""
   (generated)
   "fem.log"
-  "fem.pdf"
   "fem.pyg"
+  "fem.toc"
+  "fem.pdf"
   "fem.aux"

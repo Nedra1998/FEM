@@ -3,44 +3,44 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: fem.aux
 The style file: alpha.bst
 Database file #1: fem.bib
-You've used 12 entries,
+You've used 13 entries,
             2543 wiz_defined-function locations,
-            646 strings with 6333 characters,
-and the built_in function-call counts, 4797 in all, are:
-= -- 471
-> -- 189
-< -- 11
-+ -- 63
-- -- 59
-* -- 352
-:= -- 782
-add.period$ -- 38
-call.type$ -- 12
-change.case$ -- 71
-chr.to.int$ -- 12
-cite$ -- 12
-duplicate$ -- 201
-empty$ -- 367
-format.name$ -- 78
-if$ -- 993
+            653 strings with 6549 characters,
+and the built_in function-call counts, 5143 in all, are:
+= -- 506
+> -- 197
+< -- 12
++ -- 65
+- -- 61
+* -- 378
+:= -- 837
+add.period$ -- 41
+call.type$ -- 13
+change.case$ -- 76
+chr.to.int$ -- 13
+cite$ -- 13
+duplicate$ -- 216
+empty$ -- 397
+format.name$ -- 82
+if$ -- 1065
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 14
-newline$ -- 65
-num.names$ -- 38
-pop$ -- 59
+missing$ -- 15
+newline$ -- 70
+num.names$ -- 41
+pop$ -- 62
 preamble$ -- 1
-purify$ -- 84
+purify$ -- 90
 quote$ -- 0
-skip$ -- 159
+skip$ -- 170
 stack$ -- 0
-substring$ -- 307
-swap$ -- 32
-text.length$ -- 11
-text.prefix$ -- 8
+substring$ -- 335
+swap$ -- 33
+text.length$ -- 12
+text.prefix$ -- 9
 top$ -- 0
-type$ -- 88
+type$ -- 96
 warning$ -- 0
-while$ -- 42
-width$ -- 14
-write$ -- 163
+while$ -- 45
+width$ -- 15
+write$ -- 176

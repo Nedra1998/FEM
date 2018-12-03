@@ -31,6 +31,13 @@ Dmitri Kuzmin and Jari H{\"a}m{\"a}l{\"a}inen.
 \newblock {\em Finite Element Methods for Computational Fluid Dynamics}.
 \newblock Society for Industrial and Applied Mathematics, Philadelphia, 2015.
 
+\bibitem[Kry31]{KRYLOV}
+A.~N. Krylov.
+\newblock On the numerical solution of the equation by which in technical
+  questions frequencies of small oscillations of material systems are
+  determined.
+\newblock {\em News of Academy of Sciences of the USSR}, 7(4):491--539, 1931.
+
 \bibitem[Rup95]{R_REF}
 Jim Ruppert.
 \newblock A delaunay refinement algorithm for quality 2-dimensional mesh

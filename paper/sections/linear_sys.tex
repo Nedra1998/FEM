@@ -12,7 +12,6 @@
       \item INDEX
       \item CSR
     \end{enumerate}
-  \item Multiplication
   \item Krylov Subspaces
     \begin{enumerate}
       \item Reasoning
@@ -291,5 +290,92 @@ We will simmilarly have large vectors, and can implement a similar method for
 sparse vector storage, but this would be counter productive, as our large
 vectors are not likly to be sparse. Thus using a sparce represetnation of a
 vector would actualy consume more memory than the full vector storage method.
+
+\subsection{Krylov Subspace}%
+\label{sub:krylov_subspace}
+
+An extreamly useful tool for for numerical approximation of large systems of
+equations is \textit{Krylov Subspaces}. Krylov subspaces are defined by
+Krylov\cite{KRYLOV} as
+
+\otodo{PAUL! All the sources I find about Krylov subspaces just seem to use it
+without any actual exlination or reasoning. So I added Krylov's original paper
+(Note; it is in russian, so I didn't read it), and provide the reasoning that
+we used. Is that sufficient?}
+
+\begin{align*}
+  \mathcal{K}_r\left(A,b\right)=\text{span}\left\{b,Ab,A^2b,\ldots,A^{r-1}b\right\}
+\end{align*}
+
+where $b$ is some vector. This basis assists in the approximation for linear
+systems of the form $Ax=b$. The subscript $r$ simply defines the point at which
+we limit our approximation, if $r$ is infinite then the Krylov subspace is the
+full space, and solutions in that Krylov subspace will be exact.
+
+Note that the basis vectors in the Krylov subspace are not necessarily
+orthogonal, nor normal.
+
+\subsubsection{Reasoning}%
+\label{ssub:reasoning}
+
+We provide a short example of the reasoning for the construction of the Krylov
+subspace. We consider the example where we want to solve a system of linear
+equations of the form $Ax=b$. Where $A=I+\varepsilon$.
+
+\begin{align*}
+  Ax&=b\\
+  x&=A^{-1}b\\
+  x&=(I+\varepsilon)^{-1}b.
+\end{align*}
+
+We construct an approximation for the inverse of a matrix like by geometric
+formula
+
+\begin{align*}
+  I+\varepsilon+\varepsilon^2+\cdots+\varepsilon^n&=S\\
+  \varepsilon+\varepsilon^2+\cdots+\varepsilon^{n+1}&=S\varepsilon\\
+  S-I+\varepsilon^{n+1}&=S\varepsilon\\
+  S-S\varepsilon&=I-\varepsilon^{n+1}\\
+  S(I-\varepsilon)&=I-\varepsilon^{n+1}\\
+  S&=\left(I-\varepsilon^{n+1}\right)\left(I-\varepsilon\right)^{-1}.
+\end{align*}
+
+When $n\rightarrow \infty$ and $\varepsilon$ is small enough
+($\Vert\varepsilon\Vert < 1$), then $\varepsilon^{n+1}\rightarrow 0$. Thus
+
+\begin{align*}
+  S&=\left(I-\varepsilon^{n+1}\right)\left(I-\varepsilon\right)^{-1}\\
+  S&=\left(I-\varepsilon\right)^{-1}.
+\end{align*}
+
+Finaly we can conclude that
+
+\begin{align*}
+  A^{-1}=(I+\varepsilon)^{-1}=I-\varepsilon-\varepsilon^2-\cdots.
+\end{align*}
+
+Using this in our expression for $x$ we find
+
+\begin{align*}
+  x&=A^{-1}b=b-\varepsilon b-\varepsilon^2 b - \cdots\\
+   &=b-(A-I)b-(A-I)^2b-\cdots\\
+   &=b-Ab+b-A^2b+2Ab-b+\cdots.
+\end{align*}
+
+Using this we extract the basis that composes $x$ to be
+
+\begin{align*}
+  \left\{b, Ab, A^2b, A^3b, \ldots\right\}
+\end{align*}
+
+The Krylov subspace takes this infinite basis, and cuts it off at some given
+$r$ value, thus providing us with
+
+\begin{align*}
+  \left\{b,Ab,A^2b,\ldots,A^{r-1}b\right\}
+\end{align*}
+
+Which is our Krylov subspace. This is not a full proof of the construction of
+the Krylov subspace, but it should be a sufficient explanation for our purposes.
 
 \end{document}

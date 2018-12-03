@@ -1,0 +1,18 @@
+\contentsline {section}{\tocsection {}{1}{Introduction}}{1}
+\contentsline {section}{\tocsection {}{2}{Mesh Generation}}{1}
+\contentsline {subsection}{\tocsubsection {}{2.1}{Delaunay Triangulation}}{1}
+\contentsline {subsection}{\tocsubsection {}{2.2}{Constrained Delaunay Triangulation}}{2}
+\contentsline {subsection}{\tocsubsection {}{2.3}{Edge Flipping}}{2}
+\contentsline {subsubsection}{\tocsubsubsection {}{2.3.1}{Construction of Delaunay Triangulation}}{2}
+\contentsline {subsubsection}{\tocsubsubsection {}{2.3.2}{Construction of Constrained Delaunay Triangulation}}{3}
+\contentsline {subsection}{\tocsubsection {}{2.4}{Mesh Refinement}}{3}
+\contentsline {subsection}{\tocsubsection {}{2.5}{Implementation}}{4}
+\contentsline {section}{\tocsection {}{3}{Linear Systems}}{4}
+\contentsline {subsection}{\tocsubsection {}{3.1}{Data Structures}}{4}
+\contentsline {subsubsection}{\tocsubsubsection {}{3.1.1}{Full Matrix}}{5}
+\contentsline {subsubsection}{\tocsubsubsection {}{3.1.2}{Dictionary of Keys}}{5}
+\contentsline {subsubsection}{\tocsubsubsection {}{3.1.3}{Compressed Row Storage}}{6}
+\contentsline {subsubsection}{\tocsubsubsection {}{3.1.4}{Vectors}}{7}
+\contentsline {subsection}{\tocsubsection {}{3.2}{Krylov Subspace}}{7}
+\contentsline {subsubsection}{\tocsubsubsection {}{3.2.1}{Reasoning}}{7}
+\contentsline {section}{\tocsection {}{}{References}}{7}
