@@ -1,0 +1,46 @@
+\documentclass[../fem.tex]{subfiles}
+
+\begin{document}
+\section{Problem Statement}%
+\label{sec:problem_statement}
+
+For our expanation we will consider the 2D steady state heat equations. This is
+a simplification of the unsteady multidimensional heat transfer model. Since we
+are focusing on the time independent analysis, there is no need for an initial
+condition. We definine our domain to be $\Omega$ such that $\Omega \subset
+\R^2$ is a bounded 2D domain with boundary $\Gamma$.
+
+We write the general expression for the time-dependent general heat equation as
+
+\begin{align*}
+  \rho c_p \pder[T]{t}+\rho c_p\vec{u}\cdot\nabla T - \nabla
+  \cdot\left(\bar{\bar{x}}\nabla T\right)=f \quad \text{in}\ \Omega.
+\end{align*}
+
+Where $T(\vec{x},t)$ is the temperature at point $\vec{x}\in\Omega$ at time
+$t\in(0,\tau)$. $\rho$ is the density, and $c_p$ denotes the specific heat
+capacity. For our case we assume that they are constant and $1$. The forcing
+function $f$ is given by $f=\rho h$ where $h$ is the rate of heating per unit
+mass. $\vec{u}$ is the velocity, and $\bar{\bar{x}}$ is the thermal
+conductivity is a $2\times 2$ matrix.
+
+Using many simplifications and our assumption that there is no change in time,
+we find the problem statement to be
+
+\begin{align}\label{eq:pde}
+  \rho c_p\vec{u}\cdot \nabla T-\nabla\cdot(k\nabla T)=f \quad \text{in}\ \Omega.
+\end{align}
+
+Using the definition of gradient and divergence operators, we find that this
+simplified equation can be written as
+
+\begin{align*}
+  \sum_{i=1}^2u_i\pder[T]{x_i}-\sum_{i=1}^2\sum_{j=1}^2\pder{x_i}\left(k\pder[T]{x_j}\right)=f
+    \quad \text{in}\ \Omega.
+\end{align*}
+
+Note that the solution ot this equations is defined with some constant, meaning
+that if $T$ is a solution to this equation, then $T+C$ for $C\in\R$ is also a
+solution. Inorder to avoid this, we must impose some boundary conditions.
+
+\end{document}

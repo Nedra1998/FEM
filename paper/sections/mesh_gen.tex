@@ -44,6 +44,12 @@ Triangulation.
 \end{definition}
 
 \gtodo{Add image showing circumcircle definition.}
+\begin{Figure}
+   \begin{center}
+     \input{figures/delaunay_def.tikz}
+   \end{center}
+   \captionof{figure}{Demonstration of the Circumcircle definition of Delaunay.}
+\end{Figure}
 
 Is most situation the Delaunay triangulation of a set of points is unique. This
 is true for all points with one exception of a square, where there are two
@@ -70,7 +76,12 @@ not being strictly Delaunay. Thus we define our constrained triangulation at
 the closest triangulation to the Delaunay triangulation that still includes the
 specified edges.
 
-\gtodo{Add image showing constrained triangulation.}
+\begin{Figure}
+  \begin{center}
+    \input{figures/delaunay_0.tikz}
+  \end{center}
+  \captionof{figure}{Constraied Delaunay triangulation.}
+\end{Figure}
 
 The constrained edges are most commonly arise for the purpose of defining
 boundaries of the domain or enforcing a medium change. This makes it necessary
@@ -314,7 +325,41 @@ is guaranteed to halt for angles below $28.6^{\circ}$ and will often succeed
 with angles below $34^{\circ}$. Because of this improvement on the guaranteed
 minimum angle is why our focus is on Chew's algorithm for mesh refinement.
 
-\gtodo{Add series of images demonstrating the increase in triangle refinement.}
+\begin{Figure}
+   \begin{center}
+     \begin{minipage}{0.4\textwidth}
+       \begin{center}
+         \input{figures/delaunay_1.tikz}
+         (a)
+       \end{center}
+     \end{minipage}
+     \begin{minipage}{0.4\textwidth}
+       \begin{center}
+         \input{figures/delaunay_4.tikz}
+         (b)
+       \end{center}
+     \end{minipage}
+
+   \ifdraft
+   \else
+     \begin{minipage}{0.4\textwidth}
+       \begin{center}
+         \input{figures/delaunay_5.tikz}
+           (c)
+       \end{center}
+     \end{minipage}
+     \begin{minipage}{0.4\textwidth}
+       \begin{center}
+         \input{figures/delaunay_6.tikz}
+           (d)
+       \end{center}
+     \end{minipage}
+   \fi
+   \end{center}
+   \captionof{figure}{These four images demonstrate the refinement of a mesh.
+   (a) $60$ triangles, (b) $132$ triangles, (c) $1,319$ triangles, and (d)
+   $12,999$ triangles.}
+\end{Figure}
 
 
 \subsection{Implementation}%

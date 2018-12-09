@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.11.9)  2 DEC 2018 18:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.11.9)  8 DEC 2018 17:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -506,12 +506,9 @@ Package pgfplots: loading complementary arithmetics for your pgf version...
 File: tikzlibraryplotmarks.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1)
  (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplotmarks.code.tex
 File: pgflibraryplotmarks.code.tex 2015/08/03 v3.0.1a (rcs-revision 1.14)
-))) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/tikzlibrarypgfplots.fillbetween.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfcontrib/tikzlibraryfillbetween.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryintersections.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryintersections.code.tex
-\pgf@intersect@solutions=\count152
-)) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfcontrib/tikzlibrarydecorations.softclip.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfcontrib/pgflibraryfillbetween.code.tex))) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/tikzlibrarypgfplots.decorations.softclip.code.tex)) (/usr/share/texlive/texmf-dist/tex/latex/minted/minted.sty
+))) (/usr/share/texlive/texmf-dist/tex/latex/minted/minted.sty
 Package: minted 2017/07/19 v2.5 Yet another Pygments shim for LaTeX
-
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
  (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
@@ -534,26 +531,26 @@ Package: fvextra 2017/07/08 v1.3.1 fvextra - extensions and patches for fancyvrb
  (/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2008/02/07
  Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix <2008/02/07> (tvz)
-\FV@CodeLineNo=\count153
+\FV@CodeLineNo=\count152
 \FV@InFile=\read2
 \FV@TabBox=\box68
-\c@FancyVerbLine=\count154
-\FV@StepNumber=\count155
+\c@FancyVerbLine=\count153
+\FV@StepNumber=\count154
 \FV@OutFile=\write4
 ) (/usr/share/texlive/texmf-dist/tex/latex/upquote/upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
 ) (/usr/share/texlive/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
-\linenopenalty=\count156
+\linenopenalty=\count155
 \output=\toks48
-\linenoprevgraf=\count157
+\linenoprevgraf=\count156
 \linenumbersep=\dimen263
 \linenumberwidth=\dimen264
-\c@linenumber=\count158
-\c@pagewiselinenumber=\count159
-\c@LN@truepage=\count160
-\c@internallinenumber=\count161
-\c@internallinenumbers=\count162
+\c@linenumber=\count157
+\c@pagewiselinenumber=\count158
+\c@LN@truepage=\count159
+\c@internallinenumber=\count160
+\c@internallinenumbers=\count161
 \quotelinenumbersep=\dimen265
 \bframerule=\dimen266
 \bframesep=\dimen267
@@ -568,25 +565,25 @@ LaTeX Info: Redefining \\ on input line 3056.
 
 Package fvextra Warning: csquotes should be loaded after fvextra, to avoid a warning from the lineno package on input line 37.
 
-\c@FV@TrueTabGroupLevel=\count163
-\c@FV@TrueTabCounter=\count164
+\c@FV@TrueTabGroupLevel=\count162
+\c@FV@TrueTabCounter=\count163
 \FV@TabBox@Group=\box70
 \FV@TmpLength=\skip57
-\c@FV@HighlightLinesStart=\count165
-\c@FV@HighlightLinesStop=\count166
-\FV@LoopCount=\count167
+\c@FV@HighlightLinesStart=\count164
+\c@FV@HighlightLinesStop=\count165
+\FV@LoopCount=\count166
 \FV@NCharsBox=\box71
 \FV@BreakIndent=\dimen268
-\FV@BreakIndentNChars=\count168
+\FV@BreakIndentNChars=\count167
 \FV@BreakSymbolSepLeft=\dimen269
-\FV@BreakSymbolSepLeftNChars=\count169
+\FV@BreakSymbolSepLeftNChars=\count168
 \FV@BreakSymbolSepRight=\dimen270
-\FV@BreakSymbolSepRightNChars=\count170
+\FV@BreakSymbolSepRightNChars=\count169
 \FV@BreakSymbolIndentLeft=\dimen271
-\FV@BreakSymbolIndentLeftNChars=\count171
+\FV@BreakSymbolIndentLeftNChars=\count170
 \FV@BreakSymbolIndentRight=\dimen272
-\FV@BreakSymbolIndentRightNChars=\count172
-\c@FancyVerbLineBreakLast=\count173
+\FV@BreakSymbolIndentRightNChars=\count171
+\c@FancyVerbLineBreakLast=\count172
 \FV@LineBox=\box72
 \FV@LineIndentBox=\box73
 ) (/usr/share/texlive/texmf-dist/tex/latex/tools/shellesc.sty
@@ -609,8 +606,8 @@ Package ifplatform Warning:
 
 ) (/usr/share/texlive/texmf-dist/tex/generic/xstring/xstring.sty (/usr/share/texlive/texmf-dist/tex/generic/xstring/xstring.tex
 \@xs@message=\write5
-\integerpart=\count174
-\decimalpart=\count175
+\integerpart=\count173
+\decimalpart=\count174
 )
 Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
 ) (/usr/share/texlive/texmf-dist/tex/latex/framed/framed.sty
@@ -622,7 +619,7 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \FrameSep=\dimen276
 ) (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count176
+\c@float@type=\count175
 \float@exts=\toks49
 \float@box=\box74
 \@float@everytoks=\toks50
@@ -631,10 +628,10 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \minted@appexistsfile=\read3
 \minted@bgbox=\box76
 \minted@code=\write6
-\c@minted@FancyVerbLineTemp=\count177
-\c@minted@pygmentizecounter=\count178
+\c@minted@FancyVerbLineTemp=\count176
+\c@minted@pygmentizecounter=\count177
 \@float@every@listing=\toks51
-\c@listing=\count179
+\c@listing=\count178
 )
 runsystem(mkdir -p _minted-fem)...disabled (restricted).
 
@@ -645,7 +642,7 @@ Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count180
+\c@section@level=\count179
 LaTeX Info: Redefining \ref on input line 355.
 LaTeX Info: Redefining \pageref on input line 355.
 ) (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
@@ -654,22 +651,22 @@ Package: algpseudocode
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count181
-\c@ALG@rem=\count182
-\c@ALG@nested=\count183
+\c@ALG@line=\count180
+\c@ALG@rem=\count181
+\c@ALG@nested=\count182
 \ALG@tlm=\skip59
 \ALG@thistlm=\skip60
-\c@ALG@Lnr=\count184
-\c@ALG@blocknr=\count185
-\c@ALG@storecount=\count186
-\c@ALG@tmpcounter=\count187
+\c@ALG@Lnr=\count183
+\c@ALG@blocknr=\count184
+\c@ALG@storecount=\count185
+\c@ALG@tmpcounter=\count186
 \ALG@tmplength=\skip61
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
 ) (/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
 \@float@every@algorithm=\toks52
-\c@algorithm=\count188
+\c@algorithm=\count187
 ) (/usr/share/texlive/texmf-dist/tex/latex/subfiles/subfiles.sty
 Package: subfiles 2012/05/23 Federico Garcia
  (/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
@@ -688,31 +685,36 @@ Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footers
 \f@nch@O@erf=\skip68
 \f@nch@O@olf=\skip69
 \f@nch@O@orf=\skip70
+) (/usr/share/texlive/texmf-dist/tex/latex/appendix/appendix.sty
+Package: appendix 2009/09/02 v1.2b extra appendix facilities
+\c@@pps=\count188
+\c@@ppsavesec=\count189
+\c@@ppsaveapp=\count190
 )
-\c@example=\count189
-\c@definition=\count190
+\c@example=\count191
+\c@definition=\count192
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... none found.
  (./fem.aux)
 \openout1 = `fem.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 79.
-LaTeX Font Info:    ... okay on input line 79.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 79.
-LaTeX Font Info:    ... okay on input line 79.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 79.
-LaTeX Font Info:    ... okay on input line 79.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 79.
-LaTeX Font Info:    ... okay on input line 79.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 79.
-LaTeX Font Info:    ... okay on input line 79.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 79.
-LaTeX Font Info:    ... okay on input line 79.
-LaTeX Font Info:    Try loading font information for U+msa on input line 79.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Try loading font information for U+msa on input line 95.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 79.
+LaTeX Font Info:    Try loading font information for U+msb on input line 95.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -752,16 +754,16 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count191
+\scratchcounter=\count193
 \scratchdimen=\dimen277
 \scratchbox=\box77
-\nofMPsegments=\count192
-\nofMParguments=\count193
+\nofMPsegments=\count194
+\nofMParguments=\count195
 \everyMPshowfont=\toks55
-\MPscratchCnt=\count194
+\MPscratchCnt=\count196
 \MPscratchDim=\dimen278
-\MPnumerator=\count195
-\makeMPintoPDFobject=\count196
+\MPnumerator=\count197
+\makeMPintoPDFobject=\count198
 \everyMPtoPDFconversion=\toks56
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
@@ -783,79 +785,133 @@ Package caption Info: End \AtBeginDocument code.
 
 
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable tick labels; missing features). Consider writing \pgfplotsset{compat=1.15} into your preamble.
- on input line 79.
+ on input line 95.
 
-(./sections/introduction.tex) (./sections/mesh_gen.tex
+
+Class amsart Warning: Abstract should precede \maketitle in AMS document classes; reported on input line 104.
+
+(./sections/introduction.tex) (./sections/problem_statement.tex
 
 Package multicol Warning: I moved some lines to the next page.
-(multicol)                Footnotes on page 1 might be wrong on input line 72.
+(multicol)                Footnotes on page 1 might be wrong on input line 32.
 
 
 Overfull \vbox (1.31001pt too high) has occurred while \output is active []
 
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]) (./sections/boundary_conditions.tex) (./sections/variational_formulation.tex) (./sections/mesh_gen.tex
 
 Package Fancyhdr Warning: \headheight is too small (8.0pt): 
  Make it at least 10.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[2]
+[2] (./figures/delaunay_def.tikz) (./figures/delaunay_0.tikz)
 
 Package Fancyhdr Warning: \headheight is too small (8.0pt): 
  Make it at least 10.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[3]) (./sections/linear_sys.tex
+[3]
 
 Package Fancyhdr Warning: \headheight is too small (8.0pt): 
  Make it at least 10.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[4]
+[4] (./figures/delaunay_1.tikz) (./figures/delaunay_4.tikz)
 
 Package Fancyhdr Warning: \headheight is too small (8.0pt): 
  Make it at least 10.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[5]
+[5]) (./sections/linear_sys.tex
 
 Package Fancyhdr Warning: \headheight is too small (8.0pt): 
  Make it at least 10.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[6]) (./fem.bbl
+[6]
 
 Package Fancyhdr Warning: \headheight is too small (8.0pt): 
  Make it at least 10.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[7])
+[7]
 
 Package Fancyhdr Warning: \headheight is too small (8.0pt): 
  Make it at least 10.0pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[8] (./fem.aux) ) 
+[8] (./figures/jacobi_time.tikz) (./figures/jacobi_err.tikz)
+
+Package Fancyhdr Warning: \headheight is too small (8.0pt): 
+ Make it at least 10.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 458--461
+ \OT1/cmr/m/n/10 6.3.2.\OT1/cmr/m/it/10 Gauss-Seidel Method.[] \OT1/cmr/m/n/10 The Gauss-Seidel
+ []
+
+(./figures/gauss_seidel_time.tikz) (./figures/gauss_seidel_err.tikz)
+
+Package Fancyhdr Warning: \headheight is too small (8.0pt): 
+ Make it at least 10.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[10] (./figures/conjugate_gradient_time.tikz) (./figures/conjugate_gradient_err.tikz)
+
+Package Fancyhdr Warning: \headheight is too small (8.0pt): 
+ Make it at least 10.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[11] (./figures/cholesky_time.tikz) (./figures/cholesky_err.tikz)
+Underfull \hbox (badness 10000) in paragraph at lines 664--666
+ \OT1/cmr/m/n/10 6.5.1.\OT1/cmr/m/it/10 Cholesky De-com-po-si-tion.[] \OT1/cmr/m/n/10 We uti-lize the
+ []
+
+
+Package Fancyhdr Warning: \headheight is too small (8.0pt): 
+ Make it at least 10.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[12] (./figures/lin_time.tikz)
+
+Package Fancyhdr Warning: \headheight is too small (8.0pt): 
+ Make it at least 10.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[13]) (./fem.bbl)
+
+Package Fancyhdr Warning: \headheight is too small (8.0pt): 
+ Make it at least 10.0pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[14] (./appendix/index.tex) (./fem.aux) ) 
 Here is how much of TeX's memory you used:
- 29783 strings out of 494847
- 723151 string characters out of 6179080
- 943749 words of memory out of 5000000
- 32404 multiletter control sequences out of 15000+600000
+ 29648 strings out of 494847
+ 714591 string characters out of 6179080
+ 960034 words of memory out of 5000000
+ 32235 multiletter control sequences out of 15000+600000
  10551 words of font info for 42 fonts, out of 8000000 for 9000
  220 hyphenation exceptions out of 8191
- 72i,14n,96p,813b,2187s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on fem.pdf (8 pages, 217930 bytes).
+ 74i,15n,101p,813b,2409s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on fem.pdf (14 pages, 298262 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 65 compressed objects within 1 object stream
+ 125 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

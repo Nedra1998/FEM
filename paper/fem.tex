@@ -1,4 +1,13 @@
+\newif\ifdraft
+\drafttrue % Comment out to enable deployment
+
+\ifdraft
 \documentclass[draft,10pt]{amsart}
+\else
+\documentclass[10pt]{amsart}
+\fi
+
+
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -13,7 +22,6 @@
 \usepackage{caption}
 \usepackage{tikz}
 \usepackage{pgfplots}
-\usepgfplotslibrary{fillbetween}
 \usepackage{minted}
 \usepackage{nameref}
 \usepackage{algpseudocode}
@@ -21,10 +29,14 @@
 \usepackage{graphics}
 \usepackage{subfiles}
 \usepackage{fancyhdr}
+\usepackage[page]{appendix}
 
+\ifdraft
 \title{Sorry Paul}
-% \title{An Introduction to Finite Element Methods for Solving Partial
-% Differential Equations on Arbatrairy Boundaries}
+\else
+\title{An Introduction to Finite Element Methods for Solving Partial
+Differential Equations on Arbatrairy Boundaries}
+\fi
 \newcommand\shortitle{FINITE ELEMENT METHODS}
 \author{Arden Rasmussen}
 \date{\today}
@@ -69,9 +81,13 @@
 \newtheorem{example}{Example}[section]
 \newtheorem{definition}{Definition}[section]
 
+\renewcommand{\thealgorithm}{\arabic{section}.\arabic{algorithm}}
+\renewcommand\thefigure{\thesection.\arabic{figure}}
 
 \newcommand{\pder}[2][]{\frac{\partial#1}{\partial#2}}
 \newcommand{\spder}[2][]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\pluseq}{\mathrel{+}=}
+\newcommand{\minuseq}{\mathrel{-}=}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
@@ -85,21 +101,20 @@
 \gtodo{Addition}
 \otodo{Revise}
 
-\begin{multicols}{2}
-  \begin{enumerate}
-    \item Linear Systems
-      \begin{enumerate}
-        \item Arnoldi Iteration
-        \item GMRES
-      \end{enumerate}
-    \item Numerical Integration
-      \begin{enumerate}
-        \item Gaussian Quadrature
-        \item Weights
-      \end{enumerate}
-  \end{enumerate}
+\begin{abstract}
+  Finite Element Methods is a process that is utilized to numerically
+  approximate solutions to other wise impossible partial differential equations
+  provided with arbatrairy boundaries. This paper serves as a brief explination
+  and introduction to the methods of finite element analysis. This paper
+  provides a complete explanation of the every process involved, a reader
+  should be able to implement all the necessary steps required in the analysis.
+\end{abstract}
 
+\begin{multicols}{2}
   \subfile{sections/introduction}
+  \subfile{sections/problem_statement}
+  \subfile{sections/boundary_conditions}
+  \subfile{sections/variational_formulation}
   \subfile{sections/mesh_gen}
   \subfile{sections/linear_sys}
 
@@ -107,5 +122,9 @@
   \bibliographystyle{alpha}
   \bibliography{fem}
 \end{multicols}
+
+\newpage
+
+\subfile{appendix/index}
 
 \end{document}

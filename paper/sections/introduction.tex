@@ -4,9 +4,34 @@
 \section{Introduction}%
 \label{sec:introduction}
 
-The Method of Finite Elements (FEM) is extreamly useful in numericaly solving
-differential equations. We examine the use casses for partial differential
-equations on a provided boundary condition. This means that our algorithms, and
-mathematics must be mostly independent of the boundaries and the conditions at
-the boundaries.
+The Method of Finite Elements (FEM) is a process that is utilized for
+numbericaly computing and apprixmate solution to partial differential
+equations, on some specified domain. There are only a few cases where this
+process is analyticaly solvable, but for most situations this approximation is
+as close as technology currently allows us to achieve.
+
+The uses of finite element methods in computation and analysis is often called
+Finite Element Anaylysis (FEA), while the mathmatics of the process is called
+FEM.
+
+We will utilize the process closly set forth by \cite{KH}. This method is
+constructed around the Galerkin method for generating the approximation. The
+scope of this introduction is limited to two dimensions, but all of the
+mathematics is easily generalized to higher or lower dimensions. The only major
+part that would require rework is Mesh Generation (Section
+\ref{sec:mesh_generation}). The process can also be implemented for time
+dependent systems, but we limit ourselves to time independence for our
+introduction.
+
+In the process of FEM that we analyze, there are two major sections,
+\textbf{Theoretical}, and \textbf{Numerical}. The theorectical parts are
+required to be compleated prior to any numerical computation. These stages of
+the process, must be done manually inorder to determin the program to
+implement. These stages are extreamply dependent on the general form of the
+probelm at hand, and is where much of the mathematics is required. Then
+there are the numerical computational stages. These steps are frequently
+independent of the problem at hand, and thus much of the work can be automated.
+A single implementation of the computational steps can be utilized for a
+general class of problems. Aswell as many of the individual steps can be used
+for any problem, and are compleatly independent of the rest of the process.
 \end{document}
