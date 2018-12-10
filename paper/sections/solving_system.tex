@@ -1,0 +1,20 @@
+\documentclass[../fem.tex]{subfiles}
+
+\begin{document}
+\section{Solving the Algebraic System}%
+\label{sec:solving_the_algebraic_system}
+
+Using the algorithmic method for construction an approximate solution to the
+linear system, we can now construct our final approximation of $T$. By
+substituting the values of $T_j$ into the equation (\ref{eq:lin_approx}), we
+find that our approximation is
+
+\begin{align}\label{eq:approx}
+  T_h=\sum_{j=1}^NT_j\varphi_j.
+\end{align}
+
+where $T_j$ was solved for from the system of equations, and $\varphi_j$ is the
+global basis function corresponding to the $j$th vertex of the element mesh.
+
+
+\end{document}

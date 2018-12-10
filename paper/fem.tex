@@ -1,5 +1,5 @@
 \newif\ifdraft
-\drafttrue % Comment out to enable deployment
+% \drafttrue % Comment out to enable deployment
 
 \ifdraft
 \documentclass[draft,10pt]{amsart}
@@ -46,6 +46,7 @@ Differential Equations on Arbatrairy Boundaries}
 \fancyhead[CO]{\footnotesize \scshape \shortitle}
 \fancyhead[CE]{\footnotesize \scshape ARDEN RASMUSSEN}
 \renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{10pt}
 \pagestyle{fancy}
 
 \numberwithin{equation}{section}
@@ -92,6 +93,8 @@ Differential Equations on Arbatrairy Boundaries}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
 
+\setcounter{tocdepth}{1}
+
 \begin{document}
 \maketitle
 
@@ -118,11 +121,16 @@ Differential Equations on Arbatrairy Boundaries}
   \subfile{sections/discretization}
   \subfile{sections/localization}
   \subfile{sections/mesh_gen}
+  \subfile{sections/assembly_global}
+  \subfile{sections/dirichlet}
   \subfile{sections/linear_sys}
+  \subfile{sections/solving_system}
+  \subfile{sections/further_iteration}
+  \subfile{sections/post_processing}
 
   \nocite{*}
   \bibliographystyle{alpha}
-  \bibliography{fem}
+  \bibliography{references}
 \end{multicols}
 
 \newpage

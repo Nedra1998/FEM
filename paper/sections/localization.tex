@@ -87,7 +87,7 @@ to $0$.
 \otodo{Provide better reasoning for this neccesity.}
 
 Conviniently this is exactly what the barycentric coordinates of the master
-element provide us with, thus we define our local basis functions to be 
+element provide us with, thus we define our local basis functions to be
 
 \begin{align}\label{eq:local_basis}
   &\resizebox{\columnwidth}{!}{$
@@ -140,13 +140,6 @@ an example of a global basis function is shown in figure
 \begin{Figure}
    \begin{center}
       \begin{tikzpicture}
-
-        % \draw[fill=gray] (0,2,0) -- (1,0,-2) -- (2,0,0) -- cycle;
-        % \draw[fill=gray] (0,2,0) -- (2,0,0) -- (1,0,1) -- cycle;
-        % \draw[fill=gray] (0,2,0) -- (1,0,1) -- (-2,0,1) -- cycle;
-        % \draw[fill=gray] (0,2,0) -- (-2,0,1) -- (-1,0,-2) -- cycle;
-        % \draw[fill=gray] (0,2,0) -- (-1,0,-2) -- (1,0,-2) -- cycle;
-
         \draw (0,2,0) -- (1,0,-2) -- (2,0,0) -- cycle;
         \draw (0,2,0) -- (2,0,0) -- (1,0,1) -- cycle;
         \draw (0,2,0) -- (1,0,1) -- (-2,0,1) -- cycle;
@@ -160,10 +153,82 @@ an example of a global basis function is shown in figure
         \draw[thick] (0,0,0) -- (-1,0,-2) -- (1,0,-2) -- cycle;
 
         \draw[dotted, thick] (0,0,0)node[below left]{$n$} -- (0,2,0) node[above]{$\varphi_n$};
-
       \end{tikzpicture}
    \end{center}
    \captionof{figure}{Gloabal basis function.}\label{fig:global_basis}
 \end{Figure}
+
+\subsection{Local System}%
+\label{sub:local_system}
+
+We use our definition of the local basis functions to apply in the construction
+of an element specific system of equations from (\ref{eq:mat_rep}). Thus we
+construct our local systems of equations in matrix form as
+
+\begin{align*}
+  \left(C^{(e)}+K^{(e)}\right)T^{(e)}=F^{(e)}.
+\end{align*}
+
+Here the elements of each matrix is only determined by the local basis function
+of the element $e$, and the size of the matrix is equivalent to the number of
+local degrees fo freedom, whihc in this case is two (One for each vertex of the
+element). The elements of these matrices can be found through the following
+equations
+
+\begin{align}\label{eq:local_int}
+  c_{ij}^{(e)}&=\rho
+  c_p\int_{E_e}\varphi_i^{(e)}\vec{u}\cdot\nabla\varphi_j^{(e)}d\vec{x}\quad&i,j&=1,2,3\\
+  k_{ij}^{(e)}&=\int_{E_e}\varphi_i^{(e)}\cdot\nabla\varphi_j^{(e)}d\vec{x}\quad&i,j&=1,2,3\\
+  f_i^{(e)}&=\int_{E_e}\varphi_i^{(e)}fd\vec{x}\quad&i&=1,2,3.
+\end{align}
+
+Thus we only need to compute these local matrix elements, then construct the
+global system utilizing all of the local matricies.
+
+\subsection{Numerical Integration}%
+\label{sub:numerical_integration}
+
+As it can be seen in equation (\ref{eq:local_int}) we need to be able to
+integrate over the element $E_e$. Inorder to achive this integration over a
+triangular element, we implement the Barycentric coordinate systems, and a
+method of numerical integration called Gaussian Quadrature.
+
+By using the Barycentric coordinates, our integrals become significantly easier
+to evaluate.
+
+\begin{align*}
+  I&=\int_{E_e}f(x,y)da\\
+   &=\int_0^1\int_0^1f\left(\bar{x}, \bar{y}\right)d\lambda_1 d\lambda_2,
+\end{align*}
+
+where $\bar{x}$ and $\bar{y}$ are the $x$ and $y$ coordinates that are achived
+from the coordinate transfer from Barycentric to trilinear.
+
+Using this formulation of the integral, any numberical integration methods
+should suffice. We will implement 2D Gaussian Quadrature, defined on the
+triangle.
+
+Gaussian Quadrature is a method that approximates the integral such that
+
+\begin{align*}
+  \int f(x)dx\approx \sum_{i=1}^nw_if(x_i),
+\end{align*}
+
+where $w_i$, and $x_i$ are specified weights and positions respectivly. For the
+2D alternative, we can express this in the form
+
+\begin{align*}
+  \int_\gamma f(x,y) dxdy\approx \frac{1}{2}\sum_{i=1}^nw_if(x_i,y_i).
+\end{align*}
+
+Where $\gamma$ is the triangle with verticies $(0,0)$, $(1,0)$, and $(0,1)$.
+This is the exact verticies that are provided by the triangle over $\lambda_1$
+and $\lambda_2$. Thus we use the gaussian quadrature implementation in the
+Barycentric coordinate system, and convert the coordinates into trilinear
+coordinates inorder to evaluate whatever function at the point.
+
+The methods for constructing the weights and positions of sample points for
+this form of integration is out of the scope of this paper, and so will be
+ignored. We utilize the weights and points constructed by \cite{GQ}.
 
 \end{document}

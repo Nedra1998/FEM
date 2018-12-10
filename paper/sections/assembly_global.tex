@@ -1,0 +1,39 @@
+\documentclass[../fem.tex]{subfiles}
+
+\begin{document}
+\section{Assembly of the Global System}%
+\label{sec:assembly_of_the_global_system}
+
+It is possible to directly construct the global matrix, however this method is
+ineffective for practical computation and so in this paper we will ignore the
+direct computation.
+
+The method that we will use is an incremental construction of the global
+matrix, through the addition of elements form the local matrices. We begin by
+initializing the matrix $A=C+K$ and $F$ of zeros. $A$ is a $N\times N$ matrix,
+and $F$ is a $N\times 1$ matrix, where $N$ is the number of vertices in the
+triangulation. Then the corresponding contributions of the element matrices
+$A^{(e)}$ and $F^{(e)}$ are added in a loop over all elements.
+
+\begin{algorithm}[H]
+  \caption{element-by-element assembly}
+  \begin{algorithmic}
+    \State{Let $A$ by a $N\times N$ matrix of zeros.}
+    \State{Let $F$ by a $N\times 1$ matrix of zeros.}
+    \ForAll{$E_e$}
+      \State{Let $A^{(e)}$ be a $3\times3$ matrix, such that}
+      \State{$a_{IJ}^{(e)}=c_{IJ}^{(e)}+k_{IJ}^{(e)}\quad I,J=1,2,3$}
+      \State{$i=node(e,I)\quad j=node(e,J)\quad I,J=1,2,3$}
+      \State{$A_{ij}=A_{ij}+A_{IJ}^{(e)}$}
+      \State{$F_{i}=F_{i}+F_{I}^{(e)}$}
+    \EndFor
+    \State{\Return $A$ and $F$.}
+  \end{algorithmic}
+\end{algorithm}
+
+Where $node(e,I)$ provides the relation between global and local node numbers.
+Such that given an element and element vertex number, it returns the global
+vertex number. With the triangular mesh, there is no nice mathematical formula
+for this expression, but it is simple for any implementation.
+
+\end{document}
