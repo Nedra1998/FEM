@@ -48,7 +48,9 @@ Triangulation.
    \begin{center}
      \input{figures/delaunay_def.tikz}
    \end{center}
-   \captionof{figure}{Demonstration of the Circumcircle definition of Delaunay.}
+   \captionof{figure}{Demonstration of the Circumcircle definition of Delaunay.
+   This shows how the circumcircle of each triangle does not contain any vertex
+ from any other triangles.}
 \end{Figure}
 
 Is most situation the Delaunay triangulation of a set of points is unique. This
@@ -76,11 +78,15 @@ not being strictly Delaunay. Thus we define our constrained triangulation at
 the closest triangulation to the Delaunay triangulation that still includes the
 specified edges.
 
+This sence of closeness is such that it is as few modifications from an actual
+dalaunay triangulation, that still enforces the constrained edges.
+
 \begin{Figure}
   \begin{center}
     \input{figures/delaunay_0.tikz}
   \end{center}
-  \captionof{figure}{Constraied Delaunay triangulation.}
+  \captionof{figure}{Constraied Delaunay triangulation. Of the letter $A$. This
+  mesh has been constructed without any quality or refinement.}
 \end{Figure}
 
 The constrained edges are most commonly arise for the purpose of defining
@@ -132,17 +138,13 @@ number of points in $G$.
 In stage 1, we scale all the points that will be used to construct the
 triangulation between $0$ and $1$, this should be done such that all relative
 positions of points are unchanged. This is done using
-
 \begin{align*}
   \hat{x}=\frac{x-x_{min}}{d_{max}},\quad\hat{y}=\frac{y-y_{min}}{d_{max}},
 \end{align*}
-
 where
-
 \begin{align*}
   d_{max}=\max\left\{x_{max}-x_{min},\ y_{max}-y_{min}\right\}.
 \end{align*}
-
 This will scale all coordinates between $0$ and $1$ but will maintain the
 relative positions to all other points.
 
@@ -267,22 +269,22 @@ undesirable in our final mesh. To fix this we define a notion of ``nice''
 triangles, and insert new points into the mesh until all triangles satisfy
 our definition of ``nice''.
 
-\begin{definition}[\textit{Nice} Triangle] \label{def:nice_tri}
-  A triangle is \textit{nice} if it is both well-shaped(Def
-  \ref{def:well_shaped_tri}) and well-sized(Def \ref{def:well_sized_tri}).
-\end{definition}
-
-\begin{definition}[well-shaped]\label{def:well_shaped_tri}
+\begin{definition}[Well-shaped]\label{def:well_shaped_tri}
   A triangle is well-shaped if all its angles are greater than or equal to some
   angle $\alpha$ (commonly $\alpha=30^{\circ}$).
 \end{definition}
 
-\begin{definition}[well-sized]\label{def:well_sized_tri}
+\begin{definition}[Well-sized]\label{def:well_sized_tri}
   A triangle is well-sized if the area of the triangle satisfies some user
   defined grading function $g$ (commonly $g=\text{const}$). This function can
   use any criteria as long as there exists a value $\delta > 0$ such that any
   well-shaped(Def \ref{def:well_shaped_tri}) triangle that fits within a circle
   of radius $\delta$ would satisfy the grading function.
+\end{definition}
+
+\begin{definition}[\textit{Nice} Triangle] \label{def:nice_tri}
+  A triangle is \textit{nice} if it is both well-shaped(Def
+  \ref{def:well_shaped_tri}) and well-sized(Def \ref{def:well_sized_tri}).
 \end{definition}
 
 The use of a non-constant grading function is to allow dynamically sized
@@ -340,8 +342,9 @@ minimum angle is why our focus is on Chew's algorithm for mesh refinement.
        \end{center}
      \end{minipage}
    \end{center}
-   \captionof{figure}{These four images demonstrate the refinement of a mesh.
-   (a) $60$ triangles, (b) $132$ triangles.}
+   \captionof{figure}{These two images demonstrate the progressive refinement
+   of a mesh depending of the refinement restrictions of angle and area. (a)
+ $60$ triangles, (b) $132$ triangles.}
 \end{Figure}
 
 
@@ -351,10 +354,9 @@ minimum angle is why our focus is on Chew's algorithm for mesh refinement.
 There are many implementations of this element discretization process. Several
 of the original papers provide FORTRAN code, that can be used in
 implementations. We transcribed Sloan's FORTRAN code for his implementation of
-Constrained Delaunay Triangulation construction into C++, which is included in
-[APPENDIX CODE]. However, for mesh refinement, we utilized the open source
-software Triangle\cite{T_SOF}, which implements the Delaunay triangulation
-construction and mesh refinement.
+Constrained Delaunay Triangulation construction into C++. However, for mesh
+refinement, we utilized the open source software Triangle\cite{T_SOF}, which
+implements the Delaunay triangulation construction and mesh refinement.
 
 \btodo{Add code to the appendix.}
 

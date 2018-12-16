@@ -30,21 +30,17 @@ the boundary conditions until now. This means that our matrix is overdetermined
 and cannot be solved. In order to fix this we must apply the boundary
 conditions. By the Dirichlet boundary conditions we know that for any vertex in
 the mesh that is on the boundary $\vec{x_i}\in\Gamma$,
-
 \begin{align*}
   T_i=T_0(\vec{x_i}).
 \end{align*}
 
 We modify the system of equations by overwriting the equations associated with
 the $T_i$ value, to satisfy the conditions. This can be done like so
-
 \begin{align*}
   a_{ij}&=\delta_{ij}\quad j=1,\ldots,N\\
   F_i&=T_0(\vec{x_i}),
 \end{align*}
-
 where $\delta$ is the Kronecker delta function
-
 \begin{align*}
   \delta_{ij}=\begin{cases}
     0 & j\neq i\\
@@ -54,7 +50,6 @@ where $\delta$ is the Kronecker delta function
 
 This modification must be preformed for each vertex of the triangulation that
 lies on the boundary. This process will present a matrix vaguely of the form
-
 \begin{align*}
   \resizebox{\columnwidth}{!}{$
   \begin{pmatrix}
@@ -73,7 +68,6 @@ lies on the boundary. This process will present a matrix vaguely of the form
     F_1 \\ T_2 \\ F_3 \\ \vdots \\ T_{N-1} \\ F_N
 \end{pmatrix}.$}
 \end{align*}
-
 This example shows a matrix where the $1$, and $N-1$ vertices lie on the
 boundary, and so those equations are rewritten.
 

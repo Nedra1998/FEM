@@ -46,31 +46,30 @@ of this master element can be seen in figure \ref{fig:master_element}.
         node[right]{$(0,1,0)$} -- (0,0,1) node[below right]{$(0,0,1)$}-- cycle;
       \end{tikzpicture}
    \end{center}
-   \captionof{figure}{Master element $\hat{E}$.}\label{fig:master_element}
+   \captionof{figure}{Master element $\hat{E}$, in barycentric coordinate
+   system, that is used over the variable local
+ elements.}\label{fig:master_element}
 \end{Figure}
 
 This master element is in what is called a Barycentric coordinate system.
 Conversion from our trilinear coordinates to the Barycentric coordinates can be
 done by using the following equations
-
 \begin{align*}
   \lambda_1 &=
-  \frac{\left(E^2_y-E^3_y\right)\left(x-E^3_x\right)+\left(E^3_x-E^2_x\right)\left(y-E^3_y\right)}{\left(E^2_y-E^3_y\right)\left(E^1_x-E^3_x\right)+\left(E^3_x-E^2_x\right)\left(E^1_y-E^3_y\right)}\\
+  \frac{\left(Y_2-Y_3\right)\left(x-X_3\right)+\left(X_3-X_2\right)\left(y-Y_3\right)}{\left(Y_2-Y_3\right)\left(X_1-X_3\right)+\left(X_3-X_2\right)\left(Y_1-Y_3\right)}\\
   \lambda_2 &=
-  \frac{\left(E^3_y-E^1_y\right)\left(x-E^3_x\right)+\left(E^1_x-E^3_x\right)\left(y-E^3_y\right)}{\left(E^2_y-E^3_y\right)\left(E^1_x-E^3_x\right)+\left(E^3_x-E^2_x\right)\left(E^1_y-E^3_y\right)}\\
+  \frac{\left(Y_3-Y_1\right)\left(x-X_3\right)+\left(X_1-X_3\right)\left(y-Y_3\right)}{\left(Y_2-Y_3\right)\left(X_1-X_3\right)+\left(X_3-X_2\right)\left(Y_1-Y_3\right)}\\
   \lambda_3 &= 1-\lambda_1-\lambda_2.
 \end{align*}
-
-Where $E^i_x$ is the $x$ component of the $i$th vertex of the element, the same
+Where $X_i$ is the $x$ component of the $i$th vertex of the element, the same
 applies for the $y$ component. $x$, and $y$ is the $x$ and $y$ component of the
 point in the triangle that we want to convert to the Barycentric coordinates.
 
 Converting from Barycentric coordinates to trilinear coordinates uses the
 following equations
-
 \begin{align*}
-  x &= \lambda_1 E^1_x+\lambda_2 E^2_x + \lambda_3 E^3_x\\
-  y &= \lambda_1 E^1_y +\lambda_2 E^2_y + \lambda_3 E^3_y
+  x &= \lambda_1 X_1+\lambda_2 X_2 + \lambda_3 X_3\\
+  y &= \lambda_1 Y_1 +\lambda_2 Y_2 + \lambda_3 Y_3
 \end{align*}
 
 \subsection{Local Basis}%
@@ -88,15 +87,14 @@ to $0$.
 
 Conviniently this is exactly what the barycentric coordinates of the master
 element provide us with, thus we define our local basis functions to be
-
 \begin{align}\label{eq:local_basis}
   &\resizebox{\columnwidth}{!}{$
     \varphi_1^{(e)}=
-  \frac{\left(E^{(e)}_{2_y}-E^{(e)}_{3_y}\right)\left(x-E^{(e)}_{3_x}\right)+\left(E^{(e)}_{3_x}-E^{(e)}_{2_x}\right)\left(y-E^{(e)}_{3_y}\right)}{\left(E^{(e)}_{2_y}-E^{(e)}_{3_y}\right)\left(E^{(e)}_{1_x}-E^{(e)}_{3_x}\right)+\left(E^{(e)}_{3_x}-E^{(e)}_{2_x}\right)\left(E^{(e)}_{1_y}-E^{(e)}_{3_y}\right)}
+  \frac{\left(Y^{(e)}_2-Y^{(e)}_3\right)\left(x-X^{(e)}_3\right)+\left(X^{(e)}_3-X^{(e)}_2\right)\left(y-Y^{(e)}_3\right)}{\left(Y^{(e)}_2-Y^{(e)}_3\right)\left(X^{(e)}_1-X^{(e)}_3\right)+\left(X^{(e)}_3-X^{(e)}_2\right)\left(Y^{(e)}_1-Y^{(e)}_3\right)}
   $}\\
   &\resizebox{\columnwidth}{!}{$
     \varphi_2^{(e)}=
-    \frac{\left(E^{(e)}_{3_y}-E^{(e)}_{1_y}\right)\left(x-E^{(e)}_{3_x}\right)+\left(E^{(e)}_{1_x}-E^{(e)}_{3_x}\right)\left(y-E^{(e)}_{3_y}\right)}{\left(E^{(e)}_{2_y}-E^{(e)}_{3_y}\right)\left(E^{(e)}_{1_x}-E^{(e)}_{3_x}\right)+\left(E^{(e)}_{3_x}-E^{(e)}_{2_x}\right)\left(E^{(e)}_{1_y}-E^{(e)}_{3_y}\right)}
+    \frac{\left(Y^{(e)}_3-Y^{(e)}_1\right)\left(x-X^{(e)}_3\right)+\left(X^{(e)}_1-X^{(e)}_3\right)\left(y-Y^{(e)}_3\right)}{\left(Y^{(e)}_2-Y^{(e)}_3\right)\left(X^{(e)}_1-X^{(e)}_3\right)+\left(X^{(e)}_3-X^{(e)}_2\right)\left(Y^{(e)}_1-Y^{(e)}_3\right)}
   $}\\
   &\varphi_3^{(e)}=1-\varphi_1^{(e)}-\varphi_2^{(e)}
 \end{align}
@@ -119,7 +117,8 @@ local basis functions is shown in figure \ref{fig:local_basis}.
       \end{tikzpicture}
    \end{center}
    \captionof{figure}{Plot of local basis function $\varphi_1^{(e)}$,
-   $\varphi_2^{(e)}$, and $\varphi_3^{(e)}$.}\label{fig:local_basis}
+   $\varphi_2^{(e)}$, and $\varphi_3^{(e)}$, on some arbatrairy element
+ $E_e$.}\label{fig:local_basis}
 \end{Figure}
 
 \subsection{Global Basis}%
@@ -155,7 +154,9 @@ an example of a global basis function is shown in figure
         \draw[dotted, thick] (0,0,0)node[below left]{$n$} -- (0,2,0) node[above]{$\varphi_n$};
       \end{tikzpicture}
    \end{center}
-   \captionof{figure}{Gloabal basis function.}\label{fig:global_basis}
+   \captionof{figure}{Gloabal basis function $\varphi_n$, demonstrating a
+   potential shape of the global basis functions on a limited portion of a
+ triangular mesh.}\label{fig:global_basis}
 \end{Figure}
 
 \subsection{Local System}%
@@ -164,7 +165,6 @@ an example of a global basis function is shown in figure
 We use our definition of the local basis functions to apply in the construction
 of an element specific system of equations from (\ref{eq:mat_rep}). Thus we
 construct our local systems of equations in matrix form as
-
 \begin{align*}
   \left(C^{(e)}+K^{(e)}\right)T^{(e)}=F^{(e)}.
 \end{align*}
@@ -174,14 +174,12 @@ of the element $e$, and the size of the matrix is equivalent to the number of
 local degrees fo freedom, whihc in this case is two (One for each vertex of the
 element). The elements of these matrices can be found through the following
 equations
-
 \begin{align}\label{eq:local_int}
   c_{ij}^{(e)}&=\rho
   c_p\int_{E_e}\varphi_i^{(e)}\vec{u}\cdot\nabla\varphi_j^{(e)}d\vec{x}\quad&i,j&=1,2,3\\
   k_{ij}^{(e)}&=\int_{E_e}\varphi_i^{(e)}\cdot\nabla\varphi_j^{(e)}d\vec{x}\quad&i,j&=1,2,3\\
   f_i^{(e)}&=\int_{E_e}\varphi_i^{(e)}fd\vec{x}\quad&i&=1,2,3.
 \end{align}
-
 Thus we only need to compute these local matrix elements, then construct the
 global system utilizing all of the local matricies.
 
@@ -195,12 +193,10 @@ method of numerical integration called Gaussian Quadrature.
 
 By using the Barycentric coordinates, our integrals become significantly easier
 to evaluate.
-
 \begin{align*}
   I&=\int_{E_e}f(x,y)da\\
    &=\int_0^1\int_0^1f\left(\bar{x}, \bar{y}\right)d\lambda_1 d\lambda_2,
 \end{align*}
-
 where $\bar{x}$ and $\bar{y}$ are the $x$ and $y$ coordinates that are achived
 from the coordinate transfer from Barycentric to trilinear.
 
@@ -209,18 +205,14 @@ should suffice. We will implement 2D Gaussian Quadrature, defined on the
 triangle.
 
 Gaussian Quadrature is a method that approximates the integral such that
-
 \begin{align*}
   \int f(x)dx\approx \sum_{i=1}^nw_if(x_i),
 \end{align*}
-
 where $w_i$, and $x_i$ are specified weights and positions respectivly. For the
 2D alternative, we can express this in the form
-
 \begin{align*}
   \int_\gamma f(x,y) dxdy\approx \frac{1}{2}\sum_{i=1}^nw_if(x_i,y_i).
 \end{align*}
-
 Where $\gamma$ is the triangle with verticies $(0,0)$, $(1,0)$, and $(0,1)$.
 This is the exact verticies that are provided by the triangle over $\lambda_1$
 and $\lambda_2$. Thus we use the gaussian quadrature implementation in the

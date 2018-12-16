@@ -70,7 +70,10 @@ to, to determin the efficiency of our later methods.
 \begin{Figure}
   \begin{center}
     \begin{tikzpicture}[scale=0.8, transform shape]
-      \begin{axis}[axis lines=middle, xmin=0.0, xmax=1.0, ymin=0.0, ymax=900.0]
+      \begin{axis}[axis lines=middle, xmin=0.0, xmax=1.0, ymin=0.0, ymax=900.0,
+        x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        y label style={at={(axis description cs:-0.15,.5)},rotate=90,anchor=south},
+        ylabel={Gb}, xlabel={$S$}]
         \addplot[forget plot] {800};
       \end{axis}
     \end{tikzpicture}
@@ -147,7 +150,10 @@ that we would be better off using a full matrix storage system.
 \begin{Figure}
   \begin{center}
     \begin{tikzpicture}[scale=0.8, transform shape]
-      \begin{axis}[axis lines=middle, xmin=0.0, xmax=1.0, ymin=0.0]
+      \begin{axis}[axis lines=middle, xmin=0.0, xmax=1.0, ymin=0.0,
+        x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        y label style={at={(axis description cs:-0.15,.5)},rotate=90,anchor=south},
+        ylabel={Gb}, xlabel={$S$}]
         \addplot[forget plot] {800};
         \addplot[forget plot] {x*2400};
       \end{axis}
@@ -243,18 +249,19 @@ cool.}
 
 We can use this relation to see that for large $N$, this method is the most
 efficent between
-
 \begin{align*}
   0 < S < 0.5
 \end{align*}
-
 Because of this asymptotic approch of this range of sparcity for maximum
 efficiency, we use this method of sparse matrix storeage in our implementation.
 
 \begin{Figure}
   \begin{center}
     \begin{tikzpicture}[scale=0.8, transform shape]
-      \begin{axis}[axis lines=middle, xmin=0.0, xmax=1.0, ymin=0.0]
+      \begin{axis}[axis lines=middle, xmin=0.0, xmax=1.0, ymin=0.0,
+        x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        y label style={at={(axis description cs:-0.15,.5)},rotate=90,anchor=south},
+        ylabel={Gb}, xlabel={$S$}]
         \addplot[forget plot] {800};
         \addplot[forget plot] {x*2400};
         \addplot[forget plot] {80+x*1600};
@@ -285,11 +292,9 @@ Krylov\cite{KRYLOV} as
   without any actual exlination or reasoning. So I added Krylov's original paper
   (Note; it is in russian, so I didn't read it), and provide the reasoning that
 we used. Is that sufficient?}
-
 \begin{align*}
   \mathcal{K}_r\left(A,b\right)=\text{span}\left\{b,Ab,A^2b,\ldots,A^{r-1}b\right\}
 \end{align*}
-
 where $b$ is some vector. This basis assists in the approximation for linear
 systems of the form $Ax=b$. The subscript $r$ simply defines the point at which
 we limit our approximation, if $r$ is infinite then the Krylov subspace is the
@@ -313,7 +318,6 @@ equations of the form $Ax=b$. Where $A=I+\varepsilon$.
 
 We construct an approximation for the inverse of a matrix like by geometric
 formula
-
 \begin{align*}
   I+\varepsilon+\varepsilon^2+\cdots+\varepsilon^n&=S\\
   \varepsilon+\varepsilon^2+\cdots+\varepsilon^{n+1}&=S\varepsilon\\
@@ -322,42 +326,33 @@ formula
   S(I-\varepsilon)&=I-\varepsilon^{n+1}\\
   S&=\left(I-\varepsilon^{n+1}\right)\left(I-\varepsilon\right)^{-1}.
 \end{align*}
-
 When $n\rightarrow \infty$ and $\varepsilon$ is small enough
 ($\Vert\varepsilon\Vert < 1$), then $\varepsilon^{n+1}\rightarrow 0$. Thus
-
 \begin{align*}
   S&=\left(I-\varepsilon^{n+1}\right)\left(I-\varepsilon\right)^{-1}\\
   S&=\left(I-\varepsilon\right)^{-1}.
 \end{align*}
-
 Finaly we can conclude that
-
 \begin{align*}
   A^{-1}=(I+\varepsilon)^{-1}=I-\varepsilon-\varepsilon^2-\cdots.
 \end{align*}
 
 Using this in our expression for $x$ we find
-
 \begin{align*}
   x&=A^{-1}b=b-\varepsilon b-\varepsilon^2 b - \cdots\\
    &=b-(A-I)b-(A-I)^2b-\cdots\\
    &=b-Ab+b-A^2b+2Ab-b+\cdots.
 \end{align*}
-
 Using this we extract the basis that composes $x$ to be
-
 \begin{align*}
   \left\{b, Ab, A^2b, A^3b, \ldots\right\}
 \end{align*}
 
 The Krylov subspace takes this infinite basis, and cuts it off at some given
 $r$ value, thus providing us with
-
 \begin{align*}
   \left\{b,Ab,A^2b,\ldots,A^{r-1}b\right\}
 \end{align*}
-
 Which is our Krylov subspace. This is not a full proof of the construction of
 the Krylov subspace, but it should be a sufficient explanation for our purposes.
 
@@ -365,11 +360,9 @@ the Krylov subspace, but it should be a sufficient explanation for our purposes.
 \label{sub:stationary_iterative_methods}
 
 All iterative methods can be expressed in the form
-
 \begin{align*}
   x^{(k)}=Bx^{(k-1)}+c,
 \end{align*}
-
 when $B$ nor $c$ are dependent on the iteration $k$, then this is a stationary
 iterative method. We comment on two stationary iterative methods
 \textit{Jacobi}, and \textit{Gauss-Seidel} methods. There are several other
@@ -395,20 +388,15 @@ time, with the assumption that all other variables are constant. We slove each
 equation in isolation, and then the iteration provides us with our method for
 converging to the actual solution. We consider the $i$he equation in the
 system,
-
 \begin{align*}
   \sum_{j=1}^na_{i,j}x_j=b_i.
 \end{align*}
-
 We then solve for the value of $x_i$ assuming all other values of $x$ are
-fixed. We determin that
-
+fixed. We determine that
 \begin{align*}
   x_i=\frac{b_i-\sum_{j\neq i}a_{i,j}x_j}{a_{i,i}}.
 \end{align*}
-
 We then implement the iteration to find the equation
-
 \begin{align*}
   x_i^{(k)}=\frac{b_i-\sum_{j\neq i}a_{i,j}x_j^{(k-1)}}{a_{i,i}}.
 \end{align*}
@@ -519,8 +507,6 @@ it is one of the most researched nonstationary methods. This method is based on
 the construction of a sequence of approximations. Each new approximation is
 generated based on the direction required to minimize the residual.
 
-\gtodo{Add plot of time complexity and error.}
-
 \begin{Figure}
    \begin{center}
      \input{figures/conjugate_gradient_time.tikz}
@@ -544,31 +530,23 @@ the generated approximation should be converging to the actual solution.
 
 We construct the iterative approximation in each iteration by a multiple of
 $\alpha_i$ of the seach direction $p^{(i)}$,
-
 \begin{align*}
   x^{(i)}=x^{(i-1)}+\alpha_ip^{(i)}.
 \end{align*}
-
 We then update the residual $r^{(i)}=b-Ax^{(i)}$ as
-
 \begin{align*}
   q^{(i)}&=Ap^{(i)}\\
   r^{(i)}&=r^{(i-1)}-\alpha_i q^{(i)}
 \end{align*}
-
 We construct $\alpha_i$ inorder to minimize ${r^{(i)}}^TA^{-1}r^{(i)}$,
-
 \begin{align*}
   \alpha_i=\frac{{r^{(i-1)}}^Tr^{(i-1)}}{{p^{(i)}}^TAp^{(i)}}.
 \end{align*}
-
 Then to updated the search direcitons using the residual
-
 \begin{align*}
   \beta_i&=\frac{{r^{(i)}}^Tr^{(i)}}{{r^{(i-1)}}^Tr^{(i-1)}}\\
   p^{(i)}&=r^{9)}+\beta_{i-1}p^{(i-1)}
 \end{align*}
-
 where the choice of $\beta_i$ ensures that $r^{(i)}$ and $r^{(i-1)}$ are
 orthogonal.
 
@@ -618,8 +596,6 @@ depends on the system being considered, using this method the time required is
 directly related to the number of elements. This means that each system of the
 same size will require the same time to solve.
 
-\gtodo{Add Plot of time complexity and error for $N$.}
-
 \begin{Figure}
    \begin{center}
      \input{figures/cholesky_time.tikz}
@@ -629,7 +605,6 @@ same size will require the same time to solve.
 
 The Cholesky decomposition of a matrix provides a lower triangular matrix $L$
 of the form
-
 \begin{align*}
    A=LL^T
 \end{align*}
@@ -637,25 +612,14 @@ of the form
 We use this decomposition of $A$ to solve two systems of linear equations,
 using forward and back substitution, which is an efficient method for finding
 these solutions.
-
 \begin{align*}
   Ly&=b\quad\text{by forward substitution}\\
   L^Tx&=y\quad\text{by back substitution}.\\
 \end{align*}
-
 This provides the solution $x$ to the system of linear equations.
 
-\begin{Figure}
-   \begin{center}
-     \input{figures/cholesky_err.tikz}
-   \end{center}
-   \captionof{figure}{Error of Cholesky method.}\label{fig:ch_err}
-\end{Figure}
-
 We present a plot of the time requirements for the computation in
-Figure \ref{fig:ch_time}, and error in Figure \ref{fig:ch_err}. Note that the
-error spikes are due to floating point arithmetic error. But all of these
-errors are unavoidable, and should not effect any solutions too much.
+Figure \ref{fig:ch_time}.
 
 \subsubsection{Cholesky Decomposition}%
 \label{ssub:cholesky_decomposition}
@@ -663,13 +627,11 @@ errors are unavoidable, and should not effect any solutions too much.
 
 We utilize the Cholesky-Banachiewicz algorithm for the construction of the
 lower triangular matrix $L$. This algorithm states that
-
 \begin{align*}
   L_{j,j}&=\sqrt{A_{j,j}-\sum_{k=1}^{j-1}L_{j,k}^2}\\
   L_{i,j}&=\frac{1}{L_{j,j}}\left(A_{i,j}-\sum_{k=1}^{j-1}L_{i,k}L_{j,k}\right)\
   \text{for}\ i>j.
 \end{align*}
-
 This construction of the Cholesky decomposition is very easy, and fairly
 efficient. Thus allowing us to preform this decomposition easily.
 
@@ -683,7 +645,6 @@ matrix, just with the order of iteration flipped. We will only provide an
 explanation for forward substitution.
 
 The first stage it to write the system of equations like so
-
 \begin{align*}
   \begin{matrix}
     L_{1,1}x_1 & & & & =b_1\\
@@ -692,9 +653,7 @@ The first stage it to write the system of equations like so
     L_{n,1}x_1 & +L_{n,2}x_2 & \cdots & L_{n,n}x_n & =b_2\\
   \end{matrix}.
 \end{align*}
-
 We can clearly solve for $x_1$ directly, and find
-
 \begin{align*}
   x_1=\frac{b_1}{L_{1,1}}.
 \end{align*}
@@ -703,11 +662,9 @@ It is possible to substitute this into the second equation. This will cause the
 second equation to only have one unknown $x_2$, and so we can directly solve
 for $x_2$. This process is repeated for all $x$. Providing the general
 expression
-
 \begin{align*}
   x_m=\frac{b_m-\sum_{i=1}^{m-1}L_{m,i}x_i}{L_{m,m}}.
 \end{align*}
-
 This expression can then be used to compute the solution to the system of
 linear equations.
 
@@ -757,14 +714,6 @@ We provide psudocode of this method in Algorithm \ref{algo:cholesky_method}.
   \end{algorithmic}
 \end{algorithm}
 
-\begin{Figure}
-   \begin{center}
-     \input{figures/lin_time.tikz}
-   \end{center}
-   \captionof{figure}{Plots of the different time requirements for solving the
-   linear systems.}
-\end{Figure}
-
 \subsection{Issues}%
 \label{sub:issues}
 
@@ -778,6 +727,14 @@ restraints. If it does then it is possible to provide extra optimizations based
 on the form of the global matrix. If a general form of the matrix cannot be
 guaranteed, then we will be forced to utilize significantly slower methods of
 computing the solution to the linear system.
+
+\begin{Figure}
+   \begin{center}
+     \input{figures/lin_time.tikz}
+   \end{center}
+   \captionof{figure}{Plots of the different time requirements for solving the
+   linear systems.}
+\end{Figure}
 
 \subsubsection{Possitive Definite}%
 \label{ssub:possitive_definite}

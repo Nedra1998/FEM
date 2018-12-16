@@ -11,30 +11,26 @@ equation, into minimizing the value of the residual. This concept is used
 multiple times throughout the process of FEA.
 
 We construct the residual of equation \ref{eq:pde} as
-
 \begin{align*}
   R(\vec{x})=\rho c_p\vec{u}\cdot\nabla T-\nabla\cdot(k\nabla T)-f.
 \end{align*}
-
 Clearly $R(\vec{x})=0$ if and only if $T$ is the exact solution. Multiplying
 the residual by some test function $w$ and integrating, we obtain the weighted
 residual
-
 \begin{align*}
   \int_\Omega w(\vec{x})R(\vec{x})d\vec{x}.
 \end{align*}
 
 For the exact solution, this will always be zero because $R(\vec{x})=0$. Thus,
 we can select any function for the test function $w$, and this expression can
-still be satisfiable. We can expand the weighted residual to obtain
-
+still be satisfiable. However, we will restrict our test functions to ones that
+are zero along the boundaries, this simplifies the computations later. We can
+expand the weighted residual to obtain
 \begin{align}\label{eq:weight_res}
   \int_\Omega\rho c_p w\vec{u}\cdot\nabla T d\vec{x} - \int_\Omega
   w\nabla\cdot(k\nabla T)d\vec{x}=\int_\Omega wf d\vec{x}.
 \end{align}
-
 Applying Green's theorem on the second integral we are able to express it as
-
 \begin{align*}
   -\int_\Omega w\nabla&\cdot(k\nabla T)d\vec{x}\\
   &=\int_\Omega k\nabla w\cdot \nabla T d\vec{x} - \int_\Gamma kw\nabla T\cdot \vec{n}ds.
@@ -43,7 +39,6 @@ Applying Green's theorem on the second integral we are able to express it as
 The integral over $\Gamma$ goes to zero, because we require our test function
 to be zero on the boundary. Thus we obtain the representation of the continuour
 variational problem
-
 \begin{align}\label{eq:cvp}
   \int_\Omega \rho c_p w \vec{u}\cdot\nabla Td\vec{x}+\int_\Omega k\nabla
   w\cdot\nabla Td\vec{x}=\int_\Omega wfd\vec{x}.

@@ -16,27 +16,22 @@ constructions of the basis functions in a later section.
 The approximation of $T$ we define as $T_h$. It is posible to express this
 apprximation as a linear combination of the basis functions $\varphi_j$ for the
 finite subspace $V_h$ that $T_h$ is within. We write this expression as
-
 \begin{align}\label{eq:lin_approx}
   T_h=\sum_{j=1}^NT_j\varphi_j(\vec{x}),
 \end{align}
-
 where $T_j$ is a constant that we solve for later to achieve our final
 apprximation. We can now substitute our expression for $T_h$ for $T$ in the
 continuous variational problem (\ref{eq:cvp}). Since the continuous variational
 problem was satisfied for any test function, we make the decision to use
 $\varphi_j$ as the test functions. These two substitutions provide us with the
 expression
-
 \begin{align*}
   \int_\Omega\rho c_p \varphi_i\vec{u}&\cdot\nabla\left[\sum_{j=1}^NT_j\varphi_j\right]d\vec{x}\\
   &+\int_\Omega k\nabla
   \varphi_i\cdot\nabla\left[\sum_{j=1}^NT_j\varphi_j\right]d\vec{x}
   =\int_\Omega \varphi_ifd\vec{x}.
 \end{align*}
-
 Which we then rewrite as
-
 \begin{align*}
   \sum_{j=1}^N&\left[T_j\int_\Omega\rho c_p\varphi_i\vec{u}\cdot\nabla\varphi_jd\vec{x}\right]\\
   &+ \sum_{j=1}^N\left[T_j\int_\Omega
@@ -45,14 +40,11 @@ Which we then rewrite as
 
 This provides us with a system of equations for $i=1,2,\ldots,N$. Thus we
 express this system in matrix notation as
-
 \begin{align}\label{eq:mat_rep}
   (C+K)T=F.
 \end{align}
-
-Where $T$ is a vecot rin $\R^N$ of the $T_j$ constants, and the elements of the
+Where $T$ is a vector in $\R^N$ of the $T_j$ constants, and the elements of the
 matricies $C$, $K$, and $F$ are defined as
-
 \begin{align*}
   c_{ij}&=\rho c_p\int_\Omega\varphi_i\vec{u}\cdot\nabla\varphi_jd\vec{x}\quad
         &i,j&=1,\ldots,N\\
@@ -63,7 +55,6 @@ matricies $C$, $K$, and $F$ are defined as
 
 We note that is is often simpler to consider a matrix $A$ such that $A=C+K$,
 then our expression for the system of equations becomes
-
 \begin{align*}
    AT=F.
 \end{align*}
