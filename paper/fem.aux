@@ -1,38 +1,28 @@
 \relax 
 \citation{KH}
-\@writefile{tdo}{\contentsline {todo}{Error}{1}}
-\pgfsyspdfmark {pgfid1}{20112834}{40402217}
-\@writefile{tdo}{\contentsline {todo}{Remove}{1}}
-\pgfsyspdfmark {pgfid2}{20112834}{39404615}
-\@writefile{tdo}{\contentsline {todo}{Appendix/Citation}{1}}
-\pgfsyspdfmark {pgfid3}{20112834}{38303247}
-\@writefile{tdo}{\contentsline {todo}{Addition}{1}}
-\pgfsyspdfmark {pgfid4}{20112834}{37198238}
-\@writefile{tdo}{\contentsline {todo}{Revise}{1}}
-\pgfsyspdfmark {pgfid5}{20112834}{36196995}
 \@writefile{toc}{\contentsline {section}{\tocsection {}{1}{Introduction}}{1}}
 \newlabel{sec:introduction}{{1}{1}{Introduction}{}{}}
 \@writefile{toc}{\contentsline {section}{\tocsection {}{2}{Problem Statement}}{1}}
 \newlabel{sec:problem_statement}{{2}{1}{Problem Statement}{}{}}
-\newlabel{eq:pde}{{2.1}{2}{Problem Statement}{}{}}
+\newlabel{eq:pde}{{2.1}{1}{Problem Statement}{}{}}
 \@writefile{toc}{\contentsline {section}{\tocsection {}{3}{Boundary Conditions}}{2}}
 \newlabel{sec:boundary_conditions}{{3}{2}{Boundary Conditions}{}{}}
 \@writefile{toc}{\contentsline {section}{\tocsection {}{4}{Variational Formulation}}{2}}
 \newlabel{sec:variational_formulation}{{4}{2}{Variational Formulation}{}{}}
 \newlabel{eq:weight_res}{{4.1}{2}{Variational Formulation}{}{}}
 \newlabel{eq:cvp}{{4.2}{2}{Variational Formulation}{}{}}
-\@writefile{toc}{\contentsline {section}{\tocsection {}{5}{Boundary Conditions}}{2}}
-\newlabel{sec:boundary_conditions}{{5}{2}{Boundary Conditions}{}{}}
+\@writefile{toc}{\contentsline {section}{\tocsection {}{5}{Discretization}}{2}}
+\newlabel{sec:discretization}{{5}{2}{Discretization}{}{}}
+\newlabel{eq:lin_approx}{{5.1}{2}{Discretization}{}{}}
+\newlabel{eq:mat_rep}{{5.2}{3}{Discretization}{}{}}
 \@writefile{toc}{\contentsline {section}{\tocsection {}{6}{Localization}}{3}}
 \newlabel{sec:localization}{{6}{3}{Localization}{}{}}
 \newlabel{sub:master_space}{{6.1}{3}{Master Space}{}{}}
 \@writefile{toc}{\contentsline {subsection}{\tocsubsection {}{6.1}{Master Space}}{3}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces Master element $\mathaccentV {hat}05E{E}$, in barycentric coordinate system, that is used over the variable local elements.\relax }}{3}}
 \newlabel{fig:master_element}{{6.1}{3}{Master element $\hat {E}$, in barycentric coordinate system, that is used over the variable local elements.\relax }{}{}}
-\newlabel{sub:local_basis}{{6.2}{3}{Local Basis}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\tocsubsection {}{6.2}{Local Basis}}{3}}
-\@writefile{tdo}{\contentsline {todo}{Provide better reasoning for this necessity.}{3}}
-\pgfsyspdfmark {pgfid7}{27973141}{6711468}
+\newlabel{sub:local_basis}{{6.2}{4}{Local Basis}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\tocsubsection {}{6.2}{Local Basis}}{4}}
 \newlabel{eq:local_basis}{{6.1}{4}{Local Basis}{}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces Plot of local basis function $\varphi _1^{(e)}$, $\varphi _2^{(e)}$, and $\varphi _3^{(e)}$, on some arbatrairy element $E_e$.\relax }}{4}}
 \newlabel{fig:local_basis}{{6.2}{4}{Plot of local basis function $\varphi _1^{(e)}$, $\varphi _2^{(e)}$, and $\varphi _3^{(e)}$, on some arbatrairy element $E_e$.\relax }{}{}}
@@ -55,11 +45,7 @@
 \newlabel{sec:mesh_generation}{{7}{5}{Mesh Generation}{}{}}
 \newlabel{sub:delaunay_triangulation}{{7.1}{5}{Delaunay Triangulation}{}{}}
 \@writefile{toc}{\contentsline {subsection}{\tocsubsection {}{7.1}{Delaunay Triangulation}}{5}}
-\@writefile{tdo}{\contentsline {todo}{Add example image of Delaunay triangulation.}{5}}
-\pgfsyspdfmark {pgfid10}{27973141}{42704350}
 \newlabel{def:dt}{{7.1}{5}{Delaunay Triangulation}{}{}}
-\@writefile{tdo}{\contentsline {todo}{Add image showing circumcircle definition.}{5}}
-\pgfsyspdfmark {pgfid11}{27973141}{30934612}
 \@writefile{lof}{\contentsline {figure}{\numberline {7.4}{\ignorespaces Demonstration of the Circumcircle definition of Delaunay. This shows how the circumcircle of each triangle does not contain any vertex from any other triangles.\relax }}{5}}
 \citation{S_DT}
 \citation{S_CDT}
@@ -78,16 +64,14 @@
 \@writefile{toc}{\contentsline {subsection}{\tocsubsection {}{7.4}{Mesh Refinement}}{7}}
 \newlabel{def:well_shaped_tri}{{7.2}{7}{Well-shaped}{}{}}
 \newlabel{def:well_sized_tri}{{7.3}{7}{Well-sized}{}{}}
-\newlabel{def:nice_tri}{{7.4}{7}{\textit {Nice} Triangle}{}{}}
 \citation{T_SOF}
+\newlabel{def:nice_tri}{{7.4}{8}{\textit {Nice} Triangle}{}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {7.6}{\ignorespaces These two images demonstrate the progressive refinement of a mesh depending of the refinement restrictions of angle and area. (a) $60$ triangles, (b) $132$ triangles.\relax }}{8}}
 \newlabel{sub:implementation}{{7.5}{8}{Implementation}{}{}}
 \@writefile{toc}{\contentsline {subsection}{\tocsubsection {}{7.5}{Implementation}}{8}}
-\@writefile{tdo}{\contentsline {todo}{Add code to the appendix.}{8}}
-\pgfsyspdfmark {pgfid16}{27973141}{21178336}
 \@writefile{toc}{\contentsline {section}{\tocsection {}{8}{Assembly of the Global System}}{8}}
 \newlabel{sec:assembly_of_the_global_system}{{8}{8}{Assembly of the Global System}{}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {8.1}{\ignorespaces element-by-element assembly\relax }}{9}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {8.1}{\ignorespaces element-by-element assembly\relax }}{8}}
 \@writefile{toc}{\contentsline {section}{\tocsection {}{9}{Dirichlet Boundary Conditions}}{9}}
 \newlabel{sec:dirichlet_boundary_conditions}{{9}{9}{Dirichlet Boundary Conditions}{}{}}
 \newlabel{eq:global_sys}{{9.1}{9}{Dirichlet Boundary Conditions}{}{}}
@@ -106,16 +90,12 @@
 \citation{KRYLOV}
 \newlabel{ssub:compressed_row_storage}{{10.1.3}{11}{Compressed Row Storage}{}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\tocsubsubsection {}{10.1.3}{Compressed Row Storage}}{11}}
-\@writefile{tdo}{\contentsline {todo}{Add filled plot of the range of optimal $S$ for a given $N$. It looks really cool.}{11}}
-\pgfsyspdfmark {pgfid21}{27973141}{32505174}
 \@writefile{lof}{\contentsline {figure}{\numberline {10.9}{\ignorespaces Memory usage for CRS and DOK at different percentages of sparicty.\relax }}{11}}
 \newlabel{fig:mat_CRS}{{10.9}{11}{Memory usage for CRS and DOK at different percentages of sparicty.\relax }{}{}}
 \newlabel{ssub:vectors}{{10.1.4}{11}{Vectors}{}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\tocsubsubsection {}{10.1.4}{Vectors}}{11}}
-\newlabel{sub:krylov_subspace}{{10.2}{12}{Krylov Subspace}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\tocsubsection {}{10.2}{Krylov Subspace}}{12}}
-\@writefile{tdo}{\contentsline {todo}{PAUL! All the sources I find about Krylov subspaces just seem to use it without any actual explanation or reasoning. So I added Krylov's original paper (Note; it is in Russian, so I didn't read it), and provide the reasoning that we used. Is that sufficient?}{12}}
-\pgfsyspdfmark {pgfid24}{12252528}{41552009}
+\newlabel{sub:krylov_subspace}{{10.2}{11}{Krylov Subspace}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\tocsubsection {}{10.2}{Krylov Subspace}}{11}}
 \newlabel{ssub:reasoning}{{10.2.1}{12}{Reasoning}{}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\tocsubsubsection {}{10.2.1}{Reasoning}}{12}}
 \newlabel{sub:stationary_iterative_methods}{{10.3}{12}{Stationary Iterative Methods}{}{}}
@@ -198,3 +178,37 @@
 \newlabel{tocindent1}{22.77783pt}
 \newlabel{tocindent2}{0pt}
 \newlabel{tocindent3}{0pt}
+\gdef\minted@oldcachelist{,
+  default-pyg-prefix.pygstyle,
+  default.pygstyle,
+  9B838E9A7F6C74380D0396E67BAFC7D3FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  40BC979FC51C312C66F13621C9C53E84FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  40BC979FC51C312C66F13621C9C53E84FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex,
+  4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex}

@@ -1,12 +1,13 @@
 # Fdb version 3
-["bibtex fem"] 1545027561 "fem.aux" "fem.bbl" "fem" 1545027563
+["bibtex fem"] 1545072884 "fem.aux" "fem.bbl" "fem" 1545072886
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/alpha.bst" 1480098433 23907 a5f93555796fb564b924339521f10a7c ""
-  "fem.aux" 1545027563 15683 39c89cf46349a86d2e3a1c06f4c6e4a1 ""
+  "fem.aux" 1545072886 16668 99d5f4bf7a8feeee44582adde4016bfd ""
   "fem.bcf" 0 -1 0 ""
   "references.bib" 1544404160 3787 718e8d040dd34c84e6f59917cdd54c3a ""
   (generated)
+  "fem.blg"
   "fem.bbl"
-["pdflatex"] 1545027561 "fem.tex" "fem.pdf" "fem" 1545027563
+["pdflatex"] 1545072884 "fem.tex" "fem.pdf" "fem" 1545072886
   "/dev/null" 1544638675 0 d41d8cd98f00b204e9800998ecf8427e ""
   "/etc/texmf/web2c/texmf.cnf" 1519595310 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -228,11 +229,19 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1540879405 164837 f472f40ab643c6b1fa7fff8b04d446df ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1541823953 812183 a7a3e5235c25b265dfd255028ea467d6 ""
+  "_minted-fem/008AD728A0F71173DE0A786B9906A494FFB14667B7F011AC6123D0231B0EDE07.pygtex" 1544403925 66 c833d0b42d977c89d0740269dc92ae1c ""
+  "_minted-fem/40BC979FC51C312C66F13621C9C53E84FFB14667B7F011AC6123D0231B0EDE07.pygtex" 1544403925 72 945598f3582bc66be42c38a5869c2d0c ""
+  "_minted-fem/4AA0EF1462DE7FCC65D6591B0F46C8D5FFB14667B7F011AC6123D0231B0EDE07.pygtex" 1544403926 78 fa06c62a602140abd1d971429cf85e29 ""
+  "_minted-fem/51F2BB3D05DA41B6FF05DFE92C7C41BAFFB14667B7F011AC6123D0231B0EDE07.pygtex" 1544403926 78 93e7701e97da52c38f7859d661d0782f ""
+  "_minted-fem/9B838E9A7F6C74380D0396E67BAFC7D3FFB14667B7F011AC6123D0231B0EDE07.pygtex" 1544403925 82 c4354b771d3e59abe324ae4c13d55900 ""
+  "_minted-fem/default-pyg-prefix.pygstyle" 1544403925 7889 3ce1fbc763e3e2c748310f4fe31722b6 ""
+  "_minted-fem/default.pygstyle" 1544403925 9275 f200be7fc0b7de2461cca28cb35b1427 ""
   "a_func.png" 1544403340 723743 4ef1888541a960002a51a756662a24a6 ""
   "appendix/index.tex" 1544134457 102 c00806dfe75591a4d39e4ae5b77817e0 ""
-  "fem.aux" 1545027563 15683 39c89cf46349a86d2e3a1c06f4c6e4a1 ""
-  "fem.bbl" 1545027561 3348 297bd31859a0b580b71551745a264812 "bibtex fem"
-  "fem.tex" 1544588093 3935 2e6b4d735650130a57509f9796614c1b ""
+  "fem.aex" 0 -1 0 ""
+  "fem.aux" 1545072886 16668 99d5f4bf7a8feeee44582adde4016bfd ""
+  "fem.bbl" 1545072884 3348 297bd31859a0b580b71551745a264812 "bibtex fem"
+  "fem.tex" 1545072651 3937 bf7116076442fdcaa1b4c7f1b3951f36 ""
   "fem.w18" 0 -1 0 ""
   "figures/cholesky_time.tikz" 1544637151 968 ba85c0851b67a8ae9c8b0ab33cf0963f ""
   "figures/conjugate_gradient_err.tikz" 1544637233 1137 ac32deab7c83a277127c550e41a92d66 ""
@@ -250,7 +259,7 @@
   "sections/boundary_conditions.tex" 1545027380 1346 5f497181ecd2a8a991466f7665c4da47 ""
   "sections/conclusion.tex" 1545027168 1695 246fe0ddd7e1d22d99ca38ee676448d4 ""
   "sections/dirichlet.tex" 1545027152 2417 9530a90dff0ac9e73aeb074703d91ee6 ""
-  "sections/discretization.tex" 1545027140 1346 5f497181ecd2a8a991466f7665c4da47 ""
+  "sections/discretization.tex" 1545072849 3110 4486c0f16ed6460793c032c8a3582469 ""
   "sections/further_iteration.tex" 1545027132 338 63e5046b653954c119e307ec1f55b572 ""
   "sections/introduction.tex" 1545027124 2003 a0c0d0a1fe2c0452eefb3e3498ec9302 ""
   "sections/linear_sys.tex" 1545026998 28072 eb3cedbeff954f8904452932a22fc82d ""
@@ -261,6 +270,7 @@
   "sections/solving_system.tex" 1545027040 660 ae901e9d92fbe2585db2de95cb99b04b ""
   "sections/variational_formulation.tex" 1545027103 2043 0c3a256dda867a0fb7c1e30aca923eb8 ""
   (generated)
-  "fem.pdf"
-  "fem.aux"
   "fem.log"
+  "fem.aux"
+  "fem.pdf"
+  "fem.pyg"
