@@ -1,0 +1,759 @@
+\documentclass[../fem.tex]{subfiles}
+
+\begin{document}
+\section{Linear Systems}%
+\label{sec:linear_systems}
+
+As the finite element method constructs a global system of equations, we need
+to implement a method for solving this system of linear equations. However,
+there are issues with the magnitude of this system. Let us take a sample
+situation where our mesh has $\sim 100,000$ elements. This would result in a
+global matrix of $10,000,000,000$ values, which would require $\sim 80Gb$ of
+memory. Solving this matrix using straight forward gaussian elimination, which
+has order $\mathcal{O}(n^3)$ time complexity, would require extream amounts of
+time and memory to compute. Because of these issues we need to utilize methods
+that allow us to avoid these issues that arise in the brute force method of
+solving the system of linear equations.
+
+\subsection{Data Structures}%
+\label{sub:data_structures}
+
+The first issue that we need to solve is the issue of memory requirements for
+the large matricies. We can greatly use that fact that the global matrix will
+be a sparse matrix. This is true by the method of construction of our matrix,
+most of the elements will be zero.
+
+Using this knowledge we examine three methods of matrix storage. We use a sense
+of \textit{efficiency} to impy memory efficiency, and the memory usage required
+to store the matrix.
+
+We assume that the indicies of the matrix are stored as
+\mintinline{cpp}{uint64_t} which requires $8$ bytes of memory, and that the
+values are stored as \mintinline{cpp}{double} which requires $8$ bytes of
+memory. We use $N$ to denote the dimenson of the square matrix, and $S$ to
+represent the percent of elements that are non zero in the matrix.
+
+\begin{enumerate}[label=\arabic*.]
+  \item Full matrix storage.
+  \item Dictionary of Keys.
+  \item Compressed Row Storage.
+\end{enumerate}
+
+\subsubsection{Full Matrix}%
+\label{ssub:full_matrix}
+
+This method simply stores a two dimensional array of \mintinline{cpp}{double}
+values. This means that the memory requirement will be $N^2\cdot 8$ bytes. Note
+that this is independent of the sparicty of the matrix, so even if the matrix
+has only one element the memory usage is still the same as a full matrix.
+
+An example of this is the following
+
+\begin{align*}
+  A = \begin{bmatrix}
+    10 & 0 & 0 & 0 & -2 & 0 \\
+    3 & 0 & 0 & 0 & 0 & 3 \\
+    0 & 7 & 8 & 7 & 0 & 0 \\
+    3 & 0 & 0 & 0 & 5 & 0 \\
+    0 & 8 & 0 & 9 & 0 & 13 \\
+    0 & 4 & 0 & 0 & 2 & -1
+  \end{bmatrix}
+\end{align*}
+
+For this method we directly store this matrix into memory saving all of the
+zero elements.
+
+This is the most simplistic method for storing a matrix. It will not suffice
+for most of our situations, but it is important to have a base line to compare
+to, to determin the efficiency of our later methods.
+
+\begin{Figure}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8, transform shape]
+      \begin{axis}[axis lines=middle, xmin=0.0, xmax=1.0, ymin=0.0, ymax=900.0,
+        x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        y label style={at={(axis description cs:-0.15,.5)},rotate=90,anchor=south},
+        ylabel={Gb}, xlabel={$S$}]
+        \addplot[forget plot] {800};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  \captionof{figure}{Memory usage for full matrix storage at different
+  percentages of sparicty.}
+  \label{fig:mat_full}
+\end{Figure}
+
+\subsubsection{Dictionary of Keys}%
+\label{ssub:dictionary_of_keys}
+
+The next logical step for improving our matrix efficiency, is to only store the
+elements that are not zero. A simple way of doing this is to store the
+\textit{row} and \textit{column} indecies and the associated value at that
+point. This means that for each value we store three numbers, but we only store
+the values that are not zero. This means that this is only effective to an
+extent, as a full matrix would require three times the memory of the method in
+section \ref{ssub:full_matrix}.
+
+Using the same example from above
+
+\begin{align*}
+  A = \begin{bmatrix}
+    10 & 0 & 0 & 0 & -2 & 0 \\
+    3 & 0 & 0 & 0 & 0 & 3 \\
+    0 & 7 & 8 & 7 & 0 & 0 \\
+    3 & 0 & 0 & 0 & 5 & 0 \\
+    0 & 8 & 0 & 9 & 0 & 13 \\
+    0 & 4 & 0 & 0 & 2 & -1
+  \end{bmatrix},
+\end{align*}
+
+we implement the DOK method for sparse matrix storage.
+
+\begin{align*}
+  A = \begin{bmatrix}
+    0 & 0 & 10 \\
+    0 & 4 & -2 \\
+    1 & 0 & 3 \\
+    1 & 5 & 3 \\
+    2 & 1 & 7 \\
+    2 & 2 & 8 \\
+    2 & 3 & 7 \\
+    3 & 0 & 3 \\
+    3 & 4 & 5 \\
+    4 & 1 & 8 \\
+    4 & 3 & 9 \\
+    4 & 5 & 13 \\
+    5 & 1 & 3 \\
+    5 & 4 & 2 \\
+    5 & 5 & -1
+  \end{bmatrix}
+\end{align*}
+
+Where the first column in the row index ($0$ based), the second column in the
+column index ($0$ based), and the third column is the value stored at that
+position.
+
+We find that this method requires $SN^2\cdot24$ bytes. It is clear to see that
+if $S$ is large, then this method is significantly less effective but if $S$ is
+small enough, then there is additional efficiency to be gained. We can compute
+the minimum value of $S$ that would allow for increased efficiency like so
+
+\begin{align*}
+  SN^2\cdot24&=N^2\cdot8\\
+  S&=\frac{8}{24}\\
+  S&=\frac{1}{3}.
+\end{align*}
+
+Thus for any matrix where more than a third of its elements not zero, means
+that we would be better off using a full matrix storage system.
+
+\begin{Figure}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8, transform shape]
+      \begin{axis}[axis lines=middle, xmin=0.0, xmax=1.0, ymin=0.0,
+        x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        y label style={at={(axis description cs:-0.15,.5)},rotate=90,anchor=south},
+        ylabel={Gb}, xlabel={$S$}]
+        \addplot[forget plot] {800};
+        \addplot[forget plot] {x*2400};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  \captionof{figure}{Memory usage for DOK at different percentages of
+  sparicty.}
+  \label{fig:mat_dok}
+\end{Figure}
+
+\subsubsection{Compressed Row Storage}%
+\label{ssub:compressed_row_storage}
+
+This method take the concept of DOK, and modifies it by the realization that
+many elements will be on the same row, so we just need to store the number of
+elements in a row, the elements column index, and the value. This means that
+for every value, we now only need to store two numbers, and we have a list of
+row counts that must exists for all number of non-zero elements.
+
+A slight optimization that we introduce, is instead of storing the number of
+elements in each row, we store the total number of elements so far. This is a
+slight improvement in the coputational implementation for element access.
+
+This means that for every matrix, we need to store three vectors.
+\mintinline{cpp}{val}, \mintinline{cpp}{col_ind}, and
+\mintinline{cpp}{row_ptr}.
+
+Using our example matrix,
+
+\begin{align*}
+  A = \begin{bmatrix}
+    10 & 0 & 0 & 0 & -2 & 0 \\
+    3 & 0 & 0 & 0 & 0 & 3 \\
+    0 & 7 & 8 & 7 & 0 & 0 \\
+    3 & 0 & 0 & 0 & 5 & 0 \\
+    0 & 8 & 0 & 9 & 0 & 13 \\
+    0 & 4 & 0 & 0 & 2 & -1
+  \end{bmatrix},
+\end{align*}
+
+we find our three vectors to be
+
+\begin{align*}
+  \text{\mintinline{cpp}{row_ptr}} &= \left[0,2,4,7,8,12,15\right]\\
+  \text{\mintinline{cpp}{col_ind}} &= \left[\ \;0,\ \ 4,0,5,1,2,3,0,4,1,3,\ \;5,1,4,\ \ 5\right]\\
+  \text{\mintinline{cpp}{val}} &= \left[10,-2,3,3,7,8,7,3,5,8,9,13,4,2,-1\right]
+\end{align*}
+
+Note that we can easily find the number of nonzero elements by reading the last
+value in \mintinline{cpp}{row_ptr}.
+
+We can find the efficiency of this method of matrix storage to be
+$8N+SN^2\cdot16$. Again it is clear that if the matrix is full, then this
+method is incredibly inefficient. It is also intresting to note that if the
+matrix is empty, then the DOK method is more efficient. There are two values of
+$S$ where
+
+\begin{enumerate}[label=\arabic*.]
+  \item Dictionary of keys transitions from being more efficent to less.
+  \item Full matrix transitions from being less efficient to more.
+\end{enumerate}
+
+We solve for both of these values of $S$. First, for when DOK becomes less
+efficient than CRS.
+
+\begin{align*}
+  8N+SN^2\cdot16&=SN^2\cdot24\\
+  8N&=8SN^2\\
+  S&=\frac{1}{N}.
+\end{align*}
+
+And when the full matrix becomes more efficent.
+
+\begin{align*}
+  8N+SN^2\cdot16&=N^2\cdot8\\
+  16SN^2&=8N^2-8N\\
+  S&=\frac{N-1}{2N}
+\end{align*}
+
+It is intresting to take notice that the range in which this method is most
+efficient is dependent on the size of our matrix. Thus we only want to use this
+value when
+
+\begin{align*}
+  \frac{1}{N}<S<\frac{N-1}{2N}.
+\end{align*}
+
+Using this relation we can construct a plot for the range of $S$ values in
+relation of $N$ inwhich this method should be utilized.
+
+\gtodo{Add filled plot of range of optimal $S$ for given $N$. It looks really
+cool.}
+
+We can use this relation to see that for large $N$, this method is the most
+efficent between
+\begin{align*}
+  0 < S < 0.5
+\end{align*}
+Because of this asymptotic approch of this range of sparcity for maximum
+efficiency, we use this method of sparse matrix storeage in our implementation.
+
+\begin{Figure}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8, transform shape]
+      \begin{axis}[axis lines=middle, xmin=0.0, xmax=1.0, ymin=0.0,
+        x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        y label style={at={(axis description cs:-0.15,.5)},rotate=90,anchor=south},
+        ylabel={Gb}, xlabel={$S$}]
+        \addplot[forget plot] {800};
+        \addplot[forget plot] {x*2400};
+        \addplot[forget plot] {80+x*1600};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  \captionof{figure}{Memory usage for CRS and DOK at different percentages of
+  sparicty.}
+  \label{fig:mat_CRS}
+\end{Figure}
+
+\subsubsection{Vectors}%
+\label{ssub:vectors}
+
+We will simmilarly have large vectors, and can implement a similar method for
+sparse vector storage, but this would be counter productive, as our large
+vectors are not likly to be sparse. Thus using a sparce represetnation of a
+vector would actualy consume more memory than the full vector storage method.
+
+\subsection{Krylov Subspace}%
+\label{sub:krylov_subspace}
+
+An extreamly useful tool for for numerical approximation of large systems of
+equations is \textit{Krylov Subspaces}. Krylov subspaces are defined by
+Krylov\cite{KRYLOV} as
+
+\otodo{PAUL! All the sources I find about Krylov subspaces just seem to use it
+  without any actual exlination or reasoning. So I added Krylov's original paper
+  (Note; it is in russian, so I didn't read it), and provide the reasoning that
+we used. Is that sufficient?}
+\begin{align*}
+  \mathcal{K}_r\left(A,b\right)=\text{span}\left\{b,Ab,A^2b,\ldots,A^{r-1}b\right\}
+\end{align*}
+where $b$ is some vector. This basis assists in the approximation for linear
+systems of the form $Ax=b$. The subscript $r$ simply defines the point at which
+we limit our approximation, if $r$ is infinite then the Krylov subspace is the
+full space, and solutions in that Krylov subspace will be exact.
+
+Note that the basis vectors in the Krylov subspace are not necessarily
+orthogonal, nor normal.
+
+\subsubsection{Reasoning}%
+\label{ssub:reasoning}
+
+We provide a short example of the reasoning for the construction of the Krylov
+subspace. We consider the example where we want to solve a system of linear
+equations of the form $Ax=b$. Where $A=I+\varepsilon$.
+
+\begin{align*}
+  Ax&=b\\
+  x&=A^{-1}b\\
+  x&=(I+\varepsilon)^{-1}b.
+\end{align*}
+
+We construct an approximation for the inverse of a matrix like by geometric
+formula
+\begin{align*}
+  I+\varepsilon+\varepsilon^2+\cdots+\varepsilon^n&=S\\
+  \varepsilon+\varepsilon^2+\cdots+\varepsilon^{n+1}&=S\varepsilon\\
+  S-I+\varepsilon^{n+1}&=S\varepsilon\\
+  S-S\varepsilon&=I-\varepsilon^{n+1}\\
+  S(I-\varepsilon)&=I-\varepsilon^{n+1}\\
+  S&=\left(I-\varepsilon^{n+1}\right)\left(I-\varepsilon\right)^{-1}.
+\end{align*}
+When $n\rightarrow \infty$ and $\varepsilon$ is small enough
+($\Vert\varepsilon\Vert < 1$), then $\varepsilon^{n+1}\rightarrow 0$. Thus
+\begin{align*}
+  S&=\left(I-\varepsilon^{n+1}\right)\left(I-\varepsilon\right)^{-1}\\
+  S&=\left(I-\varepsilon\right)^{-1}.
+\end{align*}
+Finaly we can conclude that
+\begin{align*}
+  A^{-1}=(I+\varepsilon)^{-1}=I-\varepsilon-\varepsilon^2-\cdots.
+\end{align*}
+
+Using this in our expression for $x$ we find
+\begin{align*}
+  x&=A^{-1}b=b-\varepsilon b-\varepsilon^2 b - \cdots\\
+   &=b-(A-I)b-(A-I)^2b-\cdots\\
+   &=b-Ab+b-A^2b+2Ab-b+\cdots.
+\end{align*}
+Using this we extract the basis that composes $x$ to be
+\begin{align*}
+  \left\{b, Ab, A^2b, A^3b, \ldots\right\}
+\end{align*}
+
+The Krylov subspace takes this infinite basis, and cuts it off at some given
+$r$ value, thus providing us with
+\begin{align*}
+  \left\{b,Ab,A^2b,\ldots,A^{r-1}b\right\}
+\end{align*}
+Which is our Krylov subspace. This is not a full proof of the construction of
+the Krylov subspace, but it should be a sufficient explanation for our purposes.
+
+\subsection{Stationary Iterative Methods}%
+\label{sub:stationary_iterative_methods}
+
+All iterative methods can be expressed in the form
+\begin{align*}
+  x^{(k)}=Bx^{(k-1)}+c,
+\end{align*}
+when $B$ nor $c$ are dependent on the iteration $k$, then this is a stationary
+iterative method. We comment on two stationary iterative methods
+\textit{Jacobi}, and \textit{Gauss-Seidel} methods. There are several other
+statinary iterative methods, but we limit ourselves to examining only these two
+methods.
+
+\subsubsection{Jacobi Method}%
+\label{ssub:jacobi_method}
+
+The Jacobi method is a very simple method for solving linear systems. It is
+very easy to understand and implement, but the convergence of the approximation
+can be very slow.
+
+\begin{Figure}
+   \begin{center}
+     \input{figures/jacobi_time.tikz}
+   \end{center}
+   \captionof{figure}{Time complexity of Jacobi method.}\label{fig:j_time}
+\end{Figure}
+
+The concept for the Jacobi method, is to solve for each variable $x_i$ one at a
+time, with the assumption that all other variables are constant. We slove each
+equation in isolation, and then the iteration provides us with our method for
+converging to the actual solution. We consider the $i$he equation in the
+system,
+\begin{align*}
+  \sum_{j=1}^na_{i,j}x_j=b_i.
+\end{align*}
+We then solve for the value of $x_i$ assuming all other values of $x$ are
+fixed. We determine that
+\begin{align*}
+  x_i=\frac{b_i-\sum_{j\neq i}a_{i,j}x_j}{a_{i,i}}.
+\end{align*}
+We then implement the iteration to find the equation
+\begin{align*}
+  x_i^{(k)}=\frac{b_i-\sum_{j\neq i}a_{i,j}x_j^{(k-1)}}{a_{i,i}}.
+\end{align*}
+
+\begin{Figure}
+   \begin{center}
+     \input{figures/jacobi_err.tikz}
+   \end{center}
+   \captionof{figure}{Error of Jacobi method.}\label{fig:j_err}
+\end{Figure}
+
+Using this formula for the computation of the new approximation vector $x$
+
+\begin{algorithm}[H]
+  \caption{Jacobi Method}\label{algo:jacobi_method}
+  \begin{algorithmic}
+    \State{$x=0$}
+    \For{$k=1,2,\ldots$}
+    \State{$\bar{x}=0$}
+    \For{$i=1,2,\ldots,n$}
+    \For{$j=1,2,\ldots,i-1,i+1,\ldots,n$}
+    \State{$\bar{x}_i \pluseq a_{i,j}x_j$}
+    \EndFor
+    \State{$\bar{x}_i=\frac{b_i-\bar{x}_i}{a_{i,i}}$}
+    \EndFor
+    \State{$x=\bar{x}$}
+    \If{$\Vert Ax-b\Vert\leq10^{-10}$}
+    \State{\Return $x$}
+    \EndIf
+    \EndFor
+    \State{\Return $x$}
+  \end{algorithmic}
+\end{algorithm}
+
+Psudocode for the Jacobi method is shown in Algorithm \ref{algo:jacobi_method}.
+Note the neccesity for a temporary $\bar{x}$ term, as the values of $x$ are
+needed for the computation of the next iteration. We stop the iteration either
+when a maximum iteration count is reached, or when our approximation is within
+$10^{-10}$ of the actual solution. It is possible to alter this tollerance to
+achive either more precise approximation, or to accelerate convergence at the
+cost of accuracy.
+
+
+\subsubsection{Gauss-Seidel Method}%
+\label{ssub:gauss_seidel_method}
+
+The Gauss-Seidel method is an extension of the Jacobi method, with one
+optimization. Instead of using the old values of $x$, the algorithm uses the
+already computed values of the current iteration.
+
+\begin{Figure}
+   \begin{center}
+     \input{figures/gauss_seidel_time.tikz}
+   \end{center}
+   \captionof{figure}{Time complexity of Gauss-Seidel method.}\label{fig:gs_time}
+\end{Figure}
+
+This method does not improve the rate of convergence significantly, but it is a
+simple to implement improvement over the Jacobi metod. The mathematics and the
+psudocode are almost identical to that of the Jacobi method, with the only
+difference being that instead of using $\bar{x}$ all values are taken from $x$.
+
+\begin{Figure}
+   \begin{center}
+     \input{figures/gauss_seidel_err.tikz}
+   \end{center}
+   \captionof{figure}{Error of Gauss-Seidel method.}\label{fig:gs_err}
+\end{Figure}
+
+Because of this similarity we do not explain in detail the mathmatics, but the
+psudocode is provided in Algorithm \ref{algo:gauss_seidel_method}.
+
+\begin{algorithm}[H]
+  \caption{Gauss-Seidel Method}\label{algo:gauss_seidel_method}
+  \begin{algorithmic}
+    \State{$x=0$}
+    \For{$k=1,2,\ldots$}
+    \For{$i=1,2,\ldots,n$}
+    \State{$x_i=0$}
+    \For{$j=1,2,\ldots,i-1,i+1,\ldots,n$}
+    \State{$x_i \pluseq a_{i,j}x_j$}
+    \EndFor
+    \State{$x_i=\frac{b_i-x_i}{a_{i,i}}$}
+    \EndFor
+    \If{$\Vert Ax-b\Vert\leq10^{-10}$}
+    \State{\Return $x$}
+    \EndIf
+    \EndFor
+    \State{\Return $x$}
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{Nonstationary Iterative Methods}%
+\label{sub:nonstationary_iterative_methods}
+
+Nonstationary methods differ from their stationary counterparts, because the
+computation involve infromation that is altered fro every iteration. E.g. the
+values of $B$ and $c$ can depend on the iteration count $k$. We discuss the
+nonstationary iterative method called the  \textit{Conjugate Gradient} method.
+All of the nonstationary iterative methods utilize Krylov subspaces, with the
+exception of a few which we do not discuss.
+
+\subsubsection{Conjugate Gradient Method}%
+\label{ssub:conjugate_gradient_method}
+
+This method is extreamly effective for symmetric positive definite systems, and
+it is one of the most researched nonstationary methods. This method is based on
+the construction of a sequence of approximations. Each new approximation is
+generated based on the direction required to minimize the residual.
+
+\begin{Figure}
+   \begin{center}
+     \input{figures/conjugate_gradient_time.tikz}
+   \end{center}
+   \captionof{figure}{Time complexity of Conjugate Gradient
+   method.}\label{fig:cg_time}
+\end{Figure}
+
+This is done by determining which ``direction'' must be used inorder to
+minimize the residual, then the approximation is moved by some $\alpha$ amount
+in that direction. After repeating this process for some number of iterations,
+the generated approximation should be converging to the actual solution.
+
+\begin{Figure}
+   \begin{center}
+     \input{figures/conjugate_gradient_err.tikz}
+   \end{center}
+   \captionof{figure}{Error of Conjugate Gradient
+   method.}\label{fig:cg_err}
+\end{Figure}
+
+We construct the iterative approximation in each iteration by a multiple of
+$\alpha_i$ of the seach direction $p^{(i)}$,
+\begin{align*}
+  x^{(i)}=x^{(i-1)}+\alpha_ip^{(i)}.
+\end{align*}
+We then update the residual $r^{(i)}=b-Ax^{(i)}$ as
+\begin{align*}
+  q^{(i)}&=Ap^{(i)}\\
+  r^{(i)}&=r^{(i-1)}-\alpha_i q^{(i)}
+\end{align*}
+We construct $\alpha_i$ inorder to minimize ${r^{(i)}}^TA^{-1}r^{(i)}$,
+\begin{align*}
+  \alpha_i=\frac{{r^{(i-1)}}^Tr^{(i-1)}}{{p^{(i)}}^TAp^{(i)}}.
+\end{align*}
+Then to updated the search direcitons using the residual
+\begin{align*}
+  \beta_i&=\frac{{r^{(i)}}^Tr^{(i)}}{{r^{(i-1)}}^Tr^{(i-1)}}\\
+  p^{(i)}&=r^{9)}+\beta_{i-1}p^{(i-1)}
+\end{align*}
+where the choice of $\beta_i$ ensures that $r^{(i)}$ and $r^{(i-1)}$ are
+orthogonal.
+
+This process ties together the construction of the Krylov subspace, and the
+construction of the approximation based off of the most recently computed
+krylov basis vector. This means that if we allow our iterations to proceed
+untill $N$ iterations, then we should have constructed the complete Krylov
+subspace, and thus our apprixmation should be exact.
+
+Using this apprixmation we can construct our psudocode of the algorithm. Which
+is prsented in Algorithm \ref{algo:conjugategradient}.
+
+\begin{algorithm}[H]
+  \caption{ConjugateGradient}\label{algo:conjugategradient}
+  \begin{algorithmic}
+    \State{$x=0$}
+    \State{$r=b-Ax$}
+    \For{$i=1,2,\ldots,n$}
+    \State{$\rho^{(i)}={\Vert r \Vert}^2$}
+    \If{$i=0$}
+    \State{$p=r$}
+    \Else
+    \State{$\beta=\frac{\rho^{(i)}}{\rho^{(i-1)}}$}
+    \State{$p=r$}
+    \EndIf
+    \State{$q=Ap$}
+    \State{$\alpha=\frac{\rho^{(i)}}{\left<p,q\right>}$}
+    \State{$x\pluseq \alpha p$}
+    \State{$r\minuseq \alpha q$}
+    \If{$\Vert r \Vert \leq 10^{-10}$}
+    \State{\Return $x$}
+    \EndIf
+    \EndFor
+    \State{\Return $x$}
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{Cholesky Method}%
+\label{sub:cholesky_method}
+
+The Cholesky method is a methd for solving systems of linear equations based
+uppon the Cholesky decomposition of a matrix. This is the only direct method
+that we consider. A direct method does not depend on convergence of a sequence,
+but instead directly solves the system of equations. This method is useful for
+the purpose of time prediction. The convergence of iterative methods greatly
+depends on the system being considered, using this method the time required is
+directly related to the number of elements. This means that each system of the
+same size will require the same time to solve.
+
+\begin{Figure}
+   \begin{center}
+     \input{figures/cholesky_time.tikz}
+   \end{center}
+   \captionof{figure}{Time complexity of Cholesky method.}\label{fig:ch_time}
+\end{Figure}
+
+The Cholesky decomposition of a matrix provides a lower triangular matrix $L$
+of the form
+\begin{align*}
+   A=LL^T
+\end{align*}
+
+We use this decomposition of $A$ to solve two systems of linear equations,
+using forward and back substitution, which is an efficient method for finding
+these solutions.
+\begin{align*}
+  Ly&=b\quad\text{by forward substitution}\\
+  L^Tx&=y\quad\text{by back substitution}.\\
+\end{align*}
+This provides the solution $x$ to the system of linear equations.
+
+We present a plot of the time requirements for the computation in
+Figure \ref{fig:ch_time}.
+
+\subsubsection{Cholesky Decomposition}%
+\label{ssub:cholesky_decomposition}
+
+
+We utilize the Cholesky-Banachiewicz algorithm for the construction of the
+lower triangular matrix $L$. This algorithm states that
+\begin{align*}
+  L_{j,j}&=\sqrt{A_{j,j}-\sum_{k=1}^{j-1}L_{j,k}^2}\\
+  L_{i,j}&=\frac{1}{L_{j,j}}\left(A_{i,j}-\sum_{k=1}^{j-1}L_{i,k}L_{j,k}\right)\
+  \text{for}\ i>j.
+\end{align*}
+This construction of the Cholesky decomposition is very easy, and fairly
+efficient. Thus allowing us to preform this decomposition easily.
+
+\subsubsection{Forward/Back Substitution}%
+\label{ssub:forward_back_substitution}
+
+The method of forward and back substitution is an efficient method for solving
+systems of linear equations of the form $Lx=b$ where $L$ is a lower triangular
+matrix. Note that the process is almost identical for an upper triangular
+matrix, just with the order of iteration flipped. We will only provide an
+explanation for forward substitution.
+
+The first stage it to write the system of equations like so
+\begin{align*}
+  \begin{matrix}
+    L_{1,1}x_1 & & & & =b_1\\
+    L_{2,1}x_1 & +L_{2,2}x_2 & & & =b_2\\
+    \vdots & \vdots & \ddots & & \vdots\\
+    L_{n,1}x_1 & +L_{n,2}x_2 & \cdots & L_{n,n}x_n & =b_2\\
+  \end{matrix}.
+\end{align*}
+We can clearly solve for $x_1$ directly, and find
+\begin{align*}
+  x_1=\frac{b_1}{L_{1,1}}.
+\end{align*}
+
+It is possible to substitute this into the second equation. This will cause the
+second equation to only have one unknown $x_2$, and so we can directly solve
+for $x_2$. This process is repeated for all $x$. Providing the general
+expression
+\begin{align*}
+  x_m=\frac{b_m-\sum_{i=1}^{m-1}L_{m,i}x_i}{L_{m,m}}.
+\end{align*}
+This expression can then be used to compute the solution to the system of
+linear equations.
+
+Using the Cholesky decomposition and forward and back substitution, we are able
+to compute the exact solution to the system of equations, without resorting the
+inefficient Gaussian elimination.
+
+We provide psudocode of this method in Algorithm \ref{algo:cholesky_method}.
+
+\begin{algorithm}[H]
+  \caption{Cholesky method}\label{algo:cholesky_method}
+  \begin{algorithmic}
+    \State{}\Comment{Calculate $A=LL^T$ decomposition.}
+    \For{$j=0,1,2,\ldots,N$}
+      \State{$L_{j,j}=0$}
+      \For{$k=0,1,2,\ldots,j$}
+        \State{$L_{j,j}\pluseq L_{j,k}^2$}
+      \EndFor
+      \State{$L_{j,j}=\sqrt{A_{j,j}-L_{j,j}}$}
+      \For{$i=j,j+1,j+2,\ldots,N$}
+        \State{$L_{i,j}=0$}
+        \For{$k=0,1,2,\ldots,j$}
+          \State{$L_{i,j} \pluseq L_{i,k}L_{j,k}$}
+        \EndFor
+        \State{$L_{i,j}=\frac{A_{i,j}-L_{i,j}}{L_{j,j}}$}
+      \EndFor
+    \EndFor
+    \State{}\Comment{Calculate $Ly=b$ by forward substitution.}
+    \State{$y=0$}
+    \For{$i=1,2,\ldots,N$}
+      \State{$y_i=0$}
+      \For{$j=1,2,\ldots,i$}
+        \State{$y_i\pluseq L_{i,j}y_j$}
+      \EndFor
+      \State{$y_i=\frac{b_i-y_i}{L_{i,i}}$}
+    \EndFor
+    \State{}\Comment{Calculate $L^Tx=y$ by back substitution.}
+    \State{$x=0$}
+    \For{$i=N,N-1,\ldots,1$}
+      \State{$x_i=0$}
+      \For{$j=i+1,i+2,\dots,N$}
+        \State{$x_i\pluseq L^T_{i,j}x_j$}
+      \EndFor
+      \State{$x_i=\frac{b_i-x_i}{L^T_{i,i}}$}
+    \EndFor
+    \State{\Return $x$}
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{Issues}%
+\label{sub:issues}
+
+We note that these algorithms have requirements on the form of the matrix $A$.
+For many of these the algorithm requires a symmetric positive definite matrix.
+We comment on some of these restrictions here.
+
+We note that future work must be done to determine if the global matrix that is
+constructed by the Finite Element Method will consistently satisfy these
+restraints. If it does then it is possible to provide extra optimizations based
+on the form of the global matrix. If a general form of the matrix cannot be
+guaranteed, then we will be forced to utilize significantly slower methods of
+computing the solution to the linear system.
+
+\begin{Figure}
+   \begin{center}
+     \input{figures/lin_time.tikz}
+   \end{center}
+   \captionof{figure}{Plots of the different time requirements for solving the
+   linear systems.}
+\end{Figure}
+
+\subsubsection{Possitive Definite}%
+\label{ssub:possitive_definite}
+
+All of these algorithms require a positive definite matrix. This is required to
+gaurentee that there is a unique solution to the system. This can be considered
+to ensure that there is a minimum in some $N$ dimensional space, instead of a
+saddle, or maximum. Only with a minimum can we minimize our residual and use
+gradient decent to find our equilibrium solution.
+
+\subsubsection{Symmetric}%
+\label{ssub:symmetric}
+
+Most of these algorithms, with the exception of Cholesky method, require the
+matrix to be symmetric. This requirement is mostly for computational
+efficiency, and simplicity of the algorithm. There are some methods that can be
+addapted to function for nonsymmetric matricies, but those become significantly
+more complex. For most purposes, we should be able to make use of our
+implementations of these algorithms for finding the solution to the linear
+system.
+
+\end{document}

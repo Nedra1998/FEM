@@ -1,0 +1,226 @@
+\documentclass[../fem.tex]{subfiles}
+
+\begin{document}
+\section{Localization}%
+\label{sec:localization}
+
+While it is possible to find the elements of the matricies in
+(\ref{eq:mat_rep}) on the global domain, this proves to be exedingly difficult,
+and so we will use a more generalizable method. Since we are able to selece our
+basis function $\varphi_j$ we can carefully construct a set of basis functions
+such that it is possible to split the domain into discrete elements. Where each
+element is a mutualy exclusive subset of the domain. We can then implement a
+generalization to construct the system of equations for each element. Then
+using an algorithm we combine each system of equations for each element to
+construct the global matricies, which can then be solved for our approximation.
+
+We discretize the domain $\Omega$ into $N$ triangles. This process of
+constructing the triangular decomposition of the domain is detailed in the
+numerical computation section \ref{sec:mesh_generation},  Mesh Generation. For
+now we assume that we have constructed a mesh of $N$ triangles, and we denote
+the each of these triangles $E_e$, where $e=1,\ldots,N$. We then also define
+the triangle verticies to be labeled $E_e^{(i)}$ where $i=1,2,3$.
+
+In 1D this step is fairly trivial as all elements have the exact same
+dimesnions, but in our 2D implementation, each element can have variable shapes
+and sizes. Inorder to resolve this we construct a master space.
+
+\subsection{Master Space}%
+\label{sub:master_space}
+
+The master space is a domain that we construct inorder to simplify the
+construction of our local approximations. For our situation with a triangular
+element we construct our global space such that the verticies of a triangle lie
+on the points $(1,0,0)$, $(0,1,0)$, and $(0,,01)$. Then for each element in our
+mesh, we construct the transformation matrix $T$ to transform between master
+space and element space. We define our master element to be $\hat{E}$. An image
+of this master element can be seen in figure \ref{fig:master_element}.
+
+\begin{Figure}
+   \begin{center}
+     \begin{tikzpicture}[scale=2]
+        \draw[thick,->] (0,0,0) -- (1.3,0,0) node[right]{$\lambda_1$};
+        \draw[thick,->] (0,0,0) -- (0,1.3,0) node[above]{$\lambda_2$};
+        \draw[thick,->] (0,0,0) -- (0,0,1.3) node[above]{$\lambda_3$};
+        \draw (1,0,0) node[above right]{$(1,0,0)$}-- (0,1,0)
+        node[right]{$(0,1,0)$} -- (0,0,1) node[below right]{$(0,0,1)$}-- cycle;
+      \end{tikzpicture}
+   \end{center}
+   \captionof{figure}{Master element $\hat{E}$, in barycentric coordinate
+   system, that is used over the variable local
+ elements.}\label{fig:master_element}
+\end{Figure}
+
+This master element is in what is called a Barycentric coordinate system.
+Conversion from our trilinear coordinates to the Barycentric coordinates can be
+done by using the following equations
+\begin{align*}
+  \lambda_1 &=
+  \frac{\left(Y_2-Y_3\right)\left(x-X_3\right)+\left(X_3-X_2\right)\left(y-Y_3\right)}{\left(Y_2-Y_3\right)\left(X_1-X_3\right)+\left(X_3-X_2\right)\left(Y_1-Y_3\right)}\\
+  \lambda_2 &=
+  \frac{\left(Y_3-Y_1\right)\left(x-X_3\right)+\left(X_1-X_3\right)\left(y-Y_3\right)}{\left(Y_2-Y_3\right)\left(X_1-X_3\right)+\left(X_3-X_2\right)\left(Y_1-Y_3\right)}\\
+  \lambda_3 &= 1-\lambda_1-\lambda_2.
+\end{align*}
+Where $X_i$ is the $x$ component of the $i$th vertex of the element, the same
+applies for the $y$ component. $x$, and $y$ is the $x$ and $y$ component of the
+point in the triangle that we want to convert to the Barycentric coordinates.
+
+Converting from Barycentric coordinates to trilinear coordinates uses the
+following equations
+\begin{align*}
+  x &= \lambda_1 X_1+\lambda_2 X_2 + \lambda_3 X_3\\
+  y &= \lambda_1 Y_1 +\lambda_2 Y_2 + \lambda_3 Y_3
+\end{align*}
+
+\subsection{Local Basis}%
+\label{sub:local_basis}
+
+
+We want to construct three local basis functions, that are defined only for the
+current element. We aim to construct three local basis functions functions
+$\varphi_1^{(e)}$, $\varphi_2^{(e)}$, and $\varphi_3^{(e)}$.  Each shape
+function should be linear, such that at its cooresponding vertex the local
+basis function is $1$ and at the other verticies the function should evaluate
+to $0$.
+
+\otodo{Provide better reasoning for this neccesity.}
+
+Conviniently this is exactly what the barycentric coordinates of the master
+element provide us with, thus we define our local basis functions to be
+\begin{align}\label{eq:local_basis}
+  &\resizebox{\columnwidth}{!}{$
+    \varphi_1^{(e)}=
+  \frac{\left(Y^{(e)}_2-Y^{(e)}_3\right)\left(x-X^{(e)}_3\right)+\left(X^{(e)}_3-X^{(e)}_2\right)\left(y-Y^{(e)}_3\right)}{\left(Y^{(e)}_2-Y^{(e)}_3\right)\left(X^{(e)}_1-X^{(e)}_3\right)+\left(X^{(e)}_3-X^{(e)}_2\right)\left(Y^{(e)}_1-Y^{(e)}_3\right)}
+  $}\\
+  &\resizebox{\columnwidth}{!}{$
+    \varphi_2^{(e)}=
+    \frac{\left(Y^{(e)}_3-Y^{(e)}_1\right)\left(x-X^{(e)}_3\right)+\left(X^{(e)}_1-X^{(e)}_3\right)\left(y-Y^{(e)}_3\right)}{\left(Y^{(e)}_2-Y^{(e)}_3\right)\left(X^{(e)}_1-X^{(e)}_3\right)+\left(X^{(e)}_3-X^{(e)}_2\right)\left(Y^{(e)}_1-Y^{(e)}_3\right)}
+  $}\\
+  &\varphi_3^{(e)}=1-\varphi_1^{(e)}-\varphi_2^{(e)}
+\end{align}
+
+Thus for every element, there are three local basis functions. A plot of these
+local basis functions is shown in figure \ref{fig:local_basis}.
+
+\begin{Figure}
+   \begin{center}
+     \begin{tikzpicture}[scale=3]
+       \draw[thick] (0,0,0)node[below]{$E^{(e)}_1$} --
+         (1,0,0)node[below]{$E^{(e)}_2$}
+         --node[below]{$E_e$} (0.6, 0, 0.5)node[below]{$E^{(e)}_3$} -- cycle;
+       \draw (0,1,0)node[above]{$\varphi_1^{(e)}$}  -- (1,0,0) -- (0.6, 0, 0.5)-- cycle;
+       \draw (0,0,0) -- (1,1,0)node[above]{$\varphi_2^{(e)}$}  -- (0.6, 0, 0.5)-- cycle;
+       \draw (0,0,0) -- (1,0,0) -- (0.6, 1, 0.5)node[above]{$\varphi_3^{(e)}$} -- cycle;
+       \draw[dotted] (0,0,0) --node[left]{$1$} (0,1,0);
+       \draw[dotted] (1,0,0) --node[right]{$1$} (1,1,0);
+       \draw[dotted] (0.6,0,0.5) --node[right]{$1$} (0.6,1,0.5);
+      \end{tikzpicture}
+   \end{center}
+   \captionof{figure}{Plot of local basis function $\varphi_1^{(e)}$,
+   $\varphi_2^{(e)}$, and $\varphi_3^{(e)}$, on some arbatrairy element
+ $E_e$.}\label{fig:local_basis}
+\end{Figure}
+
+\subsection{Global Basis}%
+\label{sub:global_basis}
+
+We now construct the global basis functions. We chose the global basis
+functions to be associated with a vertex of the mesh, thus for $N$ mesh
+verticies are $N$ global basis functions. We want the global basis functions be
+be $1$ at their associated vertex, and at all other mesh verticies the global
+basis function should be $0$. Inorder to achive this we construct the global
+basis functions as a piecewise combination of $n$ different local basis
+functions, where $n$ is the number of elements that share a givin vertex. There
+is not a simple mathematical expression for the global basis function, as it
+greatly depends on the triangular mesh, and the current vertex index. However,
+an example of a global basis function is shown in figure
+\ref{fig:global_basis}.
+
+\begin{Figure}
+   \begin{center}
+      \begin{tikzpicture}
+        \draw (0,2,0) -- (1,0,-2) -- (2,0,0) -- cycle;
+        \draw (0,2,0) -- (2,0,0) -- (1,0,1) -- cycle;
+        \draw (0,2,0) -- (1,0,1) -- (-2,0,1) -- cycle;
+        \draw (0,2,0) -- (-2,0,1) -- (-1,0,-2) -- cycle;
+        \draw (0,2,0) -- (-1,0,-2) -- (1,0,-2) -- cycle;
+
+        \draw[thick] (0,0,0) -- (1,0,-2) -- (2,0,0) -- cycle;
+        \draw[thick] (0,0,0) -- (2,0,0) -- (1,0,1) -- cycle;
+        \draw[thick] (0,0,0) -- (1,0,1) -- (-2,0,1) -- cycle;
+        \draw[thick] (0,0,0) -- (-2,0,1) -- (-1,0,-2) -- cycle;
+        \draw[thick] (0,0,0) -- (-1,0,-2) -- (1,0,-2) -- cycle;
+
+        \draw[dotted, thick] (0,0,0)node[below left]{$n$} -- (0,2,0) node[above]{$\varphi_n$};
+      \end{tikzpicture}
+   \end{center}
+   \captionof{figure}{Gloabal basis function $\varphi_n$, demonstrating a
+   potential shape of the global basis functions on a limited portion of a
+ triangular mesh.}\label{fig:global_basis}
+\end{Figure}
+
+\subsection{Local System}%
+\label{sub:local_system}
+
+We use our definition of the local basis functions to apply in the construction
+of an element specific system of equations from (\ref{eq:mat_rep}). Thus we
+construct our local systems of equations in matrix form as
+\begin{align*}
+  \left(C^{(e)}+K^{(e)}\right)T^{(e)}=F^{(e)}.
+\end{align*}
+
+Here the elements of each matrix is only determined by the local basis function
+of the element $e$, and the size of the matrix is equivalent to the number of
+local degrees fo freedom, whihc in this case is two (One for each vertex of the
+element). The elements of these matrices can be found through the following
+equations
+\begin{align}\label{eq:local_int}
+  c_{ij}^{(e)}&=\rho
+  c_p\int_{E_e}\varphi_i^{(e)}\vec{u}\cdot\nabla\varphi_j^{(e)}d\vec{x}\quad&i,j&=1,2,3\\
+  k_{ij}^{(e)}&=\int_{E_e}\varphi_i^{(e)}\cdot\nabla\varphi_j^{(e)}d\vec{x}\quad&i,j&=1,2,3\\
+  f_i^{(e)}&=\int_{E_e}\varphi_i^{(e)}fd\vec{x}\quad&i&=1,2,3.
+\end{align}
+Thus we only need to compute these local matrix elements, then construct the
+global system utilizing all of the local matricies.
+
+\subsection{Numerical Integration}%
+\label{sub:numerical_integration}
+
+As it can be seen in equation (\ref{eq:local_int}) we need to be able to
+integrate over the element $E_e$. Inorder to achive this integration over a
+triangular element, we implement the Barycentric coordinate systems, and a
+method of numerical integration called Gaussian Quadrature.
+
+By using the Barycentric coordinates, our integrals become significantly easier
+to evaluate.
+\begin{align*}
+  I&=\int_{E_e}f(x,y)da\\
+   &=\int_0^1\int_0^1f\left(\bar{x}, \bar{y}\right)d\lambda_1 d\lambda_2,
+\end{align*}
+where $\bar{x}$ and $\bar{y}$ are the $x$ and $y$ coordinates that are achived
+from the coordinate transfer from Barycentric to trilinear.
+
+Using this formulation of the integral, any numberical integration methods
+should suffice. We will implement 2D Gaussian Quadrature, defined on the
+triangle.
+
+Gaussian Quadrature is a method that approximates the integral such that
+\begin{align*}
+  \int f(x)dx\approx \sum_{i=1}^nw_if(x_i),
+\end{align*}
+where $w_i$, and $x_i$ are specified weights and positions respectivly. For the
+2D alternative, we can express this in the form
+\begin{align*}
+  \int_\gamma f(x,y) dxdy\approx \frac{1}{2}\sum_{i=1}^nw_if(x_i,y_i).
+\end{align*}
+Where $\gamma$ is the triangle with verticies $(0,0)$, $(1,0)$, and $(0,1)$.
+This is the exact verticies that are provided by the triangle over $\lambda_1$
+and $\lambda_2$. Thus we use the gaussian quadrature implementation in the
+Barycentric coordinate system, and convert the coordinates into trilinear
+coordinates inorder to evaluate whatever function at the point.
+
+The methods for constructing the weights and positions of sample points for
+this form of integration is out of the scope of this paper, and so will be
+ignored. We utilize the weights and points constructed by \cite{GQ}.
+
+\end{document}

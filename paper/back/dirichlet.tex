@@ -1,0 +1,74 @@
+\documentclass[../fem.tex]{subfiles}
+
+\begin{document}
+\section{Dirichlet Boundary Conditions}%
+\label{sec:dirichlet_boundary_conditions}
+
+Now that the global system of equations has been constructed, we are able to
+impose the Dirichlet boundary conditions to the system.
+
+With our global system of equations in the general form of
+
+\begin{align}\label{eq:global_sys}
+  \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1N}\\
+    a_{21} & a_{22} & \cdots & a_{2N}\\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{N1} & a_{N2} & \cdots & a_{NN}
+  \end{pmatrix}
+  \begin{pmatrix}
+    T_1 \\ T_2 \\ \vdots \\ T_N
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    F_1 \\ F_2 \\ \vdots \\ F_N
+  \end{pmatrix}.
+\end{align}
+
+This system of equations is not well behaved, as we have neglected to prescribe
+the boundary conditions until now. This means that our matrix is overdetermined
+and cannot be solved. In order to fix this we must apply the boundary
+conditions. By the Dirichlet boundary conditions we know that for any vertex in
+the mesh that is on the boundary $\vec{x_i}\in\Gamma$,
+\begin{align*}
+  T_i=T_0(\vec{x_i}).
+\end{align*}
+
+We modify the system of equations by overwriting the equations associated with
+the $T_i$ value, to satisfy the conditions. This can be done like so
+\begin{align*}
+  a_{ij}&=\delta_{ij}\quad j=1,\ldots,N\\
+  F_i&=T_0(\vec{x_i}),
+\end{align*}
+where $\delta$ is the Kronecker delta function
+\begin{align*}
+  \delta_{ij}=\begin{cases}
+    0 & j\neq i\\
+    1 & j = i
+  \end{cases}.
+\end{align*}
+
+This modification must be preformed for each vertex of the triangulation that
+lies on the boundary. This process will present a matrix vaguely of the form
+\begin{align*}
+  \resizebox{\columnwidth}{!}{$
+  \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1(N-1)}& a_{1N}\\
+    0 & 1 & \cdots & 0 & 0\\
+    a_{31} & a_{32} & \cdots & a_{3(N-1)} & a_{3N}\\
+    \vdots & \vdots & \ddots & \vdots & \vdots\\
+    0 & 0 & \cdots & 1 & 0\\
+    a_{N1} & a_{N2} & \cdots & a_{N(N-1)} & a_{NN}
+  \end{pmatrix}
+  \begin{pmatrix}
+    T_1 \\ T_2 \\ T_3 \\ \vdots \\ T_{N-1} \\ T_N
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    F_1 \\ T_2 \\ F_3 \\ \vdots \\ T_{N-1} \\ F_N
+\end{pmatrix}.$}
+\end{align*}
+This example shows a matrix where the $1$, and $N-1$ vertices lie on the
+boundary, and so those equations are rewritten.
+
+\end{document}

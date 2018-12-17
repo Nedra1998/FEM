@@ -1,0 +1,68 @@
+\documentclass[../fem.tex]{subfiles}
+
+\begin{document}
+\section{Discretization}%
+\label{sec:discretization}
+
+We define our approximate solution to be in the Soblev space $H^1(\Omega)$. The
+Soblev space is a space of continuous functions that are infinitily
+differentiable. The span of the Soblev space is infinite, so we will consider a
+finite subspace $V_h\subset H^1(\Omega)$, and we will construct our
+approximation in this subspace. We define a set of basis functions for the
+subspace $V_h$ to be $\left\{\varphi_j\right\}$. We leave these basis functions
+as arbatrairy functions for now, and will show the process for the
+constructions of the basis functions in a later section.
+
+The approximation of $T$ we define as $T_h$. It is posible to express this
+apprximation as a linear combination of the basis functions $\varphi_j$ for the
+finite subspace $V_h$ that $T_h$ is within. We write this expression as
+\begin{align}\label{eq:lin_approx}
+  T_h=\sum_{j=1}^NT_j\varphi_j(\vec{x}),
+\end{align}
+where $T_j$ is a constant that we solve for later to achieve our final
+apprximation. We can now substitute our expression for $T_h$ for $T$ in the
+continuous variational problem (\ref{eq:cvp}). Since the continuous variational
+problem was satisfied for any test function, we make the decision to use
+$\varphi_j$ as the test functions. These two substitutions provide us with the
+expression
+\begin{align*}
+  \int_\Omega\rho c_p \varphi_i\vec{u}&\cdot\nabla\left[\sum_{j=1}^NT_j\varphi_j\right]d\vec{x}\\
+  &+\int_\Omega k\nabla
+  \varphi_i\cdot\nabla\left[\sum_{j=1}^NT_j\varphi_j\right]d\vec{x}
+  =\int_\Omega \varphi_ifd\vec{x}.
+\end{align*}
+Which we then rewrite as
+\begin{align*}
+  \sum_{j=1}^N&\left[T_j\int_\Omega\rho c_p\varphi_i\vec{u}\cdot\nabla\varphi_jd\vec{x}\right]\\
+  &+ \sum_{j=1}^N\left[T_j\int_\Omega
+  k\nabla\varphi_i\cdot\nabla\varphi_jd\vec{x}\right]=\int_\Omega\varphi_ifd\vec{x}.
+\end{align*}
+
+This provides us with a system of equations for $i=1,2,\ldots,N$. Thus we
+express this system in matrix notation as
+\begin{align}\label{eq:mat_rep}
+  (C+K)T=F.
+\end{align}
+Where $T$ is a vector in $\R^N$ of the $T_j$ constants, and the elements of the
+matricies $C$, $K$, and $F$ are defined as
+\begin{align*}
+  c_{ij}&=\rho c_p\int_\Omega\varphi_i\vec{u}\cdot\nabla\varphi_jd\vec{x}\quad
+        &i,j&=1,\ldots,N\\
+  k_{ij}&=k\int_\Omega\nabla\varphi_i\cdot\nabla\varphi_jd\vec{x}\quad
+        &i,j&=1,\ldots,N\\
+  f_i&=\int_\Omega\varphi_ifd\vec{x}\quad&i&=1,\ldots,N.
+\end{align*}
+
+We note that is is often simpler to consider a matrix $A$ such that $A=C+K$,
+then our expression for the system of equations becomes
+\begin{align*}
+   AT=F.
+\end{align*}
+
+This expression tends to be simpler to implement, and so we will continue by
+using this expression. If other (non Dirichlet) boundary conditions had been
+implemented, this expression for the system of equations would be different. As
+the boundary conditions integrals are not zero, and so they will add an
+additional term to this system of equations.
+
+\end{document}

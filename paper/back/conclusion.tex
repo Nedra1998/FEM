@@ -1,0 +1,31 @@
+\documentclass[../fem.tex]{subfiles}
+
+\begin{document}
+\section{Conclusion}%
+\label{sec:conclusion}
+
+The process of Finite Element Analysis is extreamly useful in practical
+implementations for numerically solving partial differential equations on some
+provided domain. The main stages of the process are to first determin the
+continuous variational formulation of the partial differatial equation, then
+use that expression to construct the system of equations. We then generate a
+mesh, and determin the system of equations for each individual element, and use
+the element systems to modify the global system of equations. Then utilizing an
+algorithm for approximating the solution to the system of linear equations, we
+are then able to determin the final approximation of the system.
+
+An advantage of this method, is the amount of the process which can be
+automated. The only need for human computation is for changing the differential
+equation, the dimension of the problem (1D, 2D, or 3D), and for changing the
+conditions at the boundaries (Dirichlet, Neuman, Newton, etc.). The reset of
+the process can be compleatly handled by a computer. Because of this, many
+variables such as the shape of the geometry, and the values at the boundaries
+can be altered without any need for a new program.
+
+Finite Element Methods is one of the industry leading methods for the
+approximation of partial differential equations, and is frequently used in many
+applications. This basic introduction to the process should provide an
+introductory level of knowledge on the mathematics, and the algorithms that are
+utilized to implement finite elment methods.
+
+\end{document}
