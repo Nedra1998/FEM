@@ -10,7 +10,7 @@ geometry:margins: 1in
 The primary learning objective is to learn and understand the mathematics of
 the finite element method. This is a method of numerical approximation used in
 differential equations. This builds off the of Math 305 course I took last
-year. This I will program an implementation of the method.
+year. Then I will program an implementation of the method.
 
 # 2
 
@@ -37,4 +37,4 @@ independent study.
 # 5
 
 We have arranged to meet weekly on Thursday morning, then we are also able to
-communicate over email. Does it work? Hello Why is it not updating?
+communicate over email.
