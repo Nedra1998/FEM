@@ -1,0 +1,43 @@
+//
+// layout.dot
+//
+// Created on 31-01-2019 by arden
+//
+digraph FEM {
+  user [label="User" shape=box];
+  pslg [label="PSLG/BC" shape=box];
+  ucmesh [label="Unconstrianed Mesh",shape=box];
+  cmesh [label="Constrained Mesh",shape=box];
+  mesh [label="Mesh/Boundary Conditions" shape=box];
+  f [label="$f$" shape=box];
+  basis [label="Basis" shape=box];
+  fv [label="$\vec{F}$" shape=box];
+  matrix [label="$[M]$" shape=box];
+  las [label="LAS" shape=box];
+  uv [label="$\vec{u}$" shape=box];
+  plot [label="Plot" shape=box];
+  file [label="FILE" shape=box];
+
+  splines=ortho;
+
+  user -> pslg[style=solid];
+  user -> f[style=dotted];
+  pslg -> ucmesh[style=solid];
+  ucmesh -> cmesh[style=dotted];
+  cmesh -> mesh[style=dotted];
+  pslg -> cmesh[style=dotted];
+  pslg -> mesh[style=dashed];
+  pslg -> file[style=solid];
+  mesh -> file[style=dotted,dir=both];
+  matrix -> file[style=solid,dir=both];
+  uv -> file[style=solid,dir=both];
+  mesh -> basis[style=dashed];
+  f -> fv[style=dashed]
+  mesh -> fv[style=dashed]
+  basis -> matrix[style=dashed];
+  fv -> las[style=solid];
+  matrix -> las[style=solid];
+  las -> uv[style=solid];
+  uv -> plot[style=dashed];
+  basis -> plot[style=dashed];
+}
