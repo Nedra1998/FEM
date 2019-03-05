@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 
-from math import *
 import numpy as np
-from numpy.linalg import solve
-from pprint import pprint
-import matplotlib.pyplot as plt
 
 WEIGHT = [
     0.3335674062677772E-03, 0.7327880811491046E-03, 0.1033723454167925E-02,
@@ -77,10 +73,8 @@ COORD = [
     0.1777991514999999E-01, 0.9627180345898023
 ]
 
-PTS = [(0, 0), (-1, 1), (1, 1), (1, -1), (-1, -1), (-0.5, 0), (0, 0.5),
-       (0.5, 0), (0, -0.5)]
-TRI = [(1, 6, 2), (1, 4, 5), (1, 5, 6), (2, 6, 7), (2, 7, 3), (6, 5, 0),
-       (6, 0, 7), (0, 5, 8), (0, 8, 7), (5, 4, 8), (8, 3, 7), (8, 4, 3)]
+PTS = [(0,0), (1,0), (0,1), (1,1)]
+TRI = [(0,1,2), (1,3,2)]
 
 
 def integrate(func, tri):
@@ -96,7 +90,8 @@ def integrate(func, tri):
     y1 = PTS[tri[0]][1]
     y2 = PTS[tri[1]][1]
     y3 = PTS[tri[2]][1]
-    return sum([
+    A = np.abs((x1*(y2-y3)+x2*(y3-y1)+x3*(y1-y2))/2.0)
+    return A * sum([
         WEIGHT[i] * func(COORD[2 * i] * x1 + COORD[(2 * i) + 1] * x2 +
                          (1.0 - COORD[2 * i] - COORD[(2 * i) + 1]) * x3,
                          COORD[2 * i] * y1 + COORD[(2 * i) + 1] * y2 +
@@ -104,111 +99,28 @@ def integrate(func, tri):
         for i in range(len(WEIGHT))
     ])
 
+def trapazoidal(f, ax, bx, ay, by, h=0.001):
+    Nx = int(np.abs(bx - ax) / h)
+    Ny = int(np.abs(by - ay) / h)
+    corner = 0.25*(f(ax, ay) + f(ax, by) + f(bx, ay) + f(bx, by))
+    edge = 0.5 * (sum([f(ax, ay + i*h) for i in range(1, Ny)])
+                + sum([f(bx, ay + i * h) for i in range(1, Ny)])
+                + sum([f(ax + i*h,ay) for i in range(1, Nx)])
+                + sum([f(ax+i*h, by) for i in range(1, Nx)]))
+    inner = sum([sum([f(ax+i*h, ay+k*h) for k in range(1, Ny)]) for i in range(1, Nx)])
+    return (h**2) * (corner + edge + inner)
 
-def pder(func, x, y, dx, dy):
-    """
-    This preforms the partial derivative using finite difference, This is the
-    exact same thing as you would normaly think, just with a higher degree of
-    percission (8). Thus it should be able to more accuratly differentiate
-    higher order polynomials, and provide a more accurate approximation.
-
-    I think this might be overkill, I'm only ever differentiating the local
-    basis functions which are planes... So this is definently overkill, but
-    it can't make the approximation worse. Right?
-    """
-    return (1.0 / 280.0 * func(x - 4 * dx, y - 4 * dy) - 4.0 / 105 * func(
-        x - 3 * dx, y - 3 * dy) + 1.0 / 5.0 * func(x - 2 * dx, y - 2 * dy) -
-            4.0 / 5.0 * func(x - dx, y - dy) + 4.0 / 5.0 * func(x + dx, y + dy)
-            - 1.0 / 5.0 * func(x + 2 * dx, y + 2 * dy) +
-            4.0 / 105.0 * func(x + 3 * dx, y + 3 * dy) -
-            1.0 / 280.0 * func(x + 4 * dx, y + 4 * dy)) / (dx + dy)
-
-
-def basis(tri, vert):
-    """This gets the basis function, which is the barycentric coordinate
-    system, I need to check that this is a valid way of handling it. I think
-    that is should be."""
-    x1 = PTS[tri[vert]][0]
-    y1 = PTS[tri[vert]][1]
-    x2 = PTS[tri[(vert + 1) % 3]][0]
-    y2 = PTS[tri[(vert + 1) % 3]][1]
-    x3 = PTS[tri[(vert + 2) % 3]][0]
-    y3 = PTS[tri[(vert + 2) % 3]][1]
-    return lambda x, y: ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3))
-
-
-def plot_func(func, res, name):
-    """I was just using this to generate the plot of the forcing function."""
-    data = np.zeros((res, res))
-    for i, x in enumerate(list(np.linspace(-1, 1, res))):
-        for j, y in enumerate(list(np.linspace(-1, 1, res))):
-            data[res - i - 1][j] = func(x, y)
-    plt.imsave("{}.png".format(name), data, vmin=0, vmax=4.5, cmap='jet')
-
+def func(x, y):
+    # return 2
+    return np.power(x, 2) + np.power(y, 2)
 
 def main():
-    # Some constants of the heat equation
-    rho = 1
-    cp = 1
-    u = (1, 1)
-    # The forcing function
-    fa = 0.0
-    fb = 0.5
-    real = lambda x, y: (x-fa)*(x-fa)+(y-fb)*(y-fb)
-    f = lambda x, y: 2*(x-fa)+2*(y-fb)-4
-    Fe = [[]]
-    Ae = [[]]
-    # Initalize global matricies
-    F = np.zeros((9, 1))
-    A = np.zeros((9, 9))
-
-    # Do for every element in the mesh
-    for e in range(len(TRI)):
-        # Terrible stuff to make lists start at 1 to match the math
-        Fe.append([0])
-        Ae.append([[]])
-        # Do for all three verticies of the triangle
-        for i in range(3):
-            Ae[-1].append([0])
-            # Get the local basis function associated with the ith vertex of
-            # the triangle.
-            phi_i = basis(TRI[e], i)
-            # Solve for the F_i^(e) and add that to the relavant global matrix
-            # value.
-            Fe[-1].append(integrate(lambda x, y: phi_i(x, y) * f(x, y), TRI[e]))
-            F[TRI[e][i]] += Fe[-1][-1]
-            # Do for all three verticies of the triangle
-            for j in range(3):
-                # Get the local basis function associated with the jth vertex
-                # of the triangle.
-                phi_j = basis(TRI[e], j)
-                # Since A=C+K we first solve for C then solve for K then add
-                # C+K to the local ang associated global matrix.
-                c = integrate(lambda x, y: phi_i(x,y)*pder(phi_j, x, y, 0.001, 0)+phi_i(x,y)*pder(phi_j,x,y,0,0.001), TRI[e])
-                k = integrate(lambda x, y: pder(phi_i, x, y, 0.001, 0)*pder(phi_j,x,y,0.001,0)+pder(phi_i,x,y,0,0.001)*pder(phi_j,x,y,0,0.001), TRI[e])
-                Ae[-1][-1].append(c + k)
-                A[TRI[e][i], TRI[e][j]] += Ae[-1][-1][-1]
-            # Note that the A_ij can somewhat be though of as associateing to
-            # the edges of the mesh, so A_ij has some contribution from the
-            # two trianges that share that edge, then the A_ii have
-            # contributions from all trianges that use i as a vertex.
-
-    F = F.reshape((9,))
-
-    # Apply boundary conditions
-    A[1] = [0, 1, 0, 0, 0, 0, 0, 0, 0]
-    A[2] = [0, 0, 1, 0, 0, 0, 0, 0, 0]
-    A[3] = [0, 0, 0, 1, 0, 0, 0, 0, 0]
-    A[4] = [0, 0, 0, 0, 1, 0, 0, 0, 0]
-    F[1] = real(-1,1)
-    F[2] = real(1,1)
-    F[3] = real(1,-1)
-    F[4] = real(-1,-1)
-    # Solve for other case
-    x = solve(A, F)
-    print("SOLN:", x)
-    # plot_func(f, 500, "forcing")
-
+    global PTS
+    print("GAUSSIAN:    {}".format(integrate(func, TRI[0]) + integrate(func, TRI[1])))
+    print("TRAPAZOIDAL: {}".format(trapazoidal(func, 0, 1, 0, 1)))
+    PTS = [(0,0), (5,0), (0,1), (5,1)]
+    print("GAUSSIAN:    {}".format(integrate(func, TRI[0]) + integrate(func, TRI[1])))
+    print("TRAPAZOIDAL: {}".format(trapazoidal(func, 0, 5, 0, 1)))
 
 if __name__ == "__main__":
     main()

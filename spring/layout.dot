@@ -21,7 +21,7 @@ digraph FEM {
   splines=ortho;
 
   user -> pslg[style=solid];
-  user -> f[style=dotted];
+  user -> f[style=solid];
   pslg -> ucmesh[style=solid];
   ucmesh -> cmesh[style=dotted];
   cmesh -> mesh[style=dotted];
@@ -31,13 +31,13 @@ digraph FEM {
   mesh -> file[style=dotted,dir=both];
   matrix -> file[style=solid,dir=both];
   uv -> file[style=solid,dir=both];
-  mesh -> basis[style=dashed];
-  f -> fv[style=dashed]
-  mesh -> fv[style=dashed]
-  basis -> matrix[style=dashed];
+  mesh -> basis[style=solid];
+  f -> fv[style=dotted]
+  basis -> fv[style=dotted]
+  basis -> matrix[style=dotted];
   fv -> las[style=solid];
   matrix -> las[style=solid];
   las -> uv[style=solid];
-  uv -> plot[style=dashed];
-  basis -> plot[style=dashed];
+  uv -> plot[style=solid];
+  basis -> plot[style=solid];
 }
