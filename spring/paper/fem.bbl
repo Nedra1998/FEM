@@ -1,0 +1,91 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{BBC{\etalchar{+}}93}
+
+\bibitem[BBC{\etalchar{+}}93]{T_LS}
+Richard Barrett, Michael Berry, Tony~F. Chan, James Demmel, June~M. Donato,
+  Jack Dongarra, Victor Eijkhout, Roldan Pozo, Charels Romine, and Hen~Van der
+  Vorst.
+\newblock {\em Templates for the Solution of Linear Systems: Buildign Blocks
+  for Iterative Methods}.
+\newblock Society for Industrial and Applied Mathematics, 2 edition, 1993.
+
+\bibitem[Che89]{C_CDT}
+L.~Paul Chew.
+\newblock Contrained delaunay triangulations.
+\newblock {\em Algorithmica}, 4:92--108, 1989.
+
+\bibitem[Che93]{C_REF}
+L.~Paul Chew.
+\newblock Guaranteed-quality mesh generation for curved surfaces.
+\newblock {\em 9th Annual Symposium on Computation Geometry}, pages 275--280,
+  1993.
+
+\bibitem[Dv08]{DZ_CDT}
+V.~Domiter and B.~\v{Z}alik.
+\newblock Sweep-line algorithm for constrained delaunay triangulation.
+\newblock {\em International Journal of Geographical Information Science},
+  22(4):449--462, 2008.
+
+\bibitem[HKA12]{GQ}
+Farzana Hussain, M.~S. Karim, and Razwan Ahamad.
+\newblock Appropriate gaussian quadrature formulae for triangle.
+\newblock {\em International Journal of Applied Mathematics and Computation},
+  4(1):24--38, 2012.
+
+\bibitem[KH15]{KH}
+Dmitri Kuzmin and Jari H{\"a}m{\"a}l{\"a}inen.
+\newblock {\em Finite Element Methods for Computational Fluid Dynamics}.
+\newblock Society for Industrial and Applied Mathematics, Philadelphia, 2015.
+
+\bibitem[Kry31]{KRYLOV}
+A.~N. Krylov.
+\newblock On the numerical solution of the equation by which in technical
+  questions frequencies of small oscillations of material systems are
+  determined.
+\newblock {\em News of Academy of Sciences of the USSR}, 7(4):491--539, 1931.
+
+\bibitem[Rup95]{R_REF}
+Jim Ruppert.
+\newblock A delaunay refinement algorithm for quality 2-dimensional mesh
+  generation.
+\newblock {\em Journal of Algorithms}, 18(3):548--585, 1995.
+
+\bibitem[She96]{T_SOF}
+Jonathan~Richard Shewchuk.
+\newblock Triangle: {E}ngineering a {2D} {Q}uality {M}esh {G}enerator and
+  {D}elaunay {T}riangulator.
+\newblock In Ming~C. Lin and Dinesh Manocha, editors, {\em Applied
+  Computational Geometry: Towards Geometric Engineering}, volume 1148 of {\em
+  Lecture Notes in Computer Science}, pages 203--222. Springer-Verlag, May
+  1996.
+\newblock From the First ACM Workshop on Applied Computational Geometry.
+
+\bibitem[She02]{T_ALG}
+Jonathan~Richard Shewchuk.
+\newblock Delaunay refinement algorithms for triangular mesh generation.
+\newblock {\em Computational Geometry: Theory and Applications}, 22(1-3):21,74,
+  2002.
+
+\bibitem[Slo87]{S_DT}
+S.~W. Sloan.
+\newblock A fast algorithm for construction delaunay triangulations in the
+  plane.
+\newblock {\em Adv. Eng. Software}, 9(1):34--42, 1987.
+
+\bibitem[Slo93]{S_CDT}
+S.~W. Sloan.
+\newblock A fast algorithm for generating constrained delaunay triangulations.
+\newblock {\em Computers \& Structures}, 47(3):441--450, 1993.
+
+\bibitem[SS86]{SS_GMRES}
+Youcef Saad and Martin~H. Schultz.
+\newblock Gmres: A generalized minimal residual algorithm for solving
+  nonsymmetric linear systems.
+\newblock {\em Sci. Stat. Comput.}, 7(3):856--869, 1986.
+
+\bibitem[\v{Z}05]{Z_DT}
+Borut \v{Z}alik.
+\newblock An efficient sweep-line delaunay triangulation algorithm.
+\newblock {\em Computer-Aided Design}, 37:1027--1038, 2005.
+
+\end{thebibliography}

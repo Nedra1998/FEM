@@ -1,0 +1,64 @@
+\documentclass[10pt]{amsart}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\usepackage{enumitem}
+
+\usepackage[margin=1in]{geometry}
+
+\usepackage{amsthm}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{subfiles}
+\usepackage{minted}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{graphics}
+
+\title{Finite Element Analysis}
+\author{Arden Rasmussen}
+\date{\today}
+
+\newenvironment{Figure}
+{\par\medskip\noindent\minipage{\linewidth}}
+{\endminipage\par\medskip}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+\newtheorem{definition}{Definition}[section]
+
+\renewcommand{\thealgorithm}{\arabic{section}.\arabic{algorithm}}
+\renewcommand\thefigure{\thesection.\arabic{figure}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+
+\newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\px}{{\partial x}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  Finite Element Analysis (FEA) is the computational process prescribed by
+  Finite Element Methods (FEM) in order to solve for numerical solutions to
+  boundary value problems for partial differential equations. Finite Element
+  Analysis is used in many specializations of mechanical engineering, and is
+  used frequently in that discipline, and occasionally in other disciplines as
+  well. This paper provides an introduction to the mathematics of Finite
+  Element Methods, and why they are useful. Then, it provides and explains the
+  simplistic implementation of Finite Element Analysis. The implementation
+  provided with this paper is written in C++, and is commented for better
+  readability of the code.
+\end{abstract}
+
+\begin{multicols}{2}
+  \subfile{sec/intro}
+  \subfile{sec/prob}
+  \subfile{sec/cond}
+
+  \nocite{*}
+  \bibliographystyle{alpha}
+  \bibliography{references}
+\end{multicols}
+\end{document}

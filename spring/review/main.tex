@@ -1,0 +1,74 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{physics}
+
+\title{FEM}
+\author{Arden Rasmussen}
+\date{\today}
+
+\newcommand{\p}{\partial}
+\newcommand{\Om}{\Omega}
+\newcommand{\om}{\omega(x)}
+\newcommand{\ph}{\varphi}
+\newcommand{\wt}[1]{\widetilde{#1}}
+
+\begin{document}
+\maketitle
+
+\section{Time dependent}%
+\label{sec:time_dependent}
+
+\begin{align*}
+  \p_tu&=Lu+f\\
+   L&=A^{ij}\p_i\p_j+B^i\p_i+C\\
+   R(x,t)&=\p_tu-Lu-f\\
+   \p_t\ip{u}{\ph_i}&=\ip{Lu}{\ph_i}+\ip{f}{\ph_i}\\
+   \sum_j\ip{\ph_j}{\ph_i}\p_tu_j&=\sum_j\ip{L\ph_j}{\ph_i}u_j+\ip{f}{\ph_i}\\
+   G\p_t U &=MU+F\\
+   \wt{A}&=G+\frac{1}{2}\Delta tm\\
+   \wt{B}&=G-\frac{1}{2}\Delta tm\\
+   \wt{C}^n&=\Delta t\frac{F^{n+1}+F^n}{2}\\
+   Q^n&=\wt{B}U^n+\wt{C}^n\\
+   \wt{A}U^{n+1}&=Q^n
+\end{align*}
+
+\subsection{Notes}%
+\label{sub:notes}
+
+\begin{itemize}
+  \item $G$ and $M$ are only dependent on the mesh, and so they can be computed
+    once and saved.
+  \item $F$ is only dependent on time $t$, so it can be computed separately
+    from the main process.
+  \item $\wt{A}$, $\wt{B}$ are independent of both time $t$ and iteration $n$,
+    so they can be computed once and then saved.
+  \item $\wt{C}^n$ is only dependent on $n$ and $t$, it is not dependent on the
+    iteration, it is not necessary to know $U^n$ in order to compute
+    $\wt{C}^n$.
+\end{itemize}
+
+\section{Time independent}%
+\label{sec:time_indpendent}
+
+\begin{align*}
+   0&=Lu+f\\
+   L&=A^{ij}\p_i\p_j+B^i\p_i+C\\
+   R(x,t)&=Lu+f\\
+   0&=\ip{Lu}{\ph_i}+\ip{f}{\ph_i}\\
+   \sum_j\ip{L\ph_j}{\ph_i}u_j&=-\ip{f}{\ph_i}\\
+   MU&=-F\\
+\end{align*}
+
+\subsection{Notes}%
+\label{sub:notes}
+
+\begin{itemize}
+  \item $M$ is dependent only on the mesh, and so can be computed once and
+    saved.
+  \item $F$ is only dependent on the forcing function, so it can be computed
+    once there and saved.
+\end{itemize}
+
+\end{document}

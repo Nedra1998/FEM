@@ -1,0 +1,41 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Introduction}%
+\label{sec:introduction}
+
+Finite element methods is a computational process used for the determination of
+an approximate solution to a given partial differential equation, with given
+forcing term and boundary conditions. Finite element analysis is the practical
+implementation of finite element methods computationally on a physical problem
+in order to ascertain more insight into the physical system in question. We
+will first explain finite element methods, and provide a thorough introduction
+into the mathematics behind the methods. Then we will also provide an
+explanation of finite element analysis, demonstrating the mathematics of FEM
+with respect to an example problem, and develop a computational program that we
+will use to solve the partial differential equation using FEM.
+
+Finite element methods is very useful, due to the fact that there are only a
+few situations where a solution to a partial differential equation can be found
+analytically, so we need methods to find a close approximation of the actual
+solution. Currently there are a handful of methods that can be used for this
+purpose, however finite element methods are currently the best methods that we
+know of. Meaning that the error between the analytical solution and the
+solution constructed by finite element analysis converges to zero faster than
+other methods.
+
+The process that we utilize for constructing the finite element methods is
+called the Galerkin method, and is presented by \cite{KH}. We will closely
+follow the method outlined by their paper. For this introduction we will limit
+the scope to two dimensions, but the mathematics can be easily generalized to
+higher dimensions, and we will make note of the sections that would have to
+change for higher dimension problems.
+
+We divide this paper into two major parts. Part 1 explains the process of FEM,
+and demonstrates the mathematics and the concepts behind the method, and how it
+can be used to solve the partial differential equations. Part 2 explains the
+process of FEA, and discusses the algorithms, data structures, and
+optimizations that can be done to construct a program to efficiently compute
+the solution utilizing the previously discussed FEM.
+
+\end{document}

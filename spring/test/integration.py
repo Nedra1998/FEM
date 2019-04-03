@@ -120,7 +120,7 @@ def main():
     print("TRAPAZOIDAL: {}".format(trapazoidal(func, 0, 1, 0, 1)))
     PTS = [(0,0), (5,0), (0,1), (5,1)]
     print("GAUSSIAN:    {}".format(integrate(func, TRI[0]) + integrate(func, TRI[1])))
-    print("TRAPAZOIDAL: {}".format(trapazoidal(func, 0, 5, 0, 1)))
+    # print("TRAPAZOIDAL: {}".format(trapazoidal(func, 0, 5, 0, 1)))
 
 if __name__ == "__main__":
     main()

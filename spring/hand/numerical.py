@@ -77,10 +77,15 @@ COORD = [
     0.1777991514999999E-01, 0.9627180345898023
 ]
 
-PTS = [(0, 0), (-1, 1), (1, 1), (1, -1), (-1, -1), (-0.5, 0), (0, 0.5),
-       (0.5, 0), (0, -0.5)]
-TRI = [(1, 6, 2), (1, 4, 5), (1, 5, 6), (2, 6, 7), (2, 7, 3), (6, 5, 0),
-       (6, 0, 7), (0, 5, 8), (0, 8, 7), (5, 4, 8), (8, 3, 7), (8, 4, 3)]
+# PTS = [(0, 0), (-1, 1), (1, 1), (1, -1), (-1, -1), (-0.5, 0), (0, 0.5),
+#        (0.5, 0), (0, -0.5)]
+# TRI = [(1, 6, 2), (1, 4, 5), (1, 5, 6), (2, 6, 7), (2, 7, 3), (6, 5, 0),
+#        (6, 0, 7), (0, 5, 8), (0, 8, 7), (5, 4, 8), (8, 3, 7), (8, 4, 3)]
+# TRI = [(0, 8, 5), (8, 0, 2), (7, 1, 5), (5, 1, 0), (5, 8, 4), (8, 6, 4),
+#        (6, 8, 2), (7, 6, 3), (6, 7, 4), (3, 6, 2), (7, 3, 1), (4, 7, 5)]
+
+PTS = [(-1, -1), (-1, 1), (1, -1), (1, 1), (0, 0)]
+TRI = [(2, 3, 4), (1, 0, 4), (4, 3, 1), (0, 2, 4)]
 
 
 def integrate(func, tri):
@@ -96,7 +101,8 @@ def integrate(func, tri):
     y1 = PTS[tri[0]][1]
     y2 = PTS[tri[1]][1]
     y3 = PTS[tri[2]][1]
-    return sum([
+    A = np.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0)
+    return A * sum([
         WEIGHT[i] * func(COORD[2 * i] * x1 + COORD[(2 * i) + 1] * x2 +
                          (1.0 - COORD[2 * i] - COORD[(2 * i) + 1]) * x3,
                          COORD[2 * i] * y1 + COORD[(2 * i) + 1] * y2 +
@@ -154,29 +160,27 @@ def main():
     # The forcing function
     fa = 0.0
     fb = 0.5
-    real = lambda x, y: (x-fa)*(x-fa)+(y-fb)*(y-fb)
-    f = lambda x, y: 2*(x-fa)+2*(y-fb)-4
+    # real = lambda x, y: (x - fa) * (x - fa) + (y - fb) * (y - fb)
+    # f = lambda x, y: 2 * (x - fa) + 2 * (y - fb) - 4
+    f = lambda x, y: 0.0
     Fe = [[]]
     Ae = [[]]
     # Initalize global matricies
-    F = np.zeros((9, 1))
-    A = np.zeros((9, 9))
+    F = np.zeros((5, 1))
+    A = np.zeros((5, 5))
 
     # Do for every element in the mesh
     for e in range(len(TRI)):
-        # Terrible stuff to make lists start at 1 to match the math
-        Fe.append([0])
-        Ae.append([[]])
         # Do for all three verticies of the triangle
         for i in range(3):
-            Ae[-1].append([0])
             # Get the local basis function associated with the ith vertex of
             # the triangle.
             phi_i = basis(TRI[e], i)
             # Solve for the F_i^(e) and add that to the relavant global matrix
             # value.
-            Fe[-1].append(integrate(lambda x, y: phi_i(x, y) * f(x, y), TRI[e]))
-            F[TRI[e][i]] += Fe[-1][-1]
+            F[TRI[e][i]] += (integrate(lambda x, y: phi_i(x, y) * f(x, y),
+                                       TRI[e]))
+            print("({}):{} -> {}".format(e, i, F[TRI[e][i]]))
             # Do for all three verticies of the triangle
             for j in range(3):
                 # Get the local basis function associated with the jth vertex
@@ -186,24 +190,39 @@ def main():
                 # C+K to the local ang associated global matrix.
                 c = integrate(lambda x, y: phi_i(x,y)*pder(phi_j, x, y, 0.001, 0)+phi_i(x,y)*pder(phi_j,x,y,0,0.001), TRI[e])
                 k = integrate(lambda x, y: pder(phi_i, x, y, 0.001, 0)*pder(phi_j,x,y,0.001,0)+pder(phi_i,x,y,0,0.001)*pder(phi_j,x,y,0,0.001), TRI[e])
-                Ae[-1][-1].append(c + k)
-                A[TRI[e][i], TRI[e][j]] += Ae[-1][-1][-1]
+                A[TRI[e][i], TRI[e][j]] += (c + k)
+                if (TRI[e][i] == 4 == TRI[e][j]):
+                    print("({},{},{})->({},{}): {}".format(
+                        e, i, j, TRI[e][i], TRI[e][j], c + k))
             # Note that the A_ij can somewhat be though of as associateing to
             # the edges of the mesh, so A_ij has some contribution from the
             # two trianges that share that edge, then the A_ii have
             # contributions from all trianges that use i as a vertex.
 
-    F = F.reshape((9,))
+    F = F.reshape((5,))
+    print(F)
+    print(A)
 
     # Apply boundary conditions
-    A[1] = [0, 1, 0, 0, 0, 0, 0, 0, 0]
-    A[2] = [0, 0, 1, 0, 0, 0, 0, 0, 0]
-    A[3] = [0, 0, 0, 1, 0, 0, 0, 0, 0]
-    A[4] = [0, 0, 0, 0, 1, 0, 0, 0, 0]
-    F[1] = real(-1,1)
-    F[2] = real(1,1)
-    F[3] = real(1,-1)
-    F[4] = real(-1,-1)
+    A[0] = [1, 0, 0, 0, 0]
+    A[1] = [0, 1, 0, 0, 0]
+    A[2] = [0, 0, 1, 0, 0]
+    A[3] = [0, 0, 0, 1, 0]
+    F[0] = 1.0
+    F[1] = 1.0
+    F[2] = 1.0
+    F[3] = 5.0
+
+    print(F)
+    print(A)
+    # A[1] = [0, 1, 0, 0, 0, 0, 0, 0, 0]
+    # A[2] = [0, 0, 1, 0, 0, 0, 0, 0, 0]
+    # A[3] = [0, 0, 0, 1, 0, 0, 0, 0, 0]
+    # A[4] = [0, 0, 0, 0, 1, 0, 0, 0, 0]
+    # F[1] = real(-1, 1)
+    # F[2] = real(1, 1)
+    # F[3] = real(1, -1)
+    # F[4] = real(-1, -1)
     # Solve for other case
     x = solve(A, F)
     print("SOLN:", x)

@@ -1,0 +1,15 @@
+digraph FEMProc {
+  node[shape="box"];
+  args->script[label="script"];
+  args->fatal[style=dotted];
+  script->mesh[label="mesh"];
+  script->fatal[style=dotted];
+  mesh->matrix;
+  mesh->fatal[style=dotted];
+  matrix->boundary;
+  boundary->solve;
+  solve->plot;
+  solve->save;
+  mesh->boundary[style=dashed, label="load-system"];
+  mesh->solve[style=dashed label="load-approx"];
+}

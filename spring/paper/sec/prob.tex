@@ -1,0 +1,51 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Problem Statement}%
+\label{sec:problem_statement}
+
+Throughout this paper and our sample code, we implement finite element methods
+using the general form of the heat equation as our differential equation to
+consider. We define the domain to be $\Omega$ such that $\Omega \in \R^2$ is a
+bounded 2D domain with boundary $\Gamma$.
+
+The general form of the heat equation takes the form
+\begin{align*}
+  \partial_t u=Lu+f,
+\end{align*}
+where $L$ is an operator of the form
+\begin{align*}
+  L=A^{ij}\px_i\px_j+B^i\px_i+C
+\end{align*}
+and $f$ is some forcing function. We will also enforce that $A^{ij}$ is
+a positive definite matrix. And where $u$ is a function that takes the position
+and the time and returns a real $u(\vec{x},t):\R^2\times\R\rightarrow\R$. Note
+that $\vec{x}\in\Omega$, and $t\in\R$.
+
+Rewriting this expression into a single equation we can express our problem
+statement as
+\begin{align}
+  \partial_t u=A^{ij}\px_i\px_j u+B^i\px_i+Cu+f
+\end{align}
+
+Note that for this process to function, we must also require some conditions.
+We first need the boundary conditions in order to determine any solution.
+Therefor we require that $u(\Gamma, t)$ is provided. Note that this could mean
+that the boundary is split into several sections, each one with different
+conditions, but the value of $u$ at any point along the boundary must be known.
+
+If considering the more general time dependent form of the equation we are also
+required to know initial conditions. That is to say that $u(\Omega,0)$ must
+also be provided. Using the initial conditions and the boundary conditions, we
+are able to construct an approximation through the use of finite element
+methods.
+
+Given $A^{ij}$, $B^i$, $C$, $f$, and appropriate conditions, we must construct
+a solution for $u$. This is the key purpose of finite element methods, as for
+most circumstances there does not exists an analytical solution to this
+differential equation. Thus we must utilize finite element analysis in order to
+construct the best possible approximation of the solution to the differential
+equation, and then it is possible to use that approximation for further
+analysis.
+
+\end{document}

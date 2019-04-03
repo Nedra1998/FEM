@@ -1,0 +1,65 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Conditions}%
+\label{sec:conditions}
+
+For our proposed problem statement, we will require some conditions in order to
+make it possible to determine a solution to the problem. The conditions that we
+will require are boundary conditions and if we are considering a time dependent
+system, we will also need an initial condition.
+
+\subsection{Boundary Conditions}%
+\label{sub:boundary_conditions}
+
+We must prescribe boundary conditions on our problem statement, to ensure that
+there is a single solution. For now we will only proceed utilizing Dirichlet
+boundary conditions. It should be noted that other conditions are possible with
+this method, such as Neumann, and Newton boundary conditions. These other
+boundary conditions require more changes to the formulation of the problem
+later on and require extra modifications to the implementation. Because of the
+extra alterations that they would necessitate, we will only focus on the
+Dirichlet boundary conditions.
+
+For the Dirichlet boundary conditions we must define the value of our solution
+at every point on the boundary. We define this as
+\begin{align*}
+  \partial u(\vec{x},t)\quad\vec{x}\in\partial\Omega.
+\end{align*}
+We will use this notation to denote the function defining the values of the
+solution to the problem along the boundary at time $t$. This can be written as
+\begin{align*}
+  u(\partial\Omega,t)\equiv\partial u(\partial\Omega,t).
+\end{align*}
+It is important to note that there is no restrictions to the form of $\partia
+u$. The user defined function can take any form, and thus requiring the
+solution to also fit any form of boundary conditions.
+
+\subsection{Initial Conditions}%
+\label{sub:initial_conditions}
+
+If the problem being considered were to be time dependent, then it is also
+necessary to define an initial condition to the problem. That is to say that it
+is required to provide some function that defines the value of $u$ at $t=0$. We
+define this function as
+\begin{align*}
+  u_0(\vec{x})\quad\vec{x}\in\Omega.
+\end{align*}
+We use this notation to denote the function defining the values of the
+solution to the problem, that is to say
+\begin{align*}
+  u(\Omega,t=0)\equiv u_0(\Omega).
+\end{align*}
+
+Note that this function also has no restrictions other that it must be defined
+on the entirety of the domain $\Omega$, although it need not be continuous on
+the domain.
+
+If the problem being considered is not time dependent, than the initial
+condition can be ignored, and only the boundary conditions must be specified.
+
+Using these prescribed conditions, both the boundary and the initial
+conditions, it is now possible to utilize finite element methods to attain an
+approximation of the solution to the problem statement.
+
+\end{document}
