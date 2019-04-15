@@ -1,4 +1,4 @@
-\documentclass[10pt]{amsart}
+\documentclass[10pt]{armath}
 \usepackage{amsmath}
 \usepackage{csquotes}
 \usepackage{enumitem}
@@ -14,10 +14,13 @@
 \usepackage{algpseudocode}
 \usepackage{algorithm}
 \usepackage{graphics}
+\usepackage{physics}
 
 \title{Finite Element Analysis}
 \author{Arden Rasmussen}
 \date{\today}
+
+\numberwithin{equation}{section}
 
 \newenvironment{Figure}
 {\par\medskip\noindent\minipage{\linewidth}}
@@ -35,6 +38,16 @@
 
 \newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\px}{{\partial x}}
+\newcommand{\ph}{\varphi}
+\newcommand{\e}{{(e)}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\wb}[1]{\overline{#1}}
+
+\newcommand{\hdiv}[3]{
+  \vspace{#1}%
+  \noindent\rule{\textwidth}{#2}%
+  \vspace{#3}%
+}
 
 \begin{document}
 \maketitle
@@ -54,8 +67,21 @@
 
 \begin{multicols}{2}
   \subfile{sec/intro}
+\end{multicols}
+
+\newpage
+\hdiv{10pt}{0.5pt}{1pt}
+\part{Mathematics}%
+\label{prt:mathematics}
+\hdiv{1pt}{0.5pt}{10pt}
+
+\begin{multicols}{2}
+
   \subfile{sec/prob}
   \subfile{sec/cond}
+  \subfile{sec/vari}
+  \subfile{sec/disc}
+  \subfile{sec/local}
 
   \nocite{*}
   \bibliographystyle{alpha}

@@ -1,0 +1,174 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Discretization}%
+\label{sec:discretization}
+
+Now that we have a variational formulation of the partial differential
+equation, we wish to discretize the equation, so that it is possible to apply
+the method of finite elements.
+
+In order to discretize the problem, we must have an understanding of the space
+that the solution resides in. It is clear that the solution to the equation
+will be in the Sobolev space $W^{1,2}(\Omega)$. The Sobolev space is the set of
+functions functions that are infinitely differentiable. In this case we can tell
+that our solution resides in the specific Sobolev space $W^{1,2}(\Omega)$. It
+is also important to mention that this can be written as $H^1(\Omega)$, because
+this Sobolev space is also a Hilbert space. A Hilbert space is one that possess
+the structure for inner product. Thus we are able to conclude that our solution
+exists in a space that supports inner product, and is infinitely
+differentiable.
+
+Since the process of finite element methods is inherently intended for
+computation, problems arise when infinities come into play. Since the span of
+the Sobolev space $H^1(\Omega)$ is infinite, we are required to consider a
+subspace of it. This will be the subspace of the Sobolev space that our
+approximation of the solution lives in, we will call this subspace
+$\wt{V}\subset H^1(\Omega)$.
+
+We will construct a finite set of basis functions for the subspace $\wt{V}$ to
+be $\left\{\ph_j\right\}$. For now we will leave these basis functions as
+arbitrary functions, but the process for the construction of the basis
+functions will be presented in a later section.
+
+The approximation of $u$ we define as $u$, since the approximation should
+converge to the exact solution, utilizing the same notation does not cause any
+issues. We construct this approximation such that it is an element of the
+subspace of the Sobolev space as we have defined. That is to say
+\begin{align*}
+  u\in\wt{V}\subset H^1(\Omega)
+\end{align*}
+Since our approximation is
+constructed in $\wt{V}$, then it must be expressible as a linear combination of
+the basis function $\ph_j$ of the finite subspace $\wt{V}$ that $\wt{u}$ is an
+element of. Thus we can express $\wt{u}$ as
+\begin{align}\label{eq:approx}
+  u=\sum_{j=1}^N u_j(t)\ph_j(\vec{x}),
+\end{align}
+where $u_j(t)$ is a function of time that once it is found, it is possible to
+construct the final approximation. Using this expression for our approximation
+the goal of the method is to determine the functions $u_j(t)$.
+
+We can now substitute our expression for $u$ into the continuous variational
+formulation of the problem (\ref{eq:variational}).
+\begin{multline}\label{eq:var_exp_b}
+  \pder{}{t}\int_\Omega w\left[\sum_{j=1}^Nu_j\ph_j\right]d\vec{x}=\\
+  -\sum_{\alpha,\beta=1}^2\int_\Omega\pder{A^{\alpha\beta}w}{x^\alpha}
+  \pder{}{x^\beta}\left[\sum_{j=1}^Nu_j\ph_j\right]d\vec{x}\\
+  +\sum_{\gamma=1}^2\int_\Omega B^\gamma w
+  \pder{}{x^\gamma}\left[\sum_{j=1}^Nu_j\ph_j\right]d\vec{x}\\
+  +\int_\Omega Cw\left[\sum_{j=1}^Nu_j\pi_j\right]d\vec{x}
+  +\int_\Omega wfd\vec{x}.
+\end{multline}
+
+It is possible to rewrite this expression, with several simplifications. First
+is to note that since $w$ and $\ph_j$ are independent of $t$, and $u$ is
+independent of $\vec{x}$. Using this it is possible to rewrite the first term,
+by moving constants with respect to the integral ($u_j$) out of the integral,
+and then to move constants with respect to the derivative (the integral) out of
+the derivative. Thus we can write the first term as
+\begin{align*}
+  \pder{}{t}\int_\Omega w\left[\sum_{j=1}^Nu_j\ph_j\right]dx\vec{x}
+  =\sum_{j=1}^N\left[\pder{u_j}{t}\int_\Omega w\ph_jd\vec{x}\right].
+\end{align*}
+Similar process can be applied to the other terms in equation
+\ref{eq:var_exp_b}. By pulling the constants out of the integrals, and
+splitting the integral over the summation, we are able to rewrite the expression
+as
+\begin{multline}\label{eq:var_exp_c}
+  \sum_{j=1}^N\left[\pder{u_j}{t}\int_\Omega w\ph_jd\vec{x}\right]=\\
+  -\sum_{j=1}^N\left[u_j\sum_{\alpha,\beta=1}^2
+    \int_\Omega\pder{A^{\alpha\beta}w}{x^\alpha}
+    \pder{\ph_j}{x^\beta}d\vec{x}\right]\\
+  +\sum_{j=1}^N\left[u_j\sum_{\gamma=1}^2\int_\Omega B^\gamma w
+    \pder{\ph_j}{x^\gamma}d\vec{x}\right]\\
+  +\sum_{j=1}^N\left[u_j\int_\Omega
+    Cw\ph_jd\vec{x}\right]
+  +\int_\Omega wfd\vec{x}.
+\end{multline}
+
+Now, since we have not placed any restrictions on $w$, and it can be any
+function, we will chose the basis functions $\ph_i$ as our test functions.
+Substituting that into the expression we obtain the discretized version of the
+variational formulation of the problem.
+\begin{multline}\label{eq:var_exp_c}
+  \sum_{j=1}^N\left[\pder{u_j}{t}\int_\Omega \ph_i\ph_jd\vec{x}\right]=\\
+  -\sum_{j=1}^N\left[u_j\sum_{\alpha,\beta=1}^2
+    \int_\Omega\pder{A^{\alpha\beta}\ph_i}{x^\alpha}
+    \pder{\ph_j}{x^\beta}d\vec{x}\right]\\
+  +\sum_{j=1}^N\left[u_j\sum_{\gamma=1}^2\int_\Omega B^\gamma \ph_i
+    \pder{\ph_j}{x^\gamma}d\vec{x}\right]\\
+  +\sum_{j=1}^N\left[u_j\int_\Omega
+    C\ph_i\ph_jd\vec{x}\right]
+  +\int_\Omega \ph_ifd\vec{x}.
+\end{multline}
+
+
+It can be useful to examine this equation using the inner products as they act
+upon functions. That is to say, that we use the $L^2$ inner product defined as
+\begin{align*}
+  \braket{f}{g}_{L^2}=\int_\Omega fgd\vec{x}.
+\end{align*}
+Using this notation, the expression can be rewritten to be
+\begin{multline*}
+  \sum_{j=1}^N\braket{\ph_i}{\ph_j}\pder{u_j}{t}=
+  -\sum_{j=1}^N\sum_{\alpha,\beta=1}^2\braket{\pder{}{x^\alpha}\left[A^{\alpha\beta}\ph_i\right]}{\pder{\ph_j}{x^\beta}}u_j\\
+  +\sum_{j=1}^N\sum_{\gamma=1}^2\braket{B^\gamma\ph_i}{\pder{\ph_j}{x^\gamma}}u_j\\
+  +\sum_{j=1}^N\braket{C\ph_i}{\ph_j}u_j
+  +\braket{\ph_i}{f}.
+\end{multline*}
+It is now possible to factor out the $u_j$ from the right hand side summations.
+This will provide the equation
+\begin{multline*}
+  \sum_{j=1}^N\braket{\ph_i}{\ph_j}\pder{u_j}{t}=\\
+  \left[-\sum_{j=1}^N\sum_{\alpha,\beta=1}^2\braket{\pder{}{x^\alpha}\left[A^{\alpha\beta}\ph_i\right]}{\pder{\ph_j}{x^\beta}}\right.\\
+  +\sum_{j=1}^N\sum_{\gamma=1}^2\braket{B^\gamma\ph_i}{\pder{\ph_j}{x^\gamma}}\\
+  \left.+\sum_{j=1}^N\braket{C\ph_i}{\ph_j}\right] u_j
+  +\braket{\ph_i}{f}.
+\end{multline*}
+
+Since it is possible to replace $w$ with \textit{any} of the basis functions,
+that means that $i=1,2,\ldots,N$. This provides us with a system of equations,
+which is then expressible in terms of matrices. The matrix representation of
+the system is
+\begin{align}\label{matrix}
+  G\partial_t U=\left(\wb{A}+\wb{B}+\wb{C}\right)U+F.
+\end{align}
+Where $U$ is a vector in $\R^N$ composed of the $u_j$ functions. We use the
+notation $\partial_t$ to denote the operator of taking the partial derivative
+of the $U$ vector with respect to time, element wise. The elements of $\wb{A}$,
+$\wb{B}$, $\wb{C}$, and $F$ are defined as
+\begin{align*}
+  \wb{A}^{ij}&=-\sum_{\alpha,\beta=1}^2\braket{\pder{}{x^\alpha}\left[A^{\alpha\beta}\ph_i\right]}{\pder{\ph_j}{x^\beta}}
+             &i,j&=1,\ldots,N\\
+  \wb{B}^{ij}&=\sum_{\gamma=1}^2\braket{B^\gamma\ph_i}{\pder{\ph_j}{x^\gamma}}
+             &i,j&=1,\ldots,N\\
+  \wb{C}^{ij}&=\braket{C\ph_i}{\ph_j} &i,j&=1,\ldots,N\\
+  F&=\braket{\ph_i}{f} &i,j&=1,\ldots,N.
+\end{align*}
+
+It is often simpler to consider a matrix $M$ such that
+$M=\wb{A}+\wb{B}+\wb{C}$, then our expression for the matrix form of the system
+of equations becomes
+\begin{align}\label{eq:matrix_simp}
+   G\partial_tU=MU+F.
+\end{align}
+
+This matrix representation is how we will continue to consider the problem. For
+most cases this is the system of equations that will be found. However, this
+expression is only sufficient for Dirichlet boundary conditions, as the
+integral over the boundary for other boundary conditions would not be zero.
+Thus there would be additional terms in the system of equations. This is not an
+issue with the Dirichlet boundary conditions, so we do not need to consider any
+additional terms in the matrix representation.
+
+If the problem that is being considered were to be time independent, then the
+matrix formulation of the system of equations would be
+\begin{align*}
+   MU=F.
+\end{align*}
+We will continue to consider both the time dependent and the time independent
+problems, as both are useful in different situations. However, they are solved
+in different ways, some simplifications can be made with one but not the other.
+
+\end{document}
