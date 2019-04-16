@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.1.24)  14 APR 2019 17:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.1.24)  16 APR 2019 10:08
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1758,23 +1758,23 @@ LaTeX Warning: Label `eq:var_exp_c' multiply defined.
 )
 \openout1 = `fem.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Try loading font information for U+msa on input line 52.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Try loading font information for U+msa on input line 53.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 52.
+LaTeX Font Info:    Try loading font information for U+msb on input line 53.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -1841,26 +1841,22 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable tick labels; missing features). Consider writing \pgfplotsset{compat=1.15} into your preamble.
- on input line 52.
+ on input line 53.
 
 
-Class armath Warning: Abstract should precede \maketitle in AMS document classes; reported on input line 55.
+Class armath Warning: Abstract should precede \maketitle in AMS document classes; reported on input line 56.
 
-(./sec/intro.tex) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./sec/prob.tex) (./sec/cond.tex [2]) (./sec/vari.tex) (./sec/disc.tex [3]
+(./math/intro.tex) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./math/prob.tex) (./math/cond.tex [2]) (./math/vari.tex) (./math/disc.tex [3]
 Overfull \hbox (19.05423pt too wide) detected at line 119
  []$[]   [] [] [] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@ [] [] [] \OML/cmm/m/it/10 u[]$ 
  []
 
 [4]
-Overfull \hbox (2.1217pt too wide) detected at line 148
+Overfull \hbox (2.1217pt too wide) detected at line 149
 []
  []
 
-) (./sec/local.tex
-
-LaTeX Warning: Reference `sec:mesh_generation' on page 5 undefined on input line 21.
-
-[5]
+) (./math/local.tex [5]
 
 LaTeX Warning: Reference `fig:master_element' on page 6 undefined on input line 50.
 
@@ -1870,12 +1866,69 @@ LaTeX Warning: Reference `fig:local_basis' on page 6 undefined on input line 95.
 
 LaTeX Warning: Reference `fig:global_basis' on page 6 undefined on input line 113.
 
+./math/local.tex:144: Undefined control sequence.
+<argument> ...int _{E_e}\ph ^\e _i\ph ^\e _jd\vex 
+                                                  {x}\quad &i,j&=1,2,3\\ \wb...
+l.144 \end{align}
+                 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-Overfull \hbox (26.112pt too wide) detected at line 137
+./math/local.tex:144: Undefined control sequence.
+<argument> ...int _{E_e}\ph ^\e _i\ph ^\e _jd\vex 
+                                                  {x}\quad &i,j&=1,2,3\\ \wb...
+l.144 \end{align}
+                 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (32.25429pt too wide) detected at line 144
 []
  []
 
-) (./fem.bbl [6]) [7] (./fem.aux)
+) (./math/mesh.tex [6]
+
+LaTeX Warning: Reference `fig:circumcircle' on page 7 undefined on input line 46.
+
+
+LaTeX Warning: Reference `sec:2mesh_gen' on page 7 undefined on input line 83.
+
+[7]
+
+LaTeX Warning: Reference `sec:2mesh_gen' on page 8 undefined on input line 114.
+
+
+LaTeX Warning: Reference `sub:2mesh_refinement' on page 8 undefined on input line 162.
+
+) (./math/global.tex [8]
+Overfull \hbox (31.2664pt too wide) detected at line 37
+[]
+ []
+
+
+LaTeX Warning: Reference `sec:2assbemly_of_the_global_system' on page 9 undefined on input line 42.
+
+
+LaTeX Warning: Reference `sec:linear_systems' on page 9 undefined on input line 51.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 112--116
+ \OT1/cmr/m/n/10 8.2.\OT1/cmr/bx/n/10 Crank-Nicolson.[] \OT1/cmr/m/n/10 For the Crank-Nicolson
+ []
+
+
+Overfull \hbox (28.9622pt too wide) detected at line 126
+[]
+ []
+
+[9]) (./math/bndry.tex) (./fem.bbl) [10] (./fem.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1884,18 +1937,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 35780 strings out of 494847
- 838118 string characters out of 6179080
- 1021897 words of memory out of 5000000
- 38430 multiletter control sequences out of 15000+600000
+ 35808 strings out of 494847
+ 838636 string characters out of 6179080
+ 1025985 words of memory out of 5000000
+ 38450 multiletter control sequences out of 15000+600000
  536679 words of font info for 47 fonts, out of 8000000 for 9000
  220 hyphenation exceptions out of 8191
  62i,17n,96p,10379b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on fem.pdf (7 pages, 217294 bytes).
+Output written on fem.pdf (10 pages, 246318 bytes).
 PDF statistics:
- 95 PDF objects out of 1000 (max. 8388607)
- 69 compressed objects within 1 object stream
+ 104 PDF objects out of 1000 (max. 8388607)
+ 75 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

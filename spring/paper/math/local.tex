@@ -131,9 +131,20 @@ the local basis function on the element $e$. The size of the matrix is
 equivalent to the number of vertices in the element, thus for the triangular
 element case, the matrices have a size of three. The element of these matrices
 can be found through the following equations
-\begin{align*}
-  \wb{A}^\e_{ij}=-\sum_{\alpha,\beta=1}^2\int_{E_e}\pder{\ph^\e_j}{x^\beta}\pder{}{x^\alpha}\left(A_{\alpha\beta}\ph^\e_i\right)d\vec{x}\quad
-  &i,j&=1,2,3
-\end{align*}
+\begin{align}\label{eq:local_sys}
+  \begin{aligned}
+    G^\e_{ij} &=\int_{E_e}\ph^\e_i\ph^\e_jd\vex{x}\quad &i,j&=1,2,3\\
+  \wb{A}^\e_{ij}&=-\sum_{\alpha,\beta=1}^2\int_{E_e}\pder{\ph^\e_j}{x^\beta}\pder{}{x^\alpha}\left(A_{\alpha\beta}\ph^\e_i\right)d\vec{x}\quad
+  &i,j&=1,2,3\\
+  \wb{B}^\e_{ij}&=\sum_{\gamma=1}^2\int_{E_e}B^\gamma\ph^\e_i\pder{\ph^\e_j}{x^\gamma}d\vec{x}\quad
+                &i,j&=1,2,3\\
+  \wb{C}^\e_{ij}&=\int_{E_e}C\ph^\e_i\ph^\e_jd\vec{x}\quad &i,j&=1,2,3\\
+  F^\e_i&=\int_{E_e}\ph^\e_ifd\vec{x}\quad & i&=1,2,3.
+  \end{aligned}
+\end{align}
+
+Using only the local matrix elements, it is possible to construct the global
+system, utilizing some specific algorithms that are discussed in section
+\ref{sec:assembly_of_the_global_system}.
 
 \end{document}

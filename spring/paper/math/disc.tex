@@ -136,9 +136,10 @@ the system is
 \end{align}
 Where $U$ is a vector in $\R^N$ composed of the $u_j$ functions. We use the
 notation $\partial_t$ to denote the operator of taking the partial derivative
-of the $U$ vector with respect to time, element wise. The elements of $\wb{A}$,
-$\wb{B}$, $\wb{C}$, and $F$ are defined as
+of the $U$ vector with respect to time, element wise. The elements of $G$,
+$\wb{A}$, $\wb{B}$, $\wb{C}$, and $F$ are defined as
 \begin{align*}
+  G_{ij}&=\braket{\ph_i}{\ph_j}\quad &i,j&=1,\ldots,N\\
   \wb{A}^{ij}&=-\sum_{\alpha,\beta=1}^2\braket{\pder{}{x^\alpha}\left[A^{\alpha\beta}\ph_i\right]}{\pder{\ph_j}{x^\beta}}
              &i,j&=1,\ldots,N\\
   \wb{B}^{ij}&=\sum_{\gamma=1}^2\braket{B^\gamma\ph_i}{\pder{\ph_j}{x^\gamma}}

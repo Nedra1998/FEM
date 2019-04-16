@@ -1,0 +1,152 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Assembly Of The Global System}%
+\label{sec:assembly_of_the_global_system}
+
+Although it is possible to directly compute the elements of the global
+matrices, it is ineffective and not practical for any non trivial problems.
+Thus we will not consider the explanation of how to construct the global
+matrices directly.
+
+The method that we utilize is an incremental construction of the global matrix,
+through the addition of elements from each of the local matrices. We begin by
+initializing the matrix $G$, $M=\wb{A}+\wb{B}+\wb{C}$ and $F$ of zeros. $G$ and
+$M$ are $N\times N$ matrices, and $F$ is a $N\times 1$ matrix, where $N$ is the
+number of vertices in the triangulation.
+
+Every element matrix $G^\e$ and $M^\e$ are $3\times 3$ matrices, and each element matrix
+$F^\e$ is a $3\times 1$ matrix. We need to construct a method that will allow
+us to associate the elements of the local matrix to the elements of the global
+matrix. The first part of this is determining a method to associate the element
+vertex to the global vertex. We define a function $node$ to do just this
+\begin{align*}
+  node&:\R\times\{1,2,3\}\rightarrow\R\\
+  node(e,I)&=i.
+\end{align*}
+This construction of the $node$ function, is such that given a element index,
+and the local index of a vertex in the specified element, it will return the
+global vertex number.
+
+Using this function, it is possible to construct the algorithm to assemble the
+global system of equations. The general method is to add each local matrix
+element to the associated global matrix element, where the association is done
+using the $node$ function. This can be viewed as
+\begin{align*}
+  A_{node(e,I)node(e,J)}=A_{node(e,I)node(e,J)}+A^\e_{IJ}\quad I,J=1,2,3.
+\end{align*}
+This is done for all of the elements in the mesh, and all of the local matrix
+elements for each mesh element.
+
+More specifics of the algorithm for the global matrix construction are
+discussed in section \ref{sec:2assbemly_of_the_global_system}.
+
+For the time independent problem statements, this is the extent of what needs
+to be done for the assembly of the global system of equations. It provides us
+with an expresion of the form
+\begin{align*}
+   MU=F,
+\end{align*}
+which can easily be solved for using any number of algorithms that will be
+discussed in section \ref{sec:linear_systems}.  However, for the time dependent
+problems, more must be done to prepare for time iterations.
+
+For the time dependent expressions, we need to be able to solve the system of
+equations imperatively. For this one can use any number of methods, such as
+explicit Euler, implicit Euler, Runge-Kutta, or Crank-Nicolson. For now we
+will use the Crank-Nicolson method of iteration, as it provides significantly
+more accurate results than either Euler method, and is significantly more
+simplistic compared to Runge-Kutta.
+
+\subsection{Euler}%
+\label{sub:euler}
+
+For the time dependent iteration, it is important to note that both $U$ and $F$
+will be dependent on the time, or in this case the current iteration. These are
+the only matrices that are dependent on the time, because in our expressions
+for the evaluation of the elements of the matrices (equation
+\ref{eq:local_sys}), the only elements that have a time dependent function is
+that of $F$, thus $F$ is the only input matrix that is dependent on time. And
+it is clear that if $F$ is dependent on the iteration, that $U$ will also be
+dependent on the iteration.
+
+Because of this dependence on the iteration, we will denote the current
+iteration by using a superscript $n$. Thus we can rewrite $U$ and $F$ as $U^n$
+and $F^n$ respectively.
+
+The basis of the time iteration, is to use the approximation
+\begin{align*}
+  \pder{U}{t}\approx\frac{U^{n+1}-U^n}{\Delta t}.
+\end{align*}
+This approximation is directly derived from the definition of a derivative, and
+it is clear that as $\Delta t\rightarrow 0$ then the approximation becomes an
+equality.
+
+Substituting this approximation into the matrix formulation of the system of
+equations, we find the new expression to become
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}=MU^n+F^n.
+\end{align*}
+Now we solve this equation for $U^{n+1}$ as it is safe to assume that $U^n$ is
+already known from the previous iteration. Thus the expression
+\begin{align*}
+  GU^{n+1}&=\left(MU^n+F^n\right)\Delta t+GU^n\\
+  GU^{n+1}&=\left(G+M\Delta t\right)U^n+F^n\Delta t
+\end{align*}
+is found.
+
+Using this expression, it becomes simple to compute the value of $U^{n+1}$.
+This is because, we can further rewrite this expression as
+\begin{align*}
+  GU^{n+1}&=Q\\\text{where}\ Q&=\left(G+M\Delta t\right)U^n+F^n\Delta t.
+\end{align*}
+It is well known how to solve a system of equations of the form $Ax=b$, so this
+form of the expression can be solve for the value of $U^{n+1}$.
+
+Unfortunately the Euler method only provides first order accuracy, so we will
+instead utilize the Crank-Nicolson method of iteration.
+
+\subsection{Crank-Nicolson}%
+\label{sub:crank_nicolson}
+
+For the Crank-Nicolson method of iteration, we follow a similar process to the
+Euler method of iteration. The main difference is that instead of using the old
+values of $U$ and $F$ on the right hand side of the expression, one uses the
+average of the old and the new values. This is written as
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}=M\frac{U^{n+1}+U^n}{2}+\frac{F^{n+1}+F^n}{2}.
+\end{align*}
+
+Once again, we assume that $U^n$ is known from the previous iterations, and
+$F^{n+1}$, and $F^n$ can be computed as givens. Thus we solve for $U^{n+1}$. We
+find that the expression becomes
+\begin{align*}
+  \left(G+\frac{1}{2}M\Delta t\right)U^{n+1}=\left(G-\frac{1}{2}M\Delta
+  t\right)U^n+\frac{F^{n+1}+F^n}{2}\Delta t
+\end{align*}
+
+In order to simplify this expression, we define three new matrices to be
+\begin{align*}
+  \wt{A}&=G+\frac{1}{2}M\Delta t\\
+  \wt{B}&=G-\frac{1}{2}M\Delta t\\
+  \wt{C}^n&=\frac{F^{n+1}+F^n}{2}\Delta t.
+\end{align*}
+
+Now the expression be be rewritten as
+\begin{align*}
+  \wt{A}U^{n+1}=\wt{B}U^n+\wt{C}^n.
+\end{align*}
+Since $U^n$ is assumed to be known from the previous iteration, we can define a
+new matrix $Q^n$ to be
+\begin{align*}
+  Q^n=\wt{B}U^n+\wt{C}^n.
+\end{align*}
+Using this new matrix, we can rewrite the expression one final time to be
+\begin{align*}
+  \wt{A}U^{n+1}=Q^n.
+\end{align*}
+This is finally in the format that is well known how to solve for the values of
+$U^{n+1}$, so all that needs to be done is apply some algorithm to solve this
+linear system.
+
+\end{document}

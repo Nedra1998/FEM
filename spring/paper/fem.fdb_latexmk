@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex fem"] 1555287396 "fem.aux" "fem.bbl" "fem" 1555287508
+["bibtex fem"] 1555433926 "fem.aux" "fem.bbl" "fem" 1555434496
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/alpha.bst" 1480098433 23907 a5f93555796fb564b924339521f10a7c ""
-  "fem.aux" 1555287508 2483 cdfd0b6305deff63a8d31c248997bf5b ""
+  "fem.aux" 1555434494 3619 92ccf3ffa5373e064ae900fd771d6bc2 ""
   "fem.bcf" 0 -1 0 ""
   "references.bib" 1553708327 3787 718e8d040dd34c84e6f59917cdd54c3a ""
   (generated)
-  "fem.bbl"
   "fem.blg"
+  "fem.bbl"
 ["latex"] 1553706489 "fem.tex" "fem.dvi" "fem" 1553706489
   "/dev/null" 1553448140 0 d41d8cd98f00b204e9800998ecf8427e ""
   "/etc/texmf/web2c/texmf.cnf" 1519595310 475 c0e671620eb5563b2130f56340a5fde8 ""
@@ -201,9 +201,9 @@
   (generated)
   "fem.aux"
   "fem.pdf"
-  "fem.dvi"
   "fem.log"
-["pdflatex"] 1555287507 "fem.tex" "fem.pdf" "fem" 1555287508
+  "fem.dvi"
+["pdflatex"] 1555434496 "fem.tex" "fem.pdf" "fem" 1555434496
   "/dev/null" 1554653894 0 d41d8cd98f00b204e9800998ecf8427e ""
   "/etc/texmf/web2c/texmf.cnf" 1519595310 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -417,17 +417,20 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1548390762 814157 c6875cb9dce8929bb3e9e2cbc5a44028 ""
   "armath.cls" 1555030369 61349 3663dd7ec50a6e95423eef0e129f7088 ""
   "fem.aex" 0 -1 0 ""
-  "fem.aux" 1555287508 2483 cdfd0b6305deff63a8d31c248997bf5b ""
-  "fem.bbl" 1555287396 3348 297bd31859a0b580b71551745a264812 "bibtex fem"
-  "fem.tex" 1555285109 2301 eff7448d1a8761fa69ec83df256b3df4 ""
+  "fem.aux" 1555434494 3619 92ccf3ffa5373e064ae900fd771d6bc2 ""
+  "fem.bbl" 1555433926 3348 297bd31859a0b580b71551745a264812 "bibtex fem"
+  "fem.tex" 1555430912 2396 1a4ed11735897f719e3b2d681e830817 ""
   "fem.w18" 0 -1 0 ""
-  "sec/cond.tex" 1554401459 2786 fd50f8aef0319e6535532fa19618c8c0 ""
-  "sec/disc.tex" 1555280920 8479 30531569fdd66c141d89cf42e0db5249 ""
-  "sec/intro.tex" 1553710786 2292 e4f0eab8531c67e7003cc7139210b9a8 ""
-  "sec/local.tex" 1555287507 7314 fdc0445e6c647f8447d45ee46ac9a4dd ""
-  "sec/prob.tex" 1554663143 2422 513986484159c68b71feb35c3ec06ab9 ""
-  "sec/vari.tex" 1554663695 3020 352344593dbff50b7303129257ea0f9e ""
+  "math/bndry.tex" 1555430937 503 915bce5f2472692a1c25a3f373d4017f ""
+  "math/cond.tex" 1554401459 2786 fd50f8aef0319e6535532fa19618c8c0 ""
+  "math/disc.tex" 1555430806 8540 985e7bfc438a48c4a2eef917da8644b4 ""
+  "math/global.tex" 1555434494 6541 5f25c1b0a2e6e962872bc703c854520c ""
+  "math/intro.tex" 1553710786 2292 e4f0eab8531c67e7003cc7139210b9a8 ""
+  "math/local.tex" 1555432387 7889 a3f588ce6c788d5f97daa3963bafe926 ""
+  "math/mesh.tex" 1555386603 8226 ee923bf271b5652ef575eadbdc7e7caf ""
+  "math/prob.tex" 1554663143 2422 513986484159c68b71feb35c3ec06ab9 ""
+  "math/vari.tex" 1554663695 3020 352344593dbff50b7303129257ea0f9e ""
   (generated)
-  "fem.pdf"
-  "fem.log"
   "fem.aux"
+  "fem.log"
+  "fem.pdf"
