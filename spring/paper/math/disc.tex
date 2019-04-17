@@ -51,15 +51,15 @@ the goal of the method is to determine the functions $u_j(t)$.
 
 We can now substitute our expression for $u$ into the continuous variational
 formulation of the problem (\ref{eq:variational}).
-\begin{multline}\label{eq:var_exp_b}
-  \pder{}{t}\int_\Omega w\left[\sum_{j=1}^Nu_j\ph_j\right]d\vec{x}=\\
+\begin{align}\label{eq:var_exp_b}
+  \pder{}{t}\int_\Omega w\left[\sum_{j=1}^Nu_j\ph_j\right]d\vec{x}&=
   -\sum_{\alpha,\beta=1}^2\int_\Omega\pder{A^{\alpha\beta}w}{x^\alpha}
   \pder{}{x^\beta}\left[\sum_{j=1}^Nu_j\ph_j\right]d\vec{x}\\
-  +\sum_{\gamma=1}^2\int_\Omega B^\gamma w
-  \pder{}{x^\gamma}\left[\sum_{j=1}^Nu_j\ph_j\right]d\vec{x}\\
+  &+\sum_{\gamma=1}^2\int_\Omega B^\gamma w
+  \pder{}{x^\gamma}\left[\sum_{j=1}^Nu_j\ph_j\right]d\vec{x}
   +\int_\Omega Cw\left[\sum_{j=1}^Nu_j\pi_j\right]d\vec{x}
-  +\int_\Omega wfd\vec{x}.
-\end{multline}
+  +\int_\Omega wfd\vec{x}.\nonumber
+\end{align}
 
 It is possible to rewrite this expression, with several simplifications. First
 is to note that since $w$ and $\ph_j$ are independent of $t$, and $u$ is
@@ -75,33 +75,33 @@ Similar process can be applied to the other terms in equation
 \ref{eq:var_exp_b}. By pulling the constants out of the integrals, and
 splitting the integral over the summation, we are able to rewrite the expression
 as
-\begin{multline}\label{eq:var_exp_c}
-  \sum_{j=1}^N\left[\pder{u_j}{t}\int_\Omega w\ph_jd\vec{x}\right]=\\
+\begin{align}\label{eq:var_exp_c1}
+  \sum_{j=1}^N\left[\pder{u_j}{t}\int_\Omega w\ph_jd\vec{x}\right]&=
   -\sum_{j=1}^N\left[u_j\sum_{\alpha,\beta=1}^2
     \int_\Omega\pder{A^{\alpha\beta}w}{x^\alpha}
     \pder{\ph_j}{x^\beta}d\vec{x}\right]\\
-  +\sum_{j=1}^N\left[u_j\sum_{\gamma=1}^2\int_\Omega B^\gamma w
-    \pder{\ph_j}{x^\gamma}d\vec{x}\right]\\
+                                                                  &+\sum_{j=1}^N\left[u_j\sum_{\gamma=1}^2\int_\Omega B^\gamma w
+    \pder{\ph_j}{x^\gamma}d\vec{x}\right]
   +\sum_{j=1}^N\left[u_j\int_\Omega
     Cw\ph_jd\vec{x}\right]
-  +\int_\Omega wfd\vec{x}.
-\end{multline}
+  +\int_\Omega wfd\vec{x}.\nonumber
+\end{align}
 
 Now, since we have not placed any restrictions on $w$, and it can be any
 function, we will chose the basis functions $\ph_i$ as our test functions.
 Substituting that into the expression we obtain the discretized version of the
 variational formulation of the problem.
-\begin{multline}\label{eq:var_exp_c}
-  \sum_{j=1}^N\left[\pder{u_j}{t}\int_\Omega \ph_i\ph_jd\vec{x}\right]=\\
+\begin{align}\label{eq:var_exp_c}
+  \sum_{j=1}^N\left[\pder{u_j}{t}\int_\Omega \ph_i\ph_jd\vec{x}\right]&=
   -\sum_{j=1}^N\left[u_j\sum_{\alpha,\beta=1}^2
     \int_\Omega\pder{A^{\alpha\beta}\ph_i}{x^\alpha}
     \pder{\ph_j}{x^\beta}d\vec{x}\right]\\
-  +\sum_{j=1}^N\left[u_j\sum_{\gamma=1}^2\int_\Omega B^\gamma \ph_i
-    \pder{\ph_j}{x^\gamma}d\vec{x}\right]\\
+                                                                      &+\sum_{j=1}^N\left[u_j\sum_{\gamma=1}^2\int_\Omega B^\gamma \ph_i
+    \pder{\ph_j}{x^\gamma}d\vec{x}\right]
   +\sum_{j=1}^N\left[u_j\int_\Omega
     C\ph_i\ph_jd\vec{x}\right]
-  +\int_\Omega \ph_ifd\vec{x}.
-\end{multline}
+  +\int_\Omega \ph_ifd\vec{x}.\nonumber
+\end{align}
 
 
 It can be useful to examine this equation using the inner products as they act
@@ -110,22 +110,22 @@ upon functions. That is to say, that we use the $L^2$ inner product defined as
   \braket{f}{g}_{L^2}=\int_\Omega fgd\vec{x}.
 \end{align*}
 Using this notation, the expression can be rewritten to be
-\begin{multline*}
-  \sum_{j=1}^N\braket{\ph_i}{\ph_j}\pder{u_j}{t}=
+\begin{align*}
+  \sum_{j=1}^N\braket{\ph_i}{\ph_j}\pder{u_j}{t}&=
   -\sum_{j=1}^N\sum_{\alpha,\beta=1}^2\braket{\pder{}{x^\alpha}\left[A^{\alpha\beta}\ph_i\right]}{\pder{\ph_j}{x^\beta}}u_j\\
-  +\sum_{j=1}^N\sum_{\gamma=1}^2\braket{B^\gamma\ph_i}{\pder{\ph_j}{x^\gamma}}u_j\\
+  &+\sum_{j=1}^N\sum_{\gamma=1}^2\braket{B^\gamma\ph_i}{\pder{\ph_j}{x^\gamma}}u_j
   +\sum_{j=1}^N\braket{C\ph_i}{\ph_j}u_j
   +\braket{\ph_i}{f}.
-\end{multline*}
+\end{align*}
 It is now possible to factor out the $u_j$ from the right hand side summations.
 This will provide the equation
-\begin{multline*}
-  \sum_{j=1}^N\braket{\ph_i}{\ph_j}\pder{u_j}{t}=\\
+\begin{align*}
+  \sum_{j=1}^N\braket{\ph_i}{\ph_j}\pder{u_j}{t}&=
   \left[-\sum_{j=1}^N\sum_{\alpha,\beta=1}^2\braket{\pder{}{x^\alpha}\left[A^{\alpha\beta}\ph_i\right]}{\pder{\ph_j}{x^\beta}}\right.\\
-  +\sum_{j=1}^N\sum_{\gamma=1}^2\braket{B^\gamma\ph_i}{\pder{\ph_j}{x^\gamma}}\\
+                                                &+\sum_{j=1}^N\sum_{\gamma=1}^2\braket{B^\gamma\ph_i}{\pder{\ph_j}{x^\gamma}}
   \left.+\sum_{j=1}^N\braket{C\ph_i}{\ph_j}\right] u_j
   +\braket{\ph_i}{f}.
-\end{multline*}
+\end{align*}
 
 Since it is possible to replace $w$ with \textit{any} of the basis functions,
 that means that $i=1,2,\ldots,N$. This provides us with a system of equations,

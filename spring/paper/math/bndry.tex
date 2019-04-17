@@ -1,16 +1,56 @@
 \documentclass[../fem.tex]{subfile}
 
 \begin{document}
-\section{Dirichlet Boundary COnditions}%
+\section{Dirichlet Boundary Conditions}%
 \label{sec:dirichlet_boundary_conditions}
 
 Now that the global system of equations has been constructed, we are able to
 impose the predefined boundary conditions to the system of equations. As
 discussed previously, we will only consider the Dirichlet boundary conditions
-in this explination.
+in this explanation.
 
 The global system of equations can be written as
 \begin{align*}
-   G\partial_t U=MU+F.
+  \wt{A}U^{n+1}&=Q^n
+\end{align*}
+for the time dependent problem, and as
+\begin{align*}
+  MU&=F
+\end{align*}
+for the time dependent case. The format of each expression is very very
+similar, this instead of explicitly explaining the process of imposing the
+boundary conditions on the system for each, we will provide the process of
+imposing the boundary conditions for the time dependent case for generality,
+and the case for the time independent case will follow the exact same process.
+
+We rewrite the global system of equations in the general form to be
+\begin{align*}
+  \begin{pmatrix}
+    \wt{A}_{11} & \wt{A}_{12} & \cdots & \wt{A}_{1N}\\
+    \wt{A}_{21} & \wt{A}_{22} & \cdots & \wt{A}_{2N}\\
+    \vdots & \vdots & \ddots & \vdots \\
+    \wt{A}_{N1} & \wt{A}_{N2} & \cdots & \wt{A}_{NN}
+  \end{pmatrix}
+  \begin{pmatrix}
+    U^{n+1}_1 \\
+    U^{n+1}_2 \\
+    \vdots \\
+    U^{n+1}_N \\
+  \end{pmatrix}
+  =\begin{pmatrix}
+    Q^n_1 \\
+    Q^n_2 \\
+    \vdots \\
+    Q^n_N \\
+  \end{pmatrix}.
+\end{align*}
+Currently this system of equations is not well behaved, as we have thus far
+neglected to prescribe the boundary conditions. This means that the matrix
+system of equations is overdetermined and cannot be solved. In order to fix
+this, we must apply the boundary conditions. Due to the Dirichlet boundary
+conditions, we know that for any vertex in the mesh that is on the boundary
+$x_i\in\partial\Omega$,
+\begin{align*}
+  U^n_i=\partial u(x_i,n\Delta t)\\
 \end{align*}
 \end{document}

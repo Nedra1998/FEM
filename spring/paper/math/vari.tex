@@ -35,14 +35,14 @@ We now expand the weighted residual to obtain
 \end{align*}
 Expanding our the $L$ operator on $u$ and splitting the integral over the sum,
 we find
-\begin{multline*}
+\begin{align*}
   \int_\Omega w\pder{u}{t}d\vec{x}=
   \sum_{\alpha,\beta=1}^2\int_\Omega
-  wA^{\alpha\beta}\pder{}{x^\alpha}\left[\pder{u}{x^\beta}\right]d\vec{x}\\
+  wA^{\alpha\beta}\pder{}{x^\alpha}\left[\pder{u}{x^\beta}\right]d\vec{x}
   +\sum_{\gamma=1}^2\int_\Omega wB^\gamma\pder{u}{x^\gamma}d\vec{x}
   +\int_\Omega wCud\vec{x}
   +\int_\Omega wfd\vec{x}.
-\end{multline*}
+\end{align*}
 We notice that $w$ is always independent of time so that the first integral can
 be rewritten as
 \begin{align*}
@@ -50,24 +50,24 @@ be rewritten as
 \end{align*}
 We can now apply integration by parts on the second integral, and rewrite this
 as
-\begin{multline*}
+\begin{align*}
   \int_\Omega
   wA^{\alpha\beta}\pder{}{x^\alpha}\left[\pder{u}{x^\beta}\right]d\vec{x}
-  =\int_{\partial\Omega}A^{\alpha\beta}w\pder{u}{x^\beta}d\vec{x}\\
+  =\int_{\partial\Omega}A^{\alpha\beta}w\pder{u}{x^\beta}d\vec{x}
   -\int_\Omega \pder{A^{\alpha\beta}w}{x^\alpha}\pder{u}{x^\beta}d\vec{x}.
-\end{multline*}
+\end{align*}
 Since our restriction on the selection of of test functions $w$, we know that
 $w(\vec{x})=0\ \forall \vec{x}\in\partial\Omega$. Thus the integral over the
 boundary must be zero. Using this simiplification, we obtain the representation
 of the continuous variational formulation of the problem to be
-\begin{multline}\label{eq:variational}
+\begin{align}\label{eq:variational}
   \pder{}{t}\int_\Omega wud\vec{x}=
   -\sum_{\alpha,\beta=1}^2\int_\Omega
-  \pder{A^{\alpha\beta}w}{x^\alpha}\pder{u}{x^\beta}d\vec{x}\\
+  \pder{A^{\alpha\beta}w}{x^\alpha}\pder{u}{x^\beta}d\vec{x}
   +\sum_{\gamma=1}^2\int_\Omega B^\gamma w\pder{u}{x_\gamma}d\vec{x}
   +\int_\Omega Cwud\vec{x}
   +\int_\Omega wfd\vec{x}.
-\end{multline}
+\end{align}
 
 
 \end{document}

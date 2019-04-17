@@ -85,9 +85,9 @@ The conversion from global space to the bilinear coordinates does exactly this
 task. Thus the definition of the local basis functions are
 \begin{align}
   \begin{split}
-  &\resizebox{\columnwidth}{!}{$\ph^\e_1=\frac{(Y^\e_2-Y^\e_3)(x-X^\e_3)+(X^\e_3-X^\e_2)(y-Y^\e_3)}{(Y^\e_2-Y^\e_3)(X^\e_1-X^\e_3)+(X^\e_3-X^\e_2)(Y^\e_1-Y^\e_3)}$}\\
-  &\resizebox{\columnwidth}{!}{$\ph^\e_2=\frac{(Y^\e_3-Y^\e_1)(x-X^\e_3)+(X^\e_1-X^\e_3)(y-Y^\e_3)}{(Y^\e_2-Y^\e_3)(X^\e_1-X^\e_3)+(X^\e_3-X^\e_2)(Y^\e_1-Y^\e_3)}$}\\
-  &\ph^\e_3=1-\ph^\e_1-\ph^\e_2.
+    \ph^\e_1&=\frac{(Y^\e_2-Y^\e_3)(x-X^\e_3)+(X^\e_3-X^\e_2)(y-Y^\e_3)}{(Y^\e_2-Y^\e_3)(X^\e_1-X^\e_3)+(X^\e_3-X^\e_2)(Y^\e_1-Y^\e_3)}\\
+    \ph^\e_2&=\frac{(Y^\e_3-Y^\e_1)(x-X^\e_3)+(X^\e_1-X^\e_3)(y-Y^\e_3)}{(Y^\e_2-Y^\e_3)(X^\e_1-X^\e_3)+(X^\e_3-X^\e_2)(Y^\e_1-Y^\e_3)}\\
+    \ph^\e_3&=1-\ph^\e_1-\ph^\e_2.
   \end{split}
 \end{align}
 
@@ -133,7 +133,7 @@ element case, the matrices have a size of three. The element of these matrices
 can be found through the following equations
 \begin{align}\label{eq:local_sys}
   \begin{aligned}
-    G^\e_{ij} &=\int_{E_e}\ph^\e_i\ph^\e_jd\vex{x}\quad &i,j&=1,2,3\\
+    G^\e_{ij} &=\int_{E_e}\ph^\e_i\ph^\e_jd\vec{x}\quad &i,j&=1,2,3\\
   \wb{A}^\e_{ij}&=-\sum_{\alpha,\beta=1}^2\int_{E_e}\pder{\ph^\e_j}{x^\beta}\pder{}{x^\alpha}\left(A_{\alpha\beta}\ph^\e_i\right)d\vec{x}\quad
   &i,j&=1,2,3\\
   \wb{B}^\e_{ij}&=\sum_{\gamma=1}^2\int_{E_e}B^\gamma\ph^\e_i\pder{\ph^\e_j}{x^\gamma}d\vec{x}\quad

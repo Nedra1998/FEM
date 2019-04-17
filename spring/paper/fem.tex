@@ -1,4 +1,4 @@
-\documentclass[10pt]{armath}
+\documentclass[12pt]{armath}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{csquotes}
@@ -66,9 +66,9 @@
   readability of the code.
 \end{abstract}
 
-\begin{multicols}{2}
-  \subfile{math/intro}
-\end{multicols}
+% \begin{multicols}{2}
+\subfile{math/intro}
+% \end{multicols}
 
 \newpage
 \hdiv{10pt}{0.5pt}{1pt}
@@ -76,19 +76,26 @@
 \label{prt:mathematics}
 \hdiv{1pt}{0.5pt}{10pt}
 
-\begin{multicols}{2}
+% \begin{multicols}{2}
 
-  \subfile{math/prob}
-  \subfile{math/cond}
-  \subfile{math/vari}
-  \subfile{math/disc}
-  \subfile{math/local}
-  \subfile{math/mesh}
-  \subfile{math/global}
-  \subfile{math/bndry}
+\subfile{math/prob}
+\subfile{math/cond}
+\subfile{math/vari}
+\subfile{math/disc}
+\subfile{math/local}
+\subfile{math/mesh}
+\subfile{math/global}
+\subfile{math/bndry}
 
-  \nocite{*}
-  \bibliographystyle{alpha}
-  \bibliography{references}
-\end{multicols}
+\newpage
+\hdiv{10pt}{0.5pt}{1pt}
+\part{Computational}%
+\label{prt:computational}
+\hdiv{1pt}{0.5pt}{10pt}
+
+\newpage
+\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{references}
+% \end{multicols}
 \end{document}
