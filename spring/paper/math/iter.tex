@@ -1,0 +1,101 @@
+\documentclass[../fem.tex]{subfiles}
+
+\begin{document}
+For the time dependent expressions, we need to be able to solve the system of
+equations imperatively. For this one can use any number of methods, such as
+explicit Euler, implicit Euler, Runge-Kutta, or Crank-Nicolson. For now we
+will use the Crank-Nicolson method of iteration, as it provides significantly
+more accurate results than either Euler method, and is significantly more
+simplistic compared to Runge-Kutta.
+
+\subsection{Euler}%
+\label{sub:euler}
+
+For the time dependent iteration, it is important to note that both $U$ and $F$
+will be dependent on the time, or in this case the current iteration. These are
+the only matrices that are dependent on the time, because in our expressions
+for the evaluation of the elements of the matrices (equation
+\ref{eq:local_sys}), the only elements that have a time dependent function is
+that of $F$, thus $F$ is the only input matrix that is dependent on time. And
+it is clear that if $F$ is dependent on the iteration, that $U$ will also be
+dependent on the iteration.
+
+Because of this dependence on the iteration, we will denote the current
+iteration by using a superscript $n$. Thus we can rewrite $U$ and $F$ as $U^n$
+and $F^n$ respectively.
+
+The basis of the time iteration, is to use the approximation
+\begin{align*}
+  \pder{U}{t}\approx\frac{U^{n+1}-U^n}{\Delta t}.
+\end{align*}
+This approximation is directly derived from the definition of a derivative, and
+it is clear that as $\Delta t\rightarrow 0$ then the approximation becomes an
+equality.
+
+Substituting this approximation into the matrix formulation of the system of
+equations, we find the new expression to become
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}=MU^n+F^n.
+\end{align*}
+Now we solve this equation for $U^{n+1}$ as it is safe to assume that $U^n$ is
+already known from the previous iteration. Thus the expression
+\begin{align*}
+  GU^{n+1}&=\left(MU^n+F^n\right)\Delta t+GU^n\\
+  GU^{n+1}&=\left(G+M\Delta t\right)U^n+F^n\Delta t
+\end{align*}
+is found.
+
+Using this expression, it becomes simple to compute the value of $U^{n+1}$.
+This is because, we can further rewrite this expression as
+\begin{align*}
+  GU^{n+1}&=Q\\\text{where}\ Q&=\left(G+M\Delta t\right)U^n+F^n\Delta t.
+\end{align*}
+It is well known how to solve a system of equations of the form $Ax=b$, so this
+form of the expression can be solve for the value of $U^{n+1}$.
+
+Unfortunately the Euler method only provides first order accuracy, so we will
+instead utilize the Crank-Nicolson method of iteration.
+
+\subsection{Crank-Nicolson}%
+\label{sub:crank_nicolson}
+
+For the Crank-Nicolson method of iteration, we follow a similar process to the
+Euler method of iteration. The main difference is that instead of using the old
+values of $U$ and $F$ on the right hand side of the expression, one uses the
+average of the old and the new values. This is written as
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}=M\frac{U^{n+1}+U^n}{2}+\frac{F^{n+1}+F^n}{2}.
+\end{align*}
+
+Once again, we assume that $U^n$ is known from the previous iterations, and
+$F^{n+1}$, and $F^n$ can be computed as givens. Thus we solve for $U^{n+1}$. We
+find that the expression becomes
+\begin{align*}
+  \left(G+\frac{1}{2}M\Delta t\right)U^{n+1}=\left(G-\frac{1}{2}M\Delta
+  t\right)U^n+\frac{F^{n+1}+F^n}{2}\Delta t
+\end{align*}
+
+In order to simplify this expression, we define three new matrices to be
+\begin{align*}
+  \wt{A}&=G+\frac{1}{2}M\Delta t\\
+  \wt{B}&=G-\frac{1}{2}M\Delta t\\
+  \wt{C}^n&=\frac{F^{n+1}+F^n}{2}\Delta t.
+\end{align*}
+
+Now the expression be be rewritten as
+\begin{align*}
+  \wt{A}U^{n+1}=\wt{B}U^n+\wt{C}^n.
+\end{align*}
+Since $U^n$ is assumed to be known from the previous iteration, we can define a
+new matrix $Q^n$ to be
+\begin{align*}
+  Q^n=\wt{B}U^n+\wt{C}^n.
+\end{align*}
+Using this new matrix, we can rewrite the expression one final time to be
+\begin{align*}
+  \wt{A}U^{n+1}=Q^n.
+\end{align*}
+This is finally in the format that is well known how to solve for the values of
+$U^{n+1}$, so all that needs to be done is apply some algorithm to solve this
+linear system.
+\end{document}

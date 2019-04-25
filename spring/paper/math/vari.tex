@@ -18,55 +18,58 @@ Clearly by the construction of $R$, $R(\vec{x},t)=0$ if and only if $u$ is the
 exact solution to the partial differential equation. Now we multiply the
 residual by some arbitrary test function, and integrate over our domain
 \begin{align*}
-  \int_\Omega w(\vec{x})R(\vec{x},t)d\vec{x}.
+  \int_\Omega w(\vec{x})R(\vec{x},t)dA=0.
 \end{align*}
 
-For the exact solution $u$ this will always be zero, because $R(\vec{x},t)=$
+For the exact solution $u$ this will always be zero, because $R(\vec{x},t)=0$
 for all $\vec{x}\in\Omega$. Because of this we are able to select any test
 function $w$, and the weighted residual will still be zero, given the exact
-solution. However, we will restrict our test functions to ones that are zero
-along the boundaries $\partial\Omega$, this will significantly simply our
-computations in the future.
+solution.
 
 We now expand the weighted residual to obtain
 \begin{align*}
-  \int_\Omega w\pder{u}{t}d\vec{x}=\int_\Omega wLud\vec{x}+\int_\Omega
-  wfd\vec{x}.
+  \int_\Omega w\pder{u}{t}dA-\int_\Omega wLudA-\int_\Omega
+  wfdA=0.
+\end{align*}
+Rearanging this expression we clearly see that
+\begin{align*}
+  \int_\Omega w\pder{u}{t}dA=\int_\Omega wLudA+\int_\Omega
+  wfdA.
 \end{align*}
 Expanding our the $L$ operator on $u$ and splitting the integral over the sum,
 we find
 \begin{align*}
-  \int_\Omega w\pder{u}{t}d\vec{x}=
+  \int_\Omega w\pder{u}{t}dA=
   \sum_{\alpha,\beta=1}^2\int_\Omega
-  wA^{\alpha\beta}\pder{}{x^\alpha}\left[\pder{u}{x^\beta}\right]d\vec{x}
-  +\sum_{\gamma=1}^2\int_\Omega wB^\gamma\pder{u}{x^\gamma}d\vec{x}
-  +\int_\Omega wCud\vec{x}
-  +\int_\Omega wfd\vec{x}.
+  wA^{\alpha\beta}\pder{}{x^\alpha}\left[\pder{u}{x^\beta}\right]dA
+  +\sum_{\gamma=1}^2\int_\Omega wB^\gamma\pder{u}{x^\gamma}dA
+  +\int_\Omega wCudA
+  +\int_\Omega wfdA.
 \end{align*}
 We notice that $w$ is always independent of time so that the first integral can
 be rewritten as
 \begin{align*}
-  \int_\Omega w\pder{u}{t}d\vec{x}&=\pder{}{t}\int_\Omega wud\vec{x}.
+  \int_\Omega w\pder{u}{t}dA&=\pder{}{t}\int_\Omega wudA.
 \end{align*}
 We can now apply integration by parts on the second integral, and rewrite this
 as
 \begin{align*}
   \int_\Omega
-  wA^{\alpha\beta}\pder{}{x^\alpha}\left[\pder{u}{x^\beta}\right]d\vec{x}
-  =\int_{\partial\Omega}A^{\alpha\beta}w\pder{u}{x^\beta}d\vec{x}
-  -\int_\Omega \pder{A^{\alpha\beta}w}{x^\alpha}\pder{u}{x^\beta}d\vec{x}.
+  wA^{\alpha\beta}\pder{}{x^\alpha}\left[\pder{u}{x^\beta}\right]dA
+  =\int_{\partial\Omega}A^{\alpha\beta}w\pder{u}{x^\beta}dA
+  -\int_\Omega \pder{A^{\alpha\beta}w}{x^\alpha}\pder{u}{x^\beta}dA.
 \end{align*}
 Since our restriction on the selection of of test functions $w$, we know that
 $w(\vec{x})=0\ \forall \vec{x}\in\partial\Omega$. Thus the integral over the
 boundary must be zero. Using this simiplification, we obtain the representation
 of the continuous variational formulation of the problem to be
 \begin{align}\label{eq:variational}
-  \pder{}{t}\int_\Omega wud\vec{x}=
+  \pder{}{t}\int_\Omega wudA=
   -\sum_{\alpha,\beta=1}^2\int_\Omega
-  \pder{A^{\alpha\beta}w}{x^\alpha}\pder{u}{x^\beta}d\vec{x}
-  +\sum_{\gamma=1}^2\int_\Omega B^\gamma w\pder{u}{x_\gamma}d\vec{x}
-  +\int_\Omega Cwud\vec{x}
-  +\int_\Omega wfd\vec{x}.
+  \pder{A^{\alpha\beta}w}{x^\alpha}\pder{u}{x^\beta}dA
+  +\sum_{\gamma=1}^2\int_\Omega B^\gamma w\pder{u}{x_\gamma}dA
+  +\int_\Omega CwudA
+  +\int_\Omega wfdA.
 \end{align}
 
 

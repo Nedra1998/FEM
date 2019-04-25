@@ -133,13 +133,13 @@ element case, the matrices have a size of three. The element of these matrices
 can be found through the following equations
 \begin{align}\label{eq:local_sys}
   \begin{aligned}
-    G^\e_{ij} &=\int_{E_e}\ph^\e_i\ph^\e_jd\vec{x}\quad &i,j&=1,2,3\\
-  \wb{A}^\e_{ij}&=-\sum_{\alpha,\beta=1}^2\int_{E_e}\pder{\ph^\e_j}{x^\beta}\pder{}{x^\alpha}\left(A_{\alpha\beta}\ph^\e_i\right)d\vec{x}\quad
+    G^\e_{ij} &=\int_{E_e}\ph^\e_i\ph^\e_jdA\quad &i,j&=1,2,3\\
+  \wb{A}^\e_{ij}&=-\sum_{\alpha,\beta=1}^2\int_{E_e}\pder{\ph^\e_j}{x^\beta}\pder{}{x^\alpha}\left(A_{\alpha\beta}\ph^\e_i\right)dA\quad
   &i,j&=1,2,3\\
-  \wb{B}^\e_{ij}&=\sum_{\gamma=1}^2\int_{E_e}B^\gamma\ph^\e_i\pder{\ph^\e_j}{x^\gamma}d\vec{x}\quad
+  \wb{B}^\e_{ij}&=\sum_{\gamma=1}^2\int_{E_e}B^\gamma\ph^\e_i\pder{\ph^\e_j}{x^\gamma}dA\quad
                 &i,j&=1,2,3\\
-  \wb{C}^\e_{ij}&=\int_{E_e}C\ph^\e_i\ph^\e_jd\vec{x}\quad &i,j&=1,2,3\\
-  F^\e_i&=\int_{E_e}\ph^\e_ifd\vec{x}\quad & i&=1,2,3.
+  \wb{C}^\e_{ij}&=\int_{E_e}C\ph^\e_i\ph^\e_jdA\quad &i,j&=1,2,3\\
+  F^\e_i&=\int_{E_e}\ph^\e_ifdA\quad & i&=1,2,3.
   \end{aligned}
 \end{align}
 

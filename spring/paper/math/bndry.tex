@@ -11,46 +11,81 @@ in this explanation.
 
 The global system of equations can be written as
 \begin{align*}
-  \wt{A}U^{n+1}&=Q^n
+  G\partial_t U=MU+F
 \end{align*}
 for the time dependent problem, and as
 \begin{align*}
   MU&=F
 \end{align*}
-for the time dependent case. The format of each expression is very very
-similar, this instead of explicitly explaining the process of imposing the
-boundary conditions on the system for each, we will provide the process of
-imposing the boundary conditions for the time dependent case for generality,
-and the case for the time independent case will follow the exact same process.
 
-We rewrite the global system of equations in the general form to be
+In the current state this system of equations is not solvable, because in the
+construction of the matricies, we included the basis elements that reside on
+the boundary. As discuessed previously, these basis elements are not a part of
+the approximation, but must be used inorder to apply the boundary conditions.
+At this point, we assign the boundary conditions to the corresponding equations
+for these boundary basis elements.
+
+To do this we enforce that the associated value of the $F$ vector for each
+$\ph_i\in\partial \Omega$, will be the value of the boundary at that point. As
+we defined in section \ref{sub:boundary_conditions}, this means that
 \begin{align*}
-  \begin{pmatrix}
-    \wt{A}_{11} & \wt{A}_{12} & \cdots & \wt{A}_{1N}\\
-    \wt{A}_{21} & \wt{A}_{22} & \cdots & \wt{A}_{2N}\\
-    \vdots & \vdots & \ddots & \vdots \\
-    \wt{A}_{N1} & \wt{A}_{N2} & \cdots & \wt{A}_{NN}
-  \end{pmatrix}
-  \begin{pmatrix}
-    U^{n+1}_1 \\
-    U^{n+1}_2 \\
-    \vdots \\
-    U^{n+1}_N \\
-  \end{pmatrix}
-  =\begin{pmatrix}
-    Q^n_1 \\
-    Q^n_2 \\
-    \vdots \\
-    Q^n_N \\
-  \end{pmatrix}.
+  F_i=\partial u\left(\left<X_i,Y_i\right>,t\right),
 \end{align*}
-Currently this system of equations is not well behaved, as we have thus far
-neglected to prescribe the boundary conditions. This means that the matrix
-system of equations is overdetermined and cannot be solved. In order to fix
-this, we must apply the boundary conditions. Due to the Dirichlet boundary
-conditions, we know that for any vertex in the mesh that is on the boundary
-$x_i\in\partial\Omega$,
+where $X_i$ and $Y_i$ are the $x$ and $y$ coordinates of the $i$th vertex of
+the mesh, we will denote this as $\vec{x}_i$. In order to apply this boundary
+coniditon to the $M$ matrix, we must also restrict that
 \begin{align*}
-  U^n_i=\partial u(x_i,n\Delta t)\\
+  M_{ij}=\begin{cases}
+    0 & i\neq j\\
+    1 & i=j
+  \end{cases}\quad\forall j=1,\ldots,N.
 \end{align*}
+This expression can be rewritten using the Kroneker delta function, thus the
+expression for $M_{ij}$ becomes
+\begin{align*}
+  M_{ij}=\delta_{ij}\quad j=1,\ldots,N.
+\end{align*}
+
+This means that taking the expression for $M$ and $F$ in a general form to be
+\begin{align*}
+   \begin{pmatrix}
+     M_{11} & M_{12} & \cdots & M_{1N} \\
+     M_{21} & M_{22} & \cdots & M_{2N}\\
+     \vdots & \vdots & \ddots & \vdots \\
+     M_{N1} & M_{N2} & \cdots & M_{nn}
+   \end{pmatrix}\quad
+   \begin{pmatrix}
+      F_1 \\
+      F_2 \\
+      \vdots \\
+      F_N
+   \end{pmatrix},
+\end{align*}
+we can demonstrate the process of applying the boundary conditions. However,
+applying the boundary conditions will be dependent on the mesh that is being
+considered. For this example we will consider some arbitrary $i$'s to act as
+boundary verticies. Applying the process for the enforcement of the boundary
+conditions, we find that the expression of $M$ and $F$ become
+\begin{align*}
+   \begin{pmatrix}
+     1 & 0 & \cdots & 0 & 0\\
+     M_{21} & M_{22} & \cdots & M_{2(N-1)} & M_{2N}\\
+     \vdots & \vdots & \ddots & \vdots & \vdots \\
+     0 & 0 & \cdots & 1 & 0\\
+     M_{N1} & M_{N2} & \cdots & M_{N(N-1)} & M_{NN}
+   \end{pmatrix}\quad
+   \begin{pmatrix}
+      \partial u(\vec{x}_1,t)\\
+      F_2 \\
+      \vdots \\
+      \partial u(\vec{x}_{(N-1)},t)\\
+      F_N
+   \end{pmatrix}.
+\end{align*}
+
+In this example the $1$ and the $N-1$ verticies of the mesh lie on the
+boundary, and so the equations associated with those indicies have been
+rewritten.
+
+
 \end{document}

@@ -1,0 +1,87 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Linear System}%
+\label{sec:linear_system}
+
+Using finite element methods, constructs a system of equations on the order of
+$N\times N$, where $N$ is the number of verticies in the triangulation. With
+finer meshes will produce a finer approximation of the solution to the partial
+differential equation. Because of this, most implementation will have highly
+refined meshes, ones that would have $\sim 10^4$ verticies. Because of this one
+must develop a more efficient method for computing solutions to systems of
+linear equations. Most is this process is discuessed further in the
+section \ref{sec:linear_system_b}. However we will introduce some mathematical
+concepts that are heavily used in the computational methods.
+
+\subsection{Krylov Subspace}%
+\label{sub:krylov_subspace}
+
+An extreamly useful tool for numerical approximation of large systems of
+equations is the \textit{Krylov Subspaces}. Krylov subspaces are defined by
+Krylov \cite{KRYLOV} as
+\begin{align*}
+  \K_r(A,b)=\text{span}\left\{b,Ab,A^2b,\ldots,A^{r-1}b\right\}
+\end{align*}
+where $b$ is some vector. THis basis assists in the approximation for linar
+systems of the form $Ax=b$. THe subscript $r$ simply defines the point at which
+we limit our approximation, if $r$ is infinite then the Krylov subspace is the
+full space, ans dolutions in that krylov subspace will be exact.
+
+Note that the basis vector in the Krylov subspace are not neccessarily
+orthogonal, nor normal.
+
+\subsubsection{Reasoning}%
+\label{ssub:reasoning}
+
+We provide a sort example of the reasoning for the construction of the Krylov
+subspace. We consider the example where we want to solve a system of linear
+equations of the form $Ax=b$. Where $A=I+\ep$.
+\begin{align*}
+  Ax&=b\\
+  x&=A^{-1}b\\
+  x&=(I+\ep)^{-1}b.
+\end{align*}
+
+We construct an approximation for the invers of a matrix-like by geometruc
+formula
+\begin{align*}
+  I+\ep+\ep^2+\ldots+\ep^n&=S\\
+  \ep+\ep^2+\ldots+\ep^{n+1}&=W\ep\\
+  S-I+\ep^{n+1}&=S\ep\\
+  S-S\ep&=I-\ep^{n+1}\\
+  S(I-\ep)&=I-\ep^{n+1}\\
+  S&=\left(I-\ep^{n+1}\right)(I-\ep)^{-1}.
+\end{align*}
+When $n\rightarrow\infty$ and $\ep$ is small enough ($\Vert\ep\Vert<1$), then
+$\ep^{n+1}\rightarrow0$. Thus
+\begin{align*}
+  S&=\left(I-\ep^{n+1}\right)(I-\ep)^{-1}\\
+  S&=(I-\ep)^{-1}.
+\end{align*}
+Finally we conclude that
+\begin{align*}
+  A^{-1}=(I+\ep)^{-1}=I-\ep-\ep^2-\ldots.
+\end{align*}
+Using this in our expression for $x$ we find
+\begin{align*}
+  x&=A^{-1}b=b-\ep b-\ep^2b-\ldots\\
+   &=b-(A-I)b-(A-I)^2b-\ldots\\
+   &=b-Ab+b-A^2b+2Ab-b+\ldots.
+\end{align*}
+Using this we extract the basis that composes $x$ to be
+\begin{align*}
+  \left\{b,Ab,A^2b,A^3b,\ldots\right\}
+\end{align*}
+
+The Krylov subspaces takes this infinite basis and cuts it off at some given
+$r$ values, thus providing us with
+\begin{align*}
+  \left\{b,Ab,A^2b,\ldots,A^{r-1}b\right\}.
+\end{align*}
+Which the the Krylov subspaces.
+
+Note that this is not a full proof of the construction of the Krylov subspace,
+but it shoulbe be a sufficient explanation for the uses in the numeric
+approximation of systems of linear equations.
+\end{document}

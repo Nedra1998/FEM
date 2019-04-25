@@ -15,7 +15,7 @@
 \usepackage{algpseudocode}
 \usepackage{algorithm}
 \usepackage{graphics}
-\usepackage{physics}
+% \usepackage{physics}
 
 \title{Finite Element Analysis}
 \author{Arden Rasmussen}
@@ -36,6 +36,8 @@
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathcal{K}}
+\newcommand{\ep}{{\varepsilon}}
 
 \newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\px}{{\partial x}}
@@ -43,6 +45,7 @@
 \newcommand{\e}{{(e)}}
 \newcommand{\wt}[1]{\widetilde{#1}}
 \newcommand{\wb}[1]{\overline{#1}}
+\newcommand{\braket}[2]{\left<{#1},{#2}\right>}
 
 \newcommand{\hdiv}[3]{
   \vspace{#1}%
@@ -70,6 +73,8 @@
 \subfile{math/intro}
 % \end{multicols}
 
+\tableofcontents
+
 \newpage
 \hdiv{10pt}{0.5pt}{1pt}
 \part{Mathematics}%
@@ -86,6 +91,8 @@
 \subfile{math/mesh}
 \subfile{math/global}
 \subfile{math/bndry}
+\subfile{math/lin}
+\subfile{math/approx}
 
 \newpage
 \hdiv{10pt}{0.5pt}{1pt}
