@@ -1,0 +1,74 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Variational Formulation}%
+\label{sec:variational_formulation}
+
+In order to construction the variational formulation of our problem statement,
+we must first introduce the concept of a residual. The residual is the
+construction of a function $R$ such that when our approximation is the exact
+solution then $R=0$. Using the residual we now want to construct a function
+that minimizes the value of the residual. We will construct the residual of
+equation \ref{eq:prob} as
+\begin{align*}
+  R(\vec{x},t)=\pder{u}{t}-Lu-f
+\end{align*}
+Clearly by the construction of $R$, $R(\vec{x},t)=0$ if and only if $u$ is the
+exact solution to the partial differential equation. Now we multiply the
+residual by some arbitrary test function, and integrate over our domain
+\begin{align*}
+  \int_\Omega w(\vec{x})R(\vec{x},t)dA=0.
+\end{align*}
+
+For the exact solution $u$ this will always be zero, because $R(\vec{x},t)=0$
+for all $\vec{x}\in\Omega$. Because of this we are able to select any test
+function $w$, and the weighted residual will still be zero, given the exact
+solution.
+
+We now expand the weighted residual to obtain
+\begin{align*}
+  \int_\Omega w\pder{u}{t}dA-\int_\Omega wLudA-\int_\Omega
+  wfdA=0.
+\end{align*}
+Rearanging this expression we clearly see that
+\begin{align*}
+  \int_\Omega w\pder{u}{t}dA=\int_\Omega wLudA+\int_\Omega
+  wfdA.
+\end{align*}
+Expanding our the $L$ operator on $u$ and splitting the integral over the sum,
+we find
+\begin{align*}
+  \int_\Omega w\pder{u}{t}dA&=
+  \sum_{\alpha,\beta=1}^2\int_\Omega
+  wA^{\alpha\beta}\pder{}{x^\alpha}\left[\pder{u}{x^\beta}\right]dA
+  +\sum_{\gamma=1}^2\int_\Omega wB^\gamma\pder{u}{x^\gamma}dA\nonumber\\
+                            &\quad+\int_\Omega wCudA
+  +\int_\Omega wfdA.
+\end{align*}
+We notice that $w$ is always independent of time so that the first integral can
+be rewritten as
+\begin{align*}
+  \int_\Omega w\pder{u}{t}dA&=\pder{}{t}\int_\Omega wudA.
+\end{align*}
+We can now apply integration by parts on the second integral, and rewrite this
+as
+\begin{align*}
+  \int_\Omega
+  wA^{\alpha\beta}\pder{}{x^\alpha}\left[\pder{u}{x^\beta}\right]dA
+  =\int_{\partial\Omega}A^{\alpha\beta}w\pder{u}{x^\beta}dA
+  -\int_\Omega \pder{A^{\alpha\beta}w}{x^\alpha}\pder{u}{x^\beta}dA.
+\end{align*}
+Since our restriction on the selection of of test functions $w$, we know that
+$w(\vec{x})=0\ \forall \vec{x}\in\partial\Omega$. Thus the integral over the
+boundary must be zero. Using this simiplification, we obtain the representation
+of the continuous variational formulation of the problem to be
+\begin{align}\label{eq:variational}
+  \pder{}{t}\int_\Omega wudA&=
+  -\sum_{\alpha,\beta=1}^2\int_\Omega
+  \pder{A^{\alpha\beta}w}{x^\alpha}\pder{u}{x^\beta}dA
+  +\sum_{\gamma=1}^2\int_\Omega B^\gamma w\pder{u}{x_\gamma}dA\nonumber\\
+                            &\quad+\int_\Omega CwudA
+  +\int_\Omega wfdA.
+\end{align}
+
+\end{document}

@@ -1,0 +1,164 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Mesh Generation}%
+\label{sec:mesh_generation}
+
+For the implementation of finite element methods it is required to first
+discretize the global domain into a set of finite subdomains. Each subdomain is
+called an element. It is then possible to compute the values of the local
+system of equations with respect to a given element, then to combine these
+values to construct the global system. The first step is to discretize the
+global domain into a set of finite elements.
+
+These elements can be of the form of an $N$ sided polygon, not that it will not
+be regular each side will have different lengths. This paper will utilize
+triangular meshes, but many implementations also implement quadrangle, and
+hexagonal meshes. Since the construction of meshes with elements with more than
+three sides is considerably more difficult, we will limit this paper to only
+discussing the triangular mesh construction.
+
+Constructing the triangular mesh is the most generalized method, as any polygon
+with more edges can be constructed by several triangles. Thus the mesh of
+polygons with more than three sides, can be derived from the triangular mesh,
+without significant difficulty.
+
+The process that will be used for the construction of the triangular mesh is
+knows as Constrained Delaunay Triangulation. Then to improve the mesh and
+consequently improve the accuracy of the approximation, a mesh refinement
+algorithm is utilized to ensure that the elements of the mesh are of an
+acceptable quality.
+
+\subsection{Delaunay Triangulation}%
+\label{sub:delaunay_triangulation}
+
+Delaunay triangulation is the straight line dual of the Voronoi diagram. The
+Delaunay triangulation of a domain is commonly used in may different
+situations, including for the purpose of mesh generation for finite element
+analysis.
+
+The key property of Delaunay triangulation is that no point may lie within the
+circumcircle of any other triangle.
+
+\begin{definition}[Circumcircle]
+  The circumcircle of a triangle, is the circle is defined by having all three
+  vertices of the triangle on the circle. For any given triangle there is only
+  one such circle that satisfies this. In figure \ref{fig:circumcircle}, a
+  depiction of the circumcircle for a provided triangle is given.
+\end{definition}
+
+\begin{definition}[Delaunay Triangulation]
+   Let $S$ be a set of points in the plane $\R^2$. A triangulation $T$ is a
+   \textit{Delaunay Triangulation}($DT$) of $S$ if for each triangle $t$ of $T$
+   there exists a circle $C$ with the following properties:
+   \begin{enumerate}
+     \item all of the vertices of the triangle $t$ are on the boundary of
+       circle $C$,
+       \begin{align*}
+          p\in\partial C\quad\forall p\in t
+       \end{align*}
+     \item and no other vertex of $S$ is in the interior of $C$.
+       \begin{align*}
+         p\notin S\quad\forall p\in\text{Int}(C)
+       \end{align*}
+   \end{enumerate}
+\end{definition}
+
+By this definition of the Delaunay triangulation, the triangulation is unique
+for most set of points $S$. The only exception to this rule is when a set of
+four points construct the square. For the square there are two equally valid
+triangulations, and dependent on the implementation one or the other must be
+selected.
+
+A major advantage of the Delaunay triangulation for mesh generation is that it
+inherently avoids triangles with small included angles, as the circumcircles of
+these triangles would be very large, and would likely include other vertices.
+This avoidance is extremely useful in finite element analysis, and will produce
+more accurate approximations of the solution to the partial differential
+equation.
+
+There are many different algorithms that can be implemented for the
+construction of the Delaunay triangulation. The notable methods include; Divide
+and Conquer, Incremental, Sweep Line, and Edge Flipping. The specifics of these
+algorithms will be discussed further in section \ref{sec:2mesh_gen}.
+
+With the Delaunay triangulation constructed, one must next apply the boundaries
+of the domain to the mesh. The process is called the construction of the
+Constrained Delaunay Triangulation.
+
+\subsection{Constrained Delaunay Triangulation}%
+\label{sub:constrained_delaunay_triangulation}
+
+The Constrained Delaunay Triangulation, is a modification of the Delaunay
+Triangulation such that specified edges and vertices are forced to exists in
+the triangulation. Because of the forcing of edges into the triangulation, the
+mesh may not strictly satisfy the definition of Delaunay triangulation. Thus we
+define the constrained triangulation as the closest triangulation to the
+Delaunay triangulation that includes all of the required edges.
+
+This sense of ``closeness'' to the Delaunay mesh is such that we use as few
+modifications from a Delaunay triangulation in order to enforce the constrained
+edges to construct the constrained Delaunay triangulation.
+
+The constrained edges are most commonly utilized for the purpose of defining
+boundaries of the domain, or enforcing a location of a medium change. Since the
+result of the unconstrained Delaunay triangulation will have a strictly convex
+shape. This makes it necessary to apply the edge constraints for all domains
+that do not have a strictly convex outer hull.
+
+There are a number of methods for the construction of the constrained Delaunay
+triangulation. A few of these implementations enforce the constraints during
+the initial construction of the triangulation. However, more commonly the
+constraints are enforced upon an already constructed triangulation. The details
+on the implementation of these algorithms is discussed in section
+\ref{sec:2mesh_gen}.
+
+\subsection{Mesh Refinement}%
+\label{sub:mesh_refinement}
+
+The direct output of the constrained Delaunay triangulation algorithms may be
+sufficient in a few situations, but for most cases, it would result in
+suboptimal meshes. For generalizability, we discuss the methods that are utilized
+to refine the generated mesh, thus improving upon the quality of the meshes.
+
+Mesh refinement is almost always required, because along constrained edges,
+there may only be a single element. This element is forced to have one of its
+edges be the entity of the constrained edge. This tends to lead to skinny
+triangles, ones who's minimum interior angle is very small. There are frequently
+undesirable in the final mesh. We denote that these triangles are not
+\textit{well-shaped}.
+
+\begin{definition}[Well-Shaped]
+  A triangle is well-shaped if all its interior angles are greater than or
+  equal to some defined constant angle $\alpha$ (commonly
+  $\alpha\approx30^\circ$).
+\end{definition}
+
+It is also possible that all the elements in the mesh are well-shaped, but they
+could all be very large. A finer mesh will always result in more accurate
+approximations, as will be made clear later. Thus we may also want to define a
+notion of \textit{well-sized} triangles, so that it is possible to refine the
+element size in the mesh.
+
+\begin{definition}[Well-Sized]
+  A triangle is well-sized if the area of the triangle satisfies some user
+  defined grading function $g$ (commonly $g=\text{const}$). This function can
+  use any criteria for determining if a triangle satisfies it, as long as there
+  exists a value $\delta>0$ such that any well-shaped triangle that fits within
+  a circle of radius $\delta$ would satisfy the grading function.
+\end{definition}
+
+This definition of the well-sized triangles, describes that any function can be
+used in order to define when a triangle is well-sized. This is very important
+in constructing meshes that are very fine around specified features, and the
+coarser in the unimportant regions. The one restriction of the grading function
+is that there must be some lower bound, such that all triangles that fit within
+the lower bound will be accepted. This enforces that the grading function may
+not require triangles to become infinitely small.
+
+Using these definitions for how to classify the elements of a mesh, it becomes
+possible to implement algorithms in order to refine any mesh. The
+technicalities of the mesh refinement algorithms is discussed in
+\ref{sub:2mesh_refinement}.
+
+\end{document}
