@@ -4,5 +4,162 @@
 \section{Numeric Approximations}%
 \label{sec:numeric_approximations}
 
+For the method of finite elements, we require the computation of a number of
+approximations. Most of these approximations are inherent in the method, and
+cannot be avoided. However, there are some computations that are possible to do
+by hand, but for the structure of the program, we chose to implement these
+computationally.
+
+These computations primarily include the integration of some function over a
+triangular element, and the partial differentiation of some functions. These
+computations are required in the stage to construct the matrix. This process is
+demonstrated in section \ref{sec:assembly_of_the_global_system}, and the
+equations that require the computations are shown in equation
+\ref{eq:local_sys}.
+
+\subsection{Local Basis Differentiation}%
+\label{sub:local_basis_differentiation}
+
+For the local basis function, it is possible to construct the partial
+derivatives analytically. This is because the structure of the local basis
+functions is constant, and known. Because of this we determined the partial
+derivatives of the local basis functions to be
+\begin{align}\label{eq:local_basis_deriv}
+  \begin{split}
+    \pder{\ph^\e_1}{x}&=\frac{\left(Y^\e_2-Y^\e_3\right)}{\left(Y^\e_2-Y^\e_3\right)\left(X^\e_1-X^\e_3\right)+\left(X^\e_3-X^\e_2\right)\left(Y^\e_1-Y^\e_3\right)}\\
+    \pder{\ph^\e_1}{y}&=\frac{\left(X^\e_3-X^\e_2\right)}{\left(Y^\e_2-Y^\e_3\right)\left(X^\e_1-X^\e_3\right)+\left(X^\e_3-X^\e_2\right)\left(Y^\e_1-Y^\e_3\right)}.
+  \end{split}
+\end{align}
+Because it is possible to only utilize the first local basis functions, this is
+all that we need to compute. This is because, we are always able to rotate the
+local basis functions. The actual number are unimportant, only the order of the
+sequence matters.
+
+Using this, we are able to use the actual value of the partial derivatives of
+the local basis functions in the computation. Thus eliminating one of the
+necessary approximations.
+
+\subsection{Differentiation}%
+\label{sub:differentiation}
+
+Unfortunately in the computation of $\wb{A}^\e_{ij}$ we are required to take the
+derivative of some user defined function. For the sake of not requiring the
+user to manually compute the partial derivatives, and define those functions as
+well, we chose to numerically approximation the partial derivative of this
+arbitrary function.
+
+Consider a function $f(x,y)$. The definition of a derivative is
+\begin{align*}
+  \pder{f}{x}\equiv\lim_{h\rightarrow 0}\frac{f(x+h,y)-f(x,y)}{h}.
+\end{align*}
+this equation is a simple two point estimation, where taking two points near
+by, and then the difference should be the approximation of the derivative.
+However, this approximation is crude, and does not provide much accuracy. One
+with minor improvements is the symmetric difference quotient
+\begin{align*}
+  \frac{f(x+h,y)-f(x-h,y)}{2h}.
+\end{align*}
+This expression improves slightly on the accuracy of the derivative.
+
+For our purposes, we want the numerical approximations of the derivatives to be
+as accurate as possible. This is why we chose to use finite differences to
+approximation the derivatives. These methods are the same as the two
+expressions provided, just at a larger scale. The two expressions previously
+presented are two point approximations of the derivative, but it is possible to
+make a $k$-point approximation of the derivative. As $k$ increases the accuracy
+of the derivative also increases.
+
+For our implementation we chose to utilize an 8-point approximation of the
+derivative. The coefficients of the approximation utilized were determined by
+\cite{FD}. The approximation that we implemented takes the form
+\todo{HELP}
+\begin{align*}
+  \resizebox{\columnwidth}{!}{$
+    \pder{f}{x}\Bigr|_{(x,y)}\approx\frac{\frac{1}{280}f(x-4h,y)-\frac{4}{105}f(x-3h,y)+\frac{1}{5}f(x-2h,y)-\frac{4}{5}f(x-h,y)+\frac{4}{5}f(x+h,y)-\frac{1}{5}f(x+2h,y)+\frac{4}{105}f(x+3h,y)-\frac{1}{280}f(x+4h,y)}{h}+O\left(h^8\right).
+$}
+\end{align*}
+Using this approximation, we achieve an error of $O\left(h^8\right)$. For many
+cases this should be an acceptable amount of error.
+
+Since each derivative is only done with respect to a single element, then we
+are able to construct a more specific approximation. Currently one must
+minimize the value of $h$ in order to compute more accurate approximations, but
+for practical purposes, we must determine a value of $h$ to evaluate at. It is
+not possible to evaluate this approximation with $h=0$. In order to determine
+the value of $h$ to utilize, we base it off of the size of the element.
+
+We denote the area or the measure of an element as $\mu\left(E_e\right)$. This
+can be computed by the use of the following expression
+\begin{align*}
+  \mu\left(E_e\right)=\frac{1}{2}\left\vert
+  X^\e_1\left(Y^\e_2-Y^\e_3\right)+X^\e_2\left(Y^\e_3-Y^\e_1\right)+X^\e_3\left(Y^\e_1-Y^\e_2\right)\right\vert.
+\end{align*}
+We decided to use $h=\frac{1}{8}\mu\left(E_e\right)$ as the value of $h$ in the
+approximation of the partial derivatives. If for any reason this is not
+sufficient for any problem, then all that needs to be done is to refine the
+mesh in that region of the domain. This mesh refinement can be controlled by
+the user through the mesh grading function (Def \ref{def:well_sized}).
+
+\subsection{Integration}%
+\label{sub:integration}
+
+The final unavoidable approximation is the integration of arbitrary functions
+over a triangular element. Due to the triangular nature of the elements, it is
+not possible to utilize a straightforward implementation of Simpson's method, or
+a trapezoidal rule. In order to integrate on an arbitrary triangular element we
+must do several steps. Consider a function $f$ to be integrated over the
+element $E_e$. Thus we wish to construct an approximation for
+\begin{align*}
+  \int_{E_e}fdA.
+\end{align*}
+
+The first step is to convert the arbitrary triangle into a master triangle
+element. We define the master element, to be a triangular element such that the
+vertices are located at $(0,0)$, $(1,0)$, and $(0,1)$, we denote this master
+element as $\Delta$. This conversion induces a scale factor of the area of the
+triangular element. Thus our expression becomes
+\begin{align*}
+  \int_{\Delta}f\mu\left(E_e\right)dA=\mu\left(E_e\right)\int_{\Delta}fdA.
+\end{align*}
+
+At this stage it would be possible to utilize Simpson's method or a trapezoidal
+method for integration, changing the bounds of the $y$ integration based upon
+the $x$ value, and the expression would be of the form
+\begin{align*}
+  \mu\left(E_e\right)\int_{x=0}^{x=1}\int_{y=0}^{y=1-x}fdydx.
+\end{align*}
+However, this method is extremely computationally intensive and does not
+provide very accurate results for the computational complexity that it
+requires. To compute this integral, we will utilize a different method of
+numerical integration called Gaussian Quadrature.
+
+The Gaussian Quadrature rule is a quadrature rule that has been constructed
+such that a $n$-point Gaussian quadrature will yield an exact result for
+polynomials of the degree $2n-1$. A quadrature rule is most methods of numeric
+integration, for example trapezoidal rule is a quadrature rule. The premise of
+the Gaussian quadrature rule is that the sum of a function evaluated at a set
+of selected points multiplies by selected weights is able to compute the
+approximation of the function.
+
+This is the same concept as the trapezoidal rule, which is expressed as
+\begin{align*}
+  \int_a^bfdx\approx\frac{\Delta
+    x}{2}\sum_{k=1}^{N}\left(f(x_{k-1})+f(x_{k})\right).
+\end{align*}
+This method is clearly a sum of the function as specified points $x_k$, multiplied by
+a specified weight $\frac{\Delta x}{2}$.
+
+Gaussian quadrature rules have been developed for the master triangle $\Delta$,
+so we will utilize the computed weights and points from \cite{GQ}. This means
+that the approximation of the integral becomes
+\begin{align*}
+  \mu\left(E_e\right)\int_{\Delta}fdA\approx\mu\left(E_e\right)\sum_{k=1}^Nw_kf(x_k,y_k).
+\end{align*}
+For our purposes we chose $N$ to be 128, as that will be sufficiently large that
+most error should be negligible. If the error is not significantly negligible,
+then the mesh should be refined thus reducing $\mu\left(E_e\right)$, and
+consequentially reducing the scale of the error. The values from \cite{GQ} have
+been provided in the appendix, both of the weights and the $(x,y)$ pairs.
+\todo{Add weights and points in the appendix.}
 
 \end{document}

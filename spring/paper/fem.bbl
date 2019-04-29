@@ -26,6 +26,14 @@ V.~Domiter and B.~\v{Z}alik.
 \newblock {\em International Journal of Geographical Information Science},
   22(4):449--462, 2008.
 
+\bibitem[FFM19]{FFMPEG}
+Ffmpeg, 2019.
+
+\bibitem[For88]{FD}
+Bengt Fornberg.
+\newblock Generation of finite difference formulas on arbitrarily spaced grids.
+\newblock {\em Mathematics of Computation}, 51(184):699--706, 1988.
+
 \bibitem[HKA12]{GQ}
 Farzana Hussain, M.~S. Karim, and Razwan Ahamad.
 \newblock Appropriate gaussian quadrature formulae for triangle.
@@ -43,6 +51,9 @@ A.~N. Krylov.
   questions frequencies of small oscillations of material systems are
   determined.
 \newblock {\em News of Academy of Sciences of the USSR}, 7(4):491--539, 1931.
+
+\bibitem[PNG19]{PNG}
+libpng, 2019.
 
 \bibitem[Rup95]{R_REF}
 Jim Ruppert.

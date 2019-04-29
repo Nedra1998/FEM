@@ -1,4 +1,0 @@
-\contentsline {part}{\tocpart {Part}{1}{Mathematical Theory}}{3}
-\contentsline {part}{\tocpart {Part}{2}{Mathematical Implementation}}{4}
-\contentsline {part}{\tocpart {Part}{3}{Computational}}{5}
-\contentsline {section}{\tocsection {}{}{References}}{6}

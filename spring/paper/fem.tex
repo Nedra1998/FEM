@@ -16,7 +16,6 @@
 \usepackage{algpseudocode}
 \usepackage{algorithm}
 \usepackage{graphics}
-% \usepackage{physics}
 
 \title{Finite Element Analysis}
 \author{Arden Rasmussen}
@@ -47,6 +46,8 @@
 \newcommand{\wt}[1]{\widetilde{#1}}
 \newcommand{\wb}[1]{\overline{#1}}
 \newcommand{\braket}[2]{\left<{#1},{#2}\right>}
+\newcommand{\pluseq}{\mathrel{+}=}
+\newcommand{\minuseq}{\mathrel{-}=}
 
 \newcommand{\hdiv}[3]{
   \vspace{#1}%
@@ -69,6 +70,13 @@
   provided with this paper is written in C++, and is commented for better
   readability of the code.
 \end{abstract}
+
+\todo[inline]{Spacial Discretization Rewrite}
+\todo[inline]{Temporal Discretization}
+\todo[inline]{Construction of the Approximation}
+\todo[inline]{Temporal Iterations}
+\todo[inline]{Figures}
+\todo[inline]{Appendix}
 
 Finite element methods is a computational process used for the determination of
 an approximate solution to a given partial differential equation, with given
@@ -146,7 +154,7 @@ the solution utilizing the previously discussed FEM.
 \label{prt:computational}
 \hdiv{10pt}{0.5pt}{1pt}
 
-\subfile{pt3/basis}
+% \subfile{pt3/basis}
 \subfile{pt3/mesh}
 \subfile{pt3/matrix}
 \subfile{pt3/numeric}

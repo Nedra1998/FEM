@@ -4,5 +4,38 @@
 \section{Basis Functions}%
 \label{sec:basis_functions}
 
+Using the basis functions that were mathematically constructed in section
+\ref{sec:localization}, we will now construct a method for the implementation
+of these basis elements. Since these basis functions are used frequently and
+commonly throughout the computations, it will be important to optimize the
+calculations.
+
+We will need both the local and global basis functions. The local basis
+functions are utilized in the matrix construction from section
+\ref{sec:assembly_of_the_global_system}, and the global basis functions are
+utilized in the plotting and post processing from section \ref{sec:plotting}.
+First we will concentrate on global basis functions, then will consider the
+global basis functions.
+
+\subsection{Local Basis Functions}%
+\label{sub:local_basis_functions}
+
+Recall that the local basis functions were derived in section
+\ref{sub:local_basis}. The basis functions can be written as
+\begin{align*}
+  \ph^\e_1&=\frac{(Y^\e_2-Y^\e_3)(x-X^\e_3)+(X^\e_3-X^\e_2)(y-Y^\e_3)}{(Y^\e_2-Y^\e_3)(X^\e_1-X^\e_3)+(X^\e_3-X^\e_2)(Y^\e_1-Y^\e_3)}\\
+  \ph^\e_2&=\frac{(Y^\e_3-Y^\e_1)(x-X^\e_3)+(X^\e_1-X^\e_3)(y-Y^\e_3)}{(Y^\e_2-Y^\e_3)(X^\e_1-X^\e_3)+(X^\e_3-X^\e_2)(Y^\e_1-Y^\e_3)}\\
+  \ph^\e_3&=1-\ph^\e_1-\ph^\e_2.
+\end{align*}
+Clearly these basis functions will require the mesh, the element index, and the
+local vertex index.
+
+The first optimization is done with relation to $\ph^\e_3$.  Currently to
+compute $\ph^\e_3$ one must also compute $\ph^\e_1$ and $\ph^\e_2$. However,
+since the base index of the local indicies does not matter, only the ordering
+of them, it is possible to only compute the value of $\ph^\e_1$. Since for
+every other local index, we can consider rotating the ordering of the local
+indicies, thus essentially converting the local index of $2$ or $3$ to $1$.
+This process is demonstrated in figure \ref{fig:local_rotate}.
 
 \end{document}

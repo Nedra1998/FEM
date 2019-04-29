@@ -128,7 +128,7 @@ triangles, ones who's minimum interior angle is very small. There are frequently
 undesirable in the final mesh. We denote that these triangles are not
 \textit{well-shaped}.
 
-\begin{definition}[Well-Shaped]
+\begin{definition}[Well-Shaped] \label{def:well_shaped}
   A triangle is well-shaped if all its interior angles are greater than or
   equal to some defined constant angle $\alpha$ (commonly
   $\alpha\approx30^\circ$).
@@ -140,7 +140,7 @@ approximations, as will be made clear later. Thus we may also want to define a
 notion of \textit{well-sized} triangles, so that it is possible to refine the
 element size in the mesh.
 
-\begin{definition}[Well-Sized]
+\begin{definition}[Well-Sized] \label{def:well_sized}
   A triangle is well-sized if the area of the triangle satisfies some user
   defined grading function $g$ (commonly $g=\text{const}$). This function can
   use any criteria for determining if a triangle satisfies it, as long as there
@@ -156,9 +156,16 @@ is that there must be some lower bound, such that all triangles that fit within
 the lower bound will be accepted. This enforces that the grading function may
 not require triangles to become infinitely small.
 
+We will now define what it means for a triangle to be ``nice''.
+
+\begin{definition}[nice] \label{def:nice_tri}
+  A triangle is said to be \textit{nice}, if it is both well-shaped (Def
+  \ref{def:well_shaped}) and well-sized (Def \ref{def:well_sized}).
+\end{definition}
+
 Using these definitions for how to classify the elements of a mesh, it becomes
 possible to implement algorithms in order to refine any mesh. The
 technicalities of the mesh refinement algorithms is discussed in
-\ref{sub:2mesh_refinement}.
+\ref{sub:mesh_refinement2}.
 
 \end{document}
