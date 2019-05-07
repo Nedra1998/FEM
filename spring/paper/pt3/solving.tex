@@ -30,12 +30,12 @@ The Jacobi method is a very simple method for solving linear systems. It is
 very easy to understand and implement, but the convergence of the approximation
 can be very slow.
 
-% \begin{Figure}
-%    \begin{center}
-%      \input{figures/jacobi_time.tikz}
-%    \end{center}
-%    \captionof{figure}{Time complexity of Jacobi method.}\label{fig:j_time}
-% \end{Figure}
+\begin{figure}[htpb]
+  \centering
+  \input{figures/jacobi_time.tikz}
+  \caption{Time complexity of Jacobi method.}
+  \label{fig:j_time}
+\end{figure}
 
 The concept for the Jacobi method is to solve for each variable $x_i$ one at a
 time, with the assumption that all other variables are constant. We solve each
@@ -55,12 +55,12 @@ We then implement the iteration to find the equation
   x_i^{(k)}=\frac{b_i-\sum_{j\neq i}a_{i,j}x_j^{(k-1)}}{a_{i,i}}.
 \end{align*}
 
-% \begin{Figure}
-%    \begin{center}
-%      \input{figures/jacobi_err.tikz}
-%    \end{center}
-%    \captionof{figure}{Error of Jacobi method.}\label{fig:j_err}
-% \end{Figure}
+\begin{figure}[htpb]
+  \centering
+  \input{figures/jacobi_err.tikz}
+  \caption{Error of Jacobi method.}
+  \label{fig:j_err}
+\end{figure}
 
 Using this formula for the computation of the new approximation vector $x$
 
@@ -101,24 +101,24 @@ The Gauss-Seidel method is an extension of the Jacobi method, with one
 optimization. Instead of using the old values of $x$, the algorithm uses the
 already computed values of the current iteration.
 
-% \begin{Figure}
-%    \begin{center}
-%      \input{figures/gauss_seidel_time.tikz}
-%    \end{center}
-%    \captionof{figure}{Time complexity of Gauss-Seidel method.}\label{fig:gs_time}
-% \end{Figure}
+\begin{figure}[htpb]
+  \centering
+  \input{figures/gauss_seidel_time.tikz}
+  \caption{Time complexity of Gauss-Seidel method.}
+  \label{fig:gs_time}
+\end{figure}
 
 This method does not improve the rate of convergence significantly, but it is a
 simple to implement improvement over the Jacobi method. The mathematics and the
 pseudocode are almost identical to that of the Jacobi method, with the only
 difference being that instead of using $\bar{x}$ all values are taken from $x$.
 
-% \begin{Figure}
-%    \begin{center}
-%      \input{figures/gauss_seidel_err.tikz}
-%    \end{center}
-%    \captionof{figure}{Error of Gauss-Seidel method.}\label{fig:gs_err}
-% \end{Figure}
+\begin{figure}[htpb]
+  \centering
+  \input{figures/gauss_seidel_err.tikz}
+  \caption{Error of Gauss-Seidel method.}
+  \label{fig:gs_err}
+\end{figure}
 
 Because of this similarity, we do not explain in detail the mathematics, but the
 pseudocode is provided in Algorithm \ref{algo:gauss_seidel_method}.
@@ -161,26 +161,24 @@ it is one of the most researched nonstationary methods. This method is based on
 the construction of a sequence of approximations. Each new approximation is
 generated based on the direction required to minimize the residual.
 
-% \begin{Figure}
-%    \begin{center}
-%      \input{figures/conjugate_gradient_time.tikz}
-%    \end{center}
-%    \captionof{figure}{Time complexity of Conjugate Gradient
-%    method.}\label{fig:cg_time}
-% \end{Figure}
+\begin{figure}[htpb]
+  \centering
+  \input{figures/conjugate_gradient_time.tikz}
+  \caption{Time complexity of Conjugate Gradient}
+  \label{fig:cg_time}
+\end{figure}
 
 This is done by determining which ``direction'' must be used in order to
 minimize the residual, then the approximation is moved by some $\alpha$ amount
 in that direction. After repeating this process for some number of iterations,
 the generated approximation should be converging to the actual solution.
 
-% \begin{Figure}
-%    \begin{center}
-%      \input{figures/conjugate_gradient_err.tikz}
-%    \end{center}
-%    \captionof{figure}{Error of Conjugate Gradient
-%    method.}\label{fig:cg_err}
-% \end{Figure}
+\begin{figure}[htpb]
+  \centering
+     \input{figures/conjugate_gradient_err.tikz}
+  \caption{Error of COnjugate Gradient}
+  \label{fig:cg_err}
+\end{figure}
 
 We construct the iterative approximation in each iteration by a multiple of
 $\alpha_i$ of the search direction $p^{(i)}$,
@@ -250,17 +248,17 @@ depends on the system being considered, using this method the time required is
 directly related to the number of elements. This means that each system of the
 same size will require the same time to solve.
 
-% \begin{Figure}
-%    \begin{center}
-%      \input{figures/cholesky_time.tikz}
-%    \end{center}
-%    \captionof{figure}{Time complexity of Cholesky method.}\label{fig:ch_time}
-% \end{Figure}
+\begin{figure}[htpb]
+  \centering
+     \input{figures/cholesky_time.tikz}
+  \caption{Time complexity of Cholesky method.}
+  \label{fig:ch_time}
+\end{figure}
 
 The Cholesky decomposition of a matrix provides a lower triangular matrix $L$
 of the form
 \begin{align*}
-   A=LL^T
+  A=LL^T
 \end{align*}
 
 We use this decomposition of $A$ to solve two systems of linear equations,
@@ -333,36 +331,36 @@ We provide pseudocode of this method in Algorithm \ref{algo:cholesky_method}.
   \begin{algorithmic}
     \State{}\Comment{Calculate $A=LL^T$ decomposition.}
     \For{$j=0,1,2,\ldots,N$}
-      \State{$L_{j,j}=0$}
-      \For{$k=0,1,2,\ldots,j$}
-        \State{$L_{j,j}\pluseq L_{j,k}^2$}
-      \EndFor
-      \State{$L_{j,j}=\sqrt{A_{j,j}-L_{j,j}}$}
-      \For{$i=j,j+1,j+2,\ldots,N$}
-        \State{$L_{i,j}=0$}
-        \For{$k=0,1,2,\ldots,j$}
-          \State{$L_{i,j} \pluseq L_{i,k}L_{j,k}$}
-        \EndFor
-        \State{$L_{i,j}=\frac{A_{i,j}-L_{i,j}}{L_{j,j}}$}
-      \EndFor
+    \State{$L_{j,j}=0$}
+    \For{$k=0,1,2,\ldots,j$}
+    \State{$L_{j,j}\pluseq L_{j,k}^2$}
+    \EndFor
+    \State{$L_{j,j}=\sqrt{A_{j,j}-L_{j,j}}$}
+    \For{$i=j,j+1,j+2,\ldots,N$}
+    \State{$L_{i,j}=0$}
+    \For{$k=0,1,2,\ldots,j$}
+    \State{$L_{i,j} \pluseq L_{i,k}L_{j,k}$}
+    \EndFor
+    \State{$L_{i,j}=\frac{A_{i,j}-L_{i,j}}{L_{j,j}}$}
+    \EndFor
     \EndFor
     \State{}\Comment{Calculate $Ly=b$ by forward substitution.}
     \State{$y=0$}
     \For{$i=1,2,\ldots,N$}
-      \State{$y_i=0$}
-      \For{$j=1,2,\ldots,i$}
-        \State{$y_i\pluseq L_{i,j}y_j$}
-      \EndFor
-      \State{$y_i=\frac{b_i-y_i}{L_{i,i}}$}
+    \State{$y_i=0$}
+    \For{$j=1,2,\ldots,i$}
+    \State{$y_i\pluseq L_{i,j}y_j$}
+    \EndFor
+    \State{$y_i=\frac{b_i-y_i}{L_{i,i}}$}
     \EndFor
     \State{}\Comment{Calculate $L^Tx=y$ by back substitution.}
     \State{$x=0$}
     \For{$i=N,N-1,\ldots,1$}
-      \State{$x_i=0$}
-      \For{$j=i+1,i+2,\dots,N$}
-        \State{$x_i\pluseq L^T_{i,j}x_j$}
-      \EndFor
-      \State{$x_i=\frac{b_i-x_i}{L^T_{i,i}}$}
+    \State{$x_i=0$}
+    \For{$j=i+1,i+2,\dots,N$}
+    \State{$x_i\pluseq L^T_{i,j}x_j$}
+    \EndFor
+    \State{$x_i=\frac{b_i-x_i}{L^T_{i,i}}$}
     \EndFor
     \State{\Return $x$}
   \end{algorithmic}
@@ -382,13 +380,13 @@ on the form of the global matrix. If a general form of the matrix cannot be
 guaranteed, then we will be forced to utilize significantly slower methods of
 computing the solution to the linear system.
 
-% \begin{Figure}
-%    \begin{center}
-%      \input{figures/lin_time.tikz}
-%    \end{center}
-%    \captionof{figure}{Plots of the different time requirements for solving the
-%    linear systems.}
-% \end{Figure}
+\begin{figure}[htpb]
+  \centering
+   \input{figures/lin_time.tikz}
+  \caption{Plots of the different time requirements for solvign the linear
+  systems.}
+  \label{fig:times}
+\end{figure}
 
 \subsubsection{Possitive Definite}%
 \label{ssub:possitive_definite}
@@ -402,13 +400,15 @@ gradient descent to find our equilibrium solution.
 \subsubsection{Symmetric}%
 \label{ssub:symmetric}
 
-Most of these algorithms, with the exception of the Cholesky method, require the
-matrix to be symmetric. This requirement is mostly for computational
-efficiency and simplicity of the algorithm. There are some methods that can be
-adapted to function for nonsymmetric matrices, but those become significantly
-more complex. For most purposes, we should be able to make use of our
-implementations of these algorithms for finding the solution to the linear
-system.
+Most of these algorithms, with the exception of the Gauss-Seidel method,
+require the matrix to be symmetric. This requirement is mostly for
+computational efficiency and simplicity of the algorithm. There are some
+methods that can be adapted to function for nonsymmetric matrices, but those
+become significantly more complex. For our implementation we will be restricted
+to the Gauss-Seidel method, as the matricies in the linear systems are not
+symmetric. For better preformance, it is recommended to utilize the Generalized
+Minimum Residual method, as this can handle non-symmetric matricies and is
+significantly faster than Gauss-Seidel method.
 
 
 \end{document}

@@ -1,25 +1,39 @@
-\documentclass[draft,10pt]{armath}
+\documentclass[10pt]{armath}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{csquotes}
 \usepackage{enumitem}
+\usepackage{subcaption}
 
 % \usepackage[margin=1in]{geometry}
-\usepackage[obeyDraft]{todonotes}
+\usepackage{todonotes}
 
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
 \usepackage{amsthm}
 \usepackage{multicol}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{subfiles}
-\usepackage{minted}
 \usepackage{algpseudocode}
 \usepackage{algorithm}
 \usepackage{graphics}
+\usepackage{longtable}
+\usepackage[toc,page]{appendix}
+\usepackage{hyperref}
+
+\usepackage{minted}
+\setminted[lua]{
+  linenos=true,
+  frame=lines,
+  framesep=5pt,
+  fontsize=\footnotesize
+}
 
 \title{Finite Element Analysis}
 \author{Arden Rasmussen}
 \date{\today}
+
 
 \numberwithin{equation}{section}
 
@@ -40,6 +54,7 @@
 \newcommand{\ep}{{\varepsilon}}
 
 \newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ppder}[2]{\frac{\partial^2 #1}{\partial {#2}^2}}
 \newcommand{\px}{{\partial x}}
 \newcommand{\ph}{\varphi}
 \newcommand{\e}{{(e)}}
@@ -48,11 +63,15 @@
 \newcommand{\braket}[2]{\left<{#1},{#2}\right>}
 \newcommand{\pluseq}{\mathrel{+}=}
 \newcommand{\minuseq}{\mathrel{-}=}
+\newcommand{\tm}{t_{\text{max}}}
 
 \newcommand{\hdiv}[3]{
   \vspace{#1}%
   \noindent\rule{\textwidth}{#2}%
   \vspace{#3}%
+}
+\newcommand{\code}[2]{
+  \begin{figure}[thp]\centering\begin{minipage}{0.8\textwidth}\inputminted{#1}{#2}\end{minipage}\end{figure}
 }
 
 \begin{document}
@@ -71,12 +90,8 @@
   readability of the code.
 \end{abstract}
 
-\todo[inline]{Spacial Discretization Rewrite}
-\todo[inline]{Temporal Discretization}
-\todo[inline]{Construction of the Approximation}
-\todo[inline]{Temporal Iterations}
-\todo[inline]{Figures}
-\todo[inline]{Appendix}
+\section{Introduction}%
+\label{sec:introduction}
 
 Finite element methods is a computational process used for the determination of
 an approximate solution to a given partial differential equation, with given
@@ -124,17 +139,6 @@ the solution utilizing the previously discussed FEM.
 \subfile{pt1/spacial}
 \subfile{pt1/temporal}
 
-% \subfile{math/prob}
-% \subfile{math/cond}
-% \subfile{math/vari}
-% \subfile{math/disc}
-% \subfile{math/local}
-% \subfile{math/mesh}
-% \subfile{math/global}
-% \subfile{math/bndry}
-% \subfile{math/lin}
-% \subfile{math/approx}
-
 \newpage
 \hdiv{10pt}{0.5pt}{1pt}
 \part{Mathematical Implementation}%
@@ -152,17 +156,48 @@ the solution utilizing the previously discussed FEM.
 \hdiv{10pt}{0.5pt}{1pt}
 \part{Computational}%
 \label{prt:computational}
-\hdiv{10pt}{0.5pt}{1pt}
+\hdiv{1pt}{0.5pt}{10pt}
 
-% \subfile{pt3/basis}
 \subfile{pt3/mesh}
 \subfile{pt3/matrix}
+\subfile{pt3/construction}
 \subfile{pt3/numeric}
 \subfile{pt3/solving}
 \subfile{pt3/plotting}
 
 \newpage
+\hdiv{10pt}{0.5pt}{1pt}
+\part{Results}%
+\label{prt:results}
+\hdiv{1pt}{0.5pt}{10pt}
+
+\subfile{pt4/intro}
+\subfile{pt4/p1}
+
+\section{Conclusion}%
+\label{sec:conclusion}
+
+The method of finite elements is currently one of the best algorithms to solve
+partial differential equations. Our implementation allows for easy user
+interface to the solver, and it is able to solve most possible problems. The
+approximation has low error for the scale of the domain. The time required for
+computation of the approximation grows rapidly with larger meshes, but this
+can be improved with improvements to the algorithm.
+
+It is important to note that there are many optimizations that can be done.
+Most important of these optimizations is to improve the algorithm to solve the
+system of linear equations. This is currently the limiting factor of the
+implementation.
+
+The use of this implementation is very simple, allowing for the easy use of the
+very powerful method of finite element methods.
+
+\newpage
 \nocite{*}
 \bibliographystyle{alpha}
 \bibliography{references}
+
+\newpage
+\subfile{appendix/index}
+
 \end{document}

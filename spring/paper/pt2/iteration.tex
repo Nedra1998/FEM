@@ -4,5 +4,36 @@
 \section{Temporal Iterations}%
 \label{sec:temporal_iterations}
 
+For further iteration of the solution, to solve for the solution at later
+times, we utilize the temporal discretization constructed in section
+\ref{sec:temporal_discretization}.
+
+The first stage of this is to compute the next forcing term $F^{n+1}$, and the
+current forcing term $F^{n}$. For our cases, this should just be dependent on
+time, and position, so that can easily be computed using the same methods used
+to compute the initial forcing term.
+
+Then we construct the $\wt{C}^{n}$ matrix. Note that we need not reconstruct
+$\wt{A}$ or $\wt{B}$, since those are independent of the current time step, and
+so can be computed once and used for all iterations. We construct
+$\wt{C}^{n}$ by
+\begin{align*}
+  \wt{C}^{n}=\Delta t\frac{F^{n+1}+F^{n}}{2}.
+\end{align*}
+
+Then using the values of $\wt{C}^n$ and $U^n$ we construct the expression for
+$Q^n$ to be
+\begin{align*}
+  Q^n=\wt{B}U^n+\wt{C}^n.
+\end{align*}
+Then we can use these expressions to solve for the solution coefficients at the
+next time step, by the expression
+\begin{align*}
+  \wt{A}U^{n+1}=Q^n.
+\end{align*}
+
+This process is more closely outlined in the explanation of the Crank-Nicolson
+method in section \ref{sub:crank_nicolson}.
+
 
 \end{document}

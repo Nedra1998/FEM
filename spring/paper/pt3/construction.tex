@@ -1,0 +1,38 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Incremental Construction}%
+\label{sec:incremental_construction}
+
+The algorithm that we implement for the construction of the global matrix,
+closely follows the methods that are outlined in section
+\ref{sec:assembly_of_the_global_system}.
+
+\begin{algorithm}[H]
+  \caption{element-by-element assembly}
+  \begin{algorithmic}
+    \State{Let $G$ by a $N\times N$ matrix of zeros.}
+    \State{Let $M$ by a $N\times N$ matrix of zeros.}
+    \State{Let $F$ by a $N\times 1$ matrix of zeros.}
+    \ForAll{$E_e$}
+    \State{Let $G^\e$ be a $3\times3$ matrix, filled with values from
+    integration.}
+    \State{Let $M^\e$ be a $3\times3$ matrix, filled with values from
+    integration.}
+    \State{Let $F^\e$ be a $3\times1$ matrix, filled with values from
+    integration.}
+      \State{$i=node(e,I)\quad j=node(e,J)\quad I,J=1,2,3$}
+      \State{$G_{ij}=G_{ij}+G_{IJ}^\e$}
+      \State{$M_{ij}=M_{ij}+M_{IJ}^\e$}
+      \State{$F_{i}=F_{i}+F_{I}^\e$}
+    \EndFor
+    \State{\Return $G$, $M$ and $F$.}
+  \end{algorithmic}
+\end{algorithm}
+
+Where $node(e,I)$ provides the relation between global and local node numbers.
+Such that given an element and element vertex number, it returns the global
+vertex number. With the triangular mesh, there is no nice mathematical formula
+for this expression, but it is simple for any implementation.
+
+\end{document}

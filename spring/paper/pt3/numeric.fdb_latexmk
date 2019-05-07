@@ -1,0 +1,12 @@
+# Fdb version 3
+["pdflatex"] 1557202892 "numeric.tex" "numeric.pdf" "numeric" 1557202892
+  "/etc/texmf/web2c/texmf.cnf" 1519595310 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1548390762 814157 c6875cb9dce8929bb3e9e2cbc5a44028 ""
+  "numeric.aux" 1557202850 8 a94a2480d3289e625eea47cd1b285758 ""
+  "numeric.tex" 1557202891 8698 cb83f50e940f4c5336b9efc0bce91c05 ""
+  "subfile.cls" 0 -1 0 ""
+  (generated)
+  "numeric.pdf"
+  "numeric.log"

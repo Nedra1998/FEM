@@ -4,5 +4,30 @@
 \section{Construction of the Approximation}%
 \label{sec:construction_of_the_approximation}
 
+Once the linear system is solved, we are provided with a vector of values $U^n$.
+However, we need to develop a method for constructing the approximation from
+this vector of values. Since these values should be the coefficients of the
+linear combination of the global basis functions $\ph_i$, then we construct the
+approximation $u(n\Delta t, x)$ to be
+\begin{align*}
+  u\left(x, n\Delta t\right)=\sum_{i=1}^NU^n_i\ph_i.
+\end{align*}
+
+Recall that $n$ is the current time step, and $\Delta t$ is the size of each
+time step, and that $N$ is the number of vertices in the mesh.
+
+This is the expression for the approximation at a single given time of
+$t=n\Delta t$. For the solution at earlier times, one must look at previously
+computed time steps where the solution has already been computed. For solutions
+at later times, we need to compute further iterations.
+
+Using this method of time iterations, our approximation is only fully defined
+at the time values of $n\Delta t$, this means that if one wants a solution at a
+time value of $\frac{1}{2}n\Delta t$, then we are unable to provide a solution.
+To work around this, we can consider that the solutions are continuous
+temporally, and so if the time steps are small enough, we can consider the
+solution to change linearly with time between each time step. This means that
+we are able to construct a solution at any time, if we are given the
+coefficients in the form of the $U^n$ and $U^{n+1}$ vectors.
 
 \end{document}

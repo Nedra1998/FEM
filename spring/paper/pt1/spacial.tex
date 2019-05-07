@@ -22,13 +22,31 @@ the structure for inner product. Thus we are able to conclude that our solution
 exists in a space that supports inner product, and is infinitely
 differentiable.
 
+Now we must also take note that we declared that the test functions are zero on
+the boundary. We will denote this space as $H^1_0(\Omega)$. We define this
+space as
+\begin{align*}
+  H^1_0(\Omega)=\left\{f\in H^1(\Omega)\quad \vert\quad
+  f(\partial\Omega)=0\right\}.
+\end{align*}
+We will use this space to construct the approximation of the solution to the
+partial differential equation. The only issue will be the boundary conditions.
+To impose those we consider
+\begin{align*}
+  \wt{u}=u+b,
+\end{align*}
+where $b$ is any function that satisfies the boundary conditions, and $u$ is
+the approximation with boundaryies of zero. Clearly $\wt{u}$ will also satisfy
+the boundary conditions, and will be an approximation of the solution to the
+problem. This is how we will construct the approximation, with the boundary
+conditions.
+
 Since the process of finite element methods is inherently intended for
 computation, problems arise when infinities come into play. Since the span of
-the Sobolev space $H^1(\Omega)$ is infinite, we are required to consider a
+the Sobolev space $H^1_0(\Omega)$ is infinite, we are required to consider a
 subspace of it. This will be the subspace of the Sobolev space that our
 approximation of the solution lives in, we will call this subspace
-$\wt{V}\subset H^1(\Omega)$.\todo{Specify that the approximation without bc
-only exists in $H^1_0(\Omega)$, or the values that are 0 on the boundaries.}
+$\wt{V}\subset H^1_0(\Omega)$.
 
 We will construct a finite set of basis functions for the subspace $\wt{V}$ to
 be $\left\{\ph_j\right\}$. For now we will leave these basis functions as
@@ -40,12 +58,15 @@ converge to the exact solution, utilizing the same notation does not cause any
 issues. We construct this approximation such that it is an element of the
 subspace of the Sobolev space as we have defined. That is to say
 \begin{align*}
-  u\in\wt{V}\subset H^1(\Omega)
+  u\in\wt{V}\subset H^1_0(\Omega)
 \end{align*}
 Since our approximation is
 constructed in $\wt{V}$, then it must be expressible as a linear combination of
 the basis function $\ph_j$ of the finite subspace $\wt{V}$ that $\wt{u}$ is an
-element of. Thus we can express $\wt{u}$ as
+element of. However, for the specifics of the implementation demonstrated in
+Part 2 we will consider $\ph_j\in H^1_0(\Omega)$, although for the mathematics
+this can be ignored. The reason for this, is so that we also construct the $b$
+function from the same basis elements. Thus we can express $\wt{u}$ as
 \begin{align}\label{eq:approx}
   u=\sum_{j=1}^N u_j(t)\ph_j(\vec{x}),
 \end{align}
@@ -135,22 +156,22 @@ Since it is possible to replace $w$ with \textit{any} of the basis functions,
 that means that $i=1,2,\ldots,N$. This provides us with a system of equations,
 which is then expressible in terms of matrices. The matrix representation of
 the system is
-\begin{align}\label{matrix}
+\begin{align}\label{eq:matrix}
   G\partial_t U=\left(\wb{A}+\wb{B}+\wb{C}\right)U+F.
 \end{align}
 Where $U$ is a vector in $\R^N$ composed of the $u_j$ functions. We use the
 notation $\partial_t$ to denote the operator of taking the partial derivative
 of the $U$ vector with respect to time, element wise. The elements of $G$,
 $\wb{A}$, $\wb{B}$, $\wb{C}$, and $F$ are defined as
-\begin{align*}
+\begin{align}\label{eq:global_mat_ele}
   G_{ij}&=\braket{\ph_i}{\ph_j}\quad &i,j&=1,\ldots,N\\
   \wb{A}^{ij}&=-\sum_{\alpha,\beta=1}^2\braket{\pder{}{x^\alpha}\left[A^{\alpha\beta}\ph_i\right]}{\pder{\ph_j}{x^\beta}}
-             &i,j&=1,\ldots,N\\
+             &i,j&=1,\ldots,N\nonumber\\
   \wb{B}^{ij}&=\sum_{\gamma=1}^2\braket{B^\gamma\ph_i}{\pder{\ph_j}{x^\gamma}}
-             &i,j&=1,\ldots,N\\
-  \wb{C}^{ij}&=\braket{C\ph_i}{\ph_j} &i,j&=1,\ldots,N\\
-  F&=\braket{\ph_i}{f} &i,j&=1,\ldots,N.
-\end{align*}
+             &i,j&=1,\ldots,N\nonumber\\
+  \wb{C}^{ij}&=\braket{C\ph_i}{\ph_j} &i,j&=1,\ldots,N\nonumber\\
+  F&=\braket{\ph_i}{f} &i,j&=1,\ldots,N.\nonumber
+\end{align}
 
 It is often simpler to consider a matrix $M$ such that
 $M=\wb{A}+\wb{B}+\wb{C}$, then our expression for the matrix form of the system

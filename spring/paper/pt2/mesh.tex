@@ -64,6 +64,15 @@ circumcircle of any other triangle.
    \end{enumerate}
 \end{definition}
 
+\begin{figure}[htpb]
+  \centering
+  \input{figures/delaunay_def.tex}
+  \caption{Demonstration of the circumcircle definition of Delaunay
+  triangulation. This shows how the circumcircle of each triangles does not
+contain any vertex from any other triangles.}
+  \label{fig:}
+\end{figure}
+
 By this definition of the Delaunay triangulation, the triangulation is unique
 for most set of points $S$. The only exception to this rule is when a set of
 four points construct the square. For the square there are two equally valid
@@ -80,7 +89,7 @@ equation.
 There are many different algorithms that can be implemented for the
 construction of the Delaunay triangulation. The notable methods include; Divide
 and Conquer, Incremental, Sweep Line, and Edge Flipping. The specifics of these
-algorithms will be discussed further in section \ref{sec:2mesh_gen}.
+algorithms will be discussed further in section \ref{sec:mesh_generation2}.
 
 With the Delaunay triangulation constructed, one must next apply the boundaries
 of the domain to the mesh. The process is called the construction of the
@@ -111,7 +120,15 @@ triangulation. A few of these implementations enforce the constraints during
 the initial construction of the triangulation. However, more commonly the
 constraints are enforced upon an already constructed triangulation. The details
 on the implementation of these algorithms is discussed in section
-\ref{sec:2mesh_gen}.
+\ref{sec:mesh_generation2}.
+
+\begin{figure}[htpb]
+  \centering
+  \input{figures/delaunay_con.tex}
+  \caption{Constrained Delaunay triaangulation of the letter $A$. This mesh has
+  been constructed without any quality or area refinements.}
+  \label{fig:delaunay_constrained}
+\end{figure}
 
 \subsection{Mesh Refinement}%
 \label{sub:mesh_refinement}
@@ -167,5 +184,25 @@ Using these definitions for how to classify the elements of a mesh, it becomes
 possible to implement algorithms in order to refine any mesh. The
 technicalities of the mesh refinement algorithms is discussed in
 \ref{sub:mesh_refinement2}.
+
+\begin{figure}[htpb]
+  \centering
+     \begin{minipage}{0.4\textwidth}
+     \begin{center}
+       \input{figures/delaunay_1.tex}
+       (a)
+     \end{center}
+   \end{minipage}
+   \begin{minipage}{0.4\textwidth}
+     \begin{center}
+       \input{figures/delaunay_2.tex}
+       (b)
+     \end{center}
+   \end{minipage}
+  \caption{These two images demonstrate the progressive refinement of a mesh
+  depending on the refinement restrictions of angle and area. (a) 60 triangles,
+(b) 132 triangles.}
+  \label{fig:name}
+\end{figure}
 
 \end{document}

@@ -72,12 +72,17 @@ of the derivative also increases.
 For our implementation we chose to utilize an 8-point approximation of the
 derivative. The coefficients of the approximation utilized were determined by
 \cite{FD}. The approximation that we implemented takes the form
-\todo{HELP}
+% \todo{HELP}
 \begin{align*}
-  \resizebox{\columnwidth}{!}{$
-    \pder{f}{x}\Bigr|_{(x,y)}\approx\frac{\frac{1}{280}f(x-4h,y)-\frac{4}{105}f(x-3h,y)+\frac{1}{5}f(x-2h,y)-\frac{4}{5}f(x-h,y)+\frac{4}{5}f(x+h,y)-\frac{1}{5}f(x+2h,y)+\frac{4}{105}f(x+3h,y)-\frac{1}{280}f(x+4h,y)}{h}+O\left(h^8\right).
-$}
+  \pder{f}{x}\Bigr|_{(x,y)}\approx\frac{1}{h}&\left[\frac{1}{280}f(x-4h,y)-\frac{4}{105}f(x-3h,y)+\frac{1}{5}f(x-2h,y)\right.\\
+                                             &\quad-\frac{4}{5}f(x-h,y)+\frac{4}{5}f(x+h,y)-\frac{1}{5}f(x+2h,y)\\
+                                             &\quad+\left.\frac{4}{105}f(x+3h,y)-\frac{1}{280}f(x+4h,y)\right]+O\left(h^8\right).
 \end{align*}
+% \begin{align*}
+%   \pder{f}{x}\Bigr|_{(x,y)}\approx\frac{1}{h}\left[&\frac{1}{280}f(x-4h,y)-\frac{4}{105}f(x-3h,y)+\frac{1}{5}f(x-2h,y)\right]\\
+%                                                    &-\frac{4}{5}f(x-h,y)+\frac{4}{5}f(x+h,y)-\frac{1}{5}f(x+2h,y)\\
+%                                                    &\left.+\frac{4}{105}f(x+3h,y)-\frac{1}{280}f(x+4h,y)\right]+O\left(h^8\right).
+% \end{align*}
 Using this approximation, we achieve an error of $O\left(h^8\right)$. For many
 cases this should be an acceptable amount of error.
 
@@ -155,11 +160,11 @@ that the approximation of the integral becomes
 \begin{align*}
   \mu\left(E_e\right)\int_{\Delta}fdA\approx\mu\left(E_e\right)\sum_{k=1}^Nw_kf(x_k,y_k).
 \end{align*}
-For our purposes we chose $N$ to be 128, as that will be sufficiently large that
+For our purposes we chose $N$ to be 64, as that will be sufficiently large that
 most error should be negligible. If the error is not significantly negligible,
 then the mesh should be refined thus reducing $\mu\left(E_e\right)$, and
 consequentially reducing the scale of the error. The values from \cite{GQ} have
-been provided in the appendix, both of the weights and the $(x,y)$ pairs.
-\todo{Add weights and points in the appendix.}
+been provided in the appendix \ref{app:gaussian_quadrature_rule}, both of the
+weights and the $(x,y)$ pairs.
 
 \end{document}

@@ -1,0 +1,346 @@
+\documentclass[../fem.tex]{subfile}
+
+\begin{document}
+\section{Problem}%
+\label{sec:problem}
+
+\subsection{Setup}%
+\label{sub:setup}
+
+For this problem we consider the matrices that define the $L$ operator to be
+\begin{align*}
+  A=\begin{bmatrix}
+    1 & 0\\ 0 & 1
+  \end{bmatrix}\qquad
+  B=\begin{bmatrix}
+    0 \\ 0
+  \end{bmatrix}\qquad
+  C=0.
+\end{align*}
+Thus we can write the operator $L$ to be
+\begin{align*}
+  L=\ppder{}{x}+\ppder{}{y}.
+\end{align*}
+
+\subsection{Problem Statement}%
+\label{sub:problem_statement}
+
+We will consider a problem that is time independent, and so will have no time
+derivative. This means that the formulation of the problem statement will be
+\begin{align*}
+  Lu=f.
+\end{align*}
+
+The problem that we consider is
+\begin{align}
+  \ppder{u}{x}+\ppder{u}{y}=-8\sin(2x)\sin(2y).
+\end{align}
+With the boundary conditions defined by
+\begin{align*}
+  \partial u(x, y, t)=\sin(2x)\sin(2y).
+\end{align*}
+
+\subsection{Analytical}%
+\label{sub:analytical}
+
+This problem was specially constructed such that the solution is
+\begin{align*}
+  u=\sin(2x)\sin(2y),
+\end{align*}
+we will verify that this is indeed a solution to the problem.
+
+\begin{align*}
+  \ppder{}{x}\left[\sin(2x)\sin(2y)\right]&+\ppder{}{y}\left[\sin(2x)\sin(2y)\right]\\
+                                          &=\pder{}{x}\left[-2\cos(2x)\sin(2y)\right]+\pder{}{y}\left[-2\sin(2x)\cos(2y)\right]\\
+                                          &=-4\sin(2x)\sin(2y)-4\sin(2x)\sin(2y)\\
+                                          &=-8\sin(2x)\sin(2y).
+\end{align*}
+Thus we have proven that a solution to this problem is $u=\sin(2x)\sin(2y)$.
+
+\subsection{Implementation}%
+\label{sub:implementation}
+
+We have constructed the finite element analysis, to accept a \texttt{Lua}
+script file. The Lua script defines all of the necessary information for the
+finite element analysis to proceed. For this problem we define the problem Lua
+script below.
+
+\code{lua}{snippets/r1.lua}
+
+\subsection{Unit Square}%
+\label{sub:unit_square}
+
+First we provide the findings on the unit square. We will compare the results
+of the unit square on four different mesh resolutions. These resolutions are
+$0.05$, $0.01$, $0.005$, $0.001$. Recall that the mesh resolution is the maximum
+area of the individual triangles of the mesh. We will denote the mesh
+resolution using $\mu$. The results of the computations are provided below.
+
+\begin{figure}[htpb]
+  \centering
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r1a/tri.png}
+    \caption{$\mu=0.05$, $n=77$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r1b/tri.png}
+    \caption{$\mu=0.01$, $n=338$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r1c/tri.png}
+    \caption{$\mu=0.005$, $n=666$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r1d/tri.png}
+    \caption{$\mu=0.001$, $n=6249$}
+  \end{subfigure}
+  \caption{Triangular meshes of $\Box^2$ used for solving the problem.}
+  \label{fig:b2_mesh}
+\end{figure}
+
+\begin{figure}[htpb]
+  \centering
+  \begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r1a/func.png}
+    \caption{Analytical Solution}
+  \end{subfigure}
+
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r1a/approx.png}
+    \caption{$\mu=0.05$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r1b/approx.png}
+    \caption{$\mu=0.01$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r1c/approx.png}
+    \caption{$\mu=0.005$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r1d/approx.png}
+    \caption{$\mu=0.001$}
+  \end{subfigure}
+  \caption{Side by side comparison of the analytical and numerical solutions.}
+  \label{fig:r1_soln}
+\end{figure}
+
+It can clearly be seen in figure \ref{fig:r1_soln}, that there is little to no
+difference, between the analytical and the numerical solutions. The
+quantitative comparisons of the different methods is provided in table
+\ref{tab:r1}.
+
+\begin{table}[htpb]
+  \centering
+  \caption{Times and error required for each of the mesh refinement levels.}
+  \label{tab:r1}
+  \begin{tabular}{c c}
+    \begin{tabular}{r l}
+      \multicolumn{2}{c}{$\mu=0.05$}\\\hline\hline
+      Stage & Time (HH:MM:SS)\\\hline
+      Mesh & 00:00:00.002735\\
+      Matrices & 00:00:00.558476\\
+      Forcing & 00:00:00.008525\\
+      Solving & 00:00:00.059320\\\hline
+      Total & 00:00:00.629056\\
+      Error & 0.111038\\\hline
+    \end{tabular}
+    &
+    \begin{tabular}{r l}
+      \multicolumn{2}{c}{$\mu=0.01$}\\\hline\hline
+      Stage & Time (HH:MM:SS)\\\hline
+      Mesh & 00:00:00.007338\\
+      Matrices & 00:00:02.785410\\
+      Forcing & 00:00:00.047460\\
+      Solving & 00:00:05.320913\\\hline
+      Total & 00:00:08.161121\\
+      Error & 0.027810\\\hline
+    \end{tabular}\\[2cm]
+    \begin{tabular}{r l}
+      \multicolumn{2}{c}{$\mu=0.005$}\\\hline\hline
+      Stage & Time (HH:MM:SS)\\\hline
+      Mesh & 00:00:00.026886\\
+      Matrices & 00:00:05.753090\\
+      Forcing & 00:00:00.084677\\
+      Solving & 00:00:44.845096\\\hline
+      Total & 00:00:50.709749\\
+      Error & 0.010363\\\hline
+    \end{tabular}
+    &
+    \begin{tabular}{r l}
+      \multicolumn{2}{c}{$\mu=0.001$}\\\hline\hline
+      Stage & Time (HH:MM:SS)\\\hline
+      Mesh & 00:00:00.048287\\
+      Matrices & 00:00:31.228624\\
+      Forcing & 00:00:00.454135\\
+      Solving & 01:21:50.405917\\\hline
+      Total & 01:22:22.136963\\
+      Error & 0.002487\\\hline
+    \end{tabular}
+  \end{tabular}
+\end{table}
+
+\subsection{Unit Disk}%
+\label{sub:unit_disk}
+
+Now we provide the findings on the unite disk. We will compare the results on
+the unit disk using the same changes that we made for the unit square. The
+results of the computations are provided below.
+
+\begin{figure}[htpb]
+  \centering
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c1a/tri.png}
+    \caption{$\mu=0.05$, $n=93$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c1b/tri.png}
+    \caption{$\mu=0.01$, $n=273$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c1c/tri.png}
+    \caption{$\mu=0.005$, $n=525$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c1d/tri.png}
+    \caption{$\mu=0.001$, $n=2501$}
+  \end{subfigure}
+  \caption{Triangular meshes of $D^2$ used for solving the problem.}
+  \label{fig:d2_mesh}
+\end{figure}
+
+\begin{figure}[htpb]
+  \centering
+  \begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c1a/func.png}
+    \caption{Analytical Solution}
+  \end{subfigure}
+
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c1a/approx.png}
+    \caption{$\mu=0.05$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c1b/approx.png}
+    \caption{$\mu=0.01$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c1c/approx.png}
+    \caption{$\mu=0.005$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c1d/approx.png}
+    \caption{$\mu=0.001$}
+  \end{subfigure}
+  \caption{Side by side comparison of the analytical and numerical solutions.}
+  \label{fig:d1_soln}
+\end{figure}
+
+It can clearly be seen in figure \ref{fig:d1_soln}, that there is little to no
+difference, between the analytical and the numerical solutions. This is
+especially true for the higher refinement of the mesh. The quantitative
+comparisons of the different methods is provided in table
+\ref{tab:c1}.
+
+\begin{table}[htpb]
+  \centering
+  \caption{Times and error required for each of the mesh refinement levels.}
+  \label{tab:c1}
+  \begin{tabular}{c c}
+    \begin{tabular}{r l}
+      \multicolumn{2}{c}{$\mu=0.05$}\\\hline\hline
+      Stage & Time (HH:MM:SS)\\\hline
+      Mesh & 00:00:00.002921\\
+      Matrices & 00:00:01.177174\\
+      Forcing & 00:00:00.019072\\
+      Solving & 00:00:00.139923\\\hline
+      Total & 00:00:01.33909\\
+      Error & 0.016088\\\hline
+    \end{tabular}
+    &
+    \begin{tabular}{r l}
+      \multicolumn{2}{c}{$\mu=0.01$}\\\hline\hline
+      Stage & Time (HH:MM:SS)\\\hline
+      Mesh & 00:00:00.004376\\
+      Matrices & 00:00:03.800784\\
+      Forcing & 00:00:00.058017\\
+      Solving & 00:00:4.476645\\\hline
+      Total & 00:00:08.379206\\
+      Error & 0.003888\\\hline
+    \end{tabular}\\[2cm]
+    \begin{tabular}{r l}
+      \multicolumn{2}{c}{$\mu=0.005$}\\\hline\hline
+      Stage & Time (HH:MM:SS)\\\hline
+      Mesh & 00:00:00.006625\\
+      Matrices & 00:00:07.717563\\
+      Forcing & 00:00:00.116296\\
+      Solving & 00:00:32.456541\\\hline
+      Total & 00:00:40.29665\\
+      Error & 0.002074\\\hline
+    \end{tabular}
+    &
+    \begin{tabular}{r l}
+      \multicolumn{2}{c}{$\mu=0.001$}\\\hline\hline
+      Stage & Time (HH:MM:SS)\\\hline
+      Mesh & 00:00:00.025953\\
+      Matrices & 00:00:38.557897\\
+      Forcing & 00:00:00.587212\\
+      Solving & 01:02:43.771275\\\hline
+      Total & 01:03:22.942397\\
+      Error & 0.000509\\\hline
+    \end{tabular}
+  \end{tabular}
+\end{table}
+
+Clearly for the simple cases like this one, the method of finite element
+analysis works extremely well, and quickly for smaller numbers of triangles.
+
+For both of these case increasing the mesh refinement, greatly increased the
+number of vertices. The number of vertices is on the order
+of$\sim\frac{3}{\mu}$. This means that as $\mu$ is decreases the number of
+vertices explodes. This will indicate that the time required for computation
+will also explode.
+
+We observe that the time of computation does indeed directly correlate the
+number of vertices in the mesh, and is on the order of $\sim N^3$. This means
+that a small decrease in mesh size, means that the time will grow greatly,
+making the approximation take significantly longer to compute.
+
+Finally we notice that the error decreases almost linearly. This will greatly
+depend on the problem that is being computed. For this problem, the
+approximation was already very accurate, and so the increase in mesh
+refinement, did not provide much of a benefit in the error from the analytical
+solution.
+
+With this analysis of the implementation, it is clear that larger meshes should
+be avoided as much as possible, as they result in drastically longer computation
+times. For problems with few changes are very well handled by this method, and
+do not require a very fine mesh. However, problems with many changes will be
+handled poorly, and will require extremely small mesh triangles. This can be
+considered in reference to a 2D example.
+
+Consider $\sin(x)$ and $\sin(10x)$, because of the higher frequency of
+$\sin(10x)$ it would be less well approximated, without many many triangles,
+but $\sin(x)$ would be very easily approximated with only a few triangles. So
+with a ``higher frequency'' function a finer mesh would be required to achieve
+acceptable error.
+
+\end{document}

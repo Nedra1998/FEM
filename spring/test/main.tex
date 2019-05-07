@@ -1,9 +1,10 @@
 \documentclass[10pt]{amsart}
-\usepackage{amsmath}
-\usepackage{csquotes}
-\usepackage{enumitem}
-\usepackage{tikz}
-\usepackage{pgfplots}
+% \usepackage{amsmath}
+% \usepackage{csquotes}
+% \usepackage{enumitem}
+% \usepackage{tikz}
+% \usepackage{pgfplots}
+\usepackage{minted}
 
 \title{TESTING}
 
@@ -11,7 +12,14 @@
 \begin{document}
 \maketitle
 
-\input{tri.tikz}
+% \input{tri.tikz}
+\begin{minted}{lua}
+function main()
+  print("Hello World!\n")
+end
+\end{minted}
+
+\inputminted[frame=lines, linenos]{lua}{../paper/snippets/r1.lua}
 
 
 \end{document}

@@ -4,5 +4,146 @@
 \section{Temporal Discretization}%
 \label{sec:temporal_discretization}
 
+Since this problem is also dependent on time, we must not only discretize the
+problem spatially, but also temporally.
+
+Consider the expression constructed in the previous section (equation
+\ref{eq:matrix_simp}). We will construct the temporal discretization of this
+equation
+\begin{align*}
+   G\partial_t U=MU+F.
+\end{align*}
+
+We will first require some definition of what the time step is. The user must
+define the size of the time step $\Delta t$, and the maximum time $\tm$. Now to
+construct the discretization, we utilize notation that will denote what the
+current time step is.
+
+Take for example the solution $U$, we will denote the solution before any
+temporal iteration to be $U^0$, and at the first time step to be $U^1$, and at
+the $n$th time step to be $U^n$. Note that because the time steps are in
+discrete steps of $\Delta t$, then the time at the $n$th time step is
+$t=n\Delta t$. So we can consider $U^n$ to be the solution at $t=n\Delta t$.
+This notation is used for several of the variables in the discretization. Using
+this notation, we rewrite the expression to be
+\begin{align}\label{eq:time_disc}
+   G\partial_t U^n=MU^n+F^n.
+\end{align}
+Note that we did not place a time step index on $G$ or $M$. This is because in
+the construction of the elements of the matrices in equation
+\ref{eq:global_mat_ele}, it can clearly be seen that these matrices will be
+independent of time. This is because we are restricting $A$, $B$, and $C$ to be
+temporally constant, and the basis functions $\ph_i$ are are independent with
+respect to time by construction.
+
+There are many methods that can be used for the discretization of the problem.
+We chose to utilize the Crank-Nicolson method, as it provides higher order
+accuracy, while not costing significant amounts of computational power. For
+significantly more accurate computation, one could implement a Runge Kutta
+method for the temporal iteration of the problem.
+
+The Crank-Nicolson method is a combination of the Forward Euler method, and the
+Backward Euler method, so we provide an explanation of all three of these
+methods below.
+
+\subsection{Forward Euler Method}%
+\label{sub:forward_euler_method}
+
+The basis of this method is to consider the derivative as a difference
+quotient, such as
+\begin{align*}
+  \partial_t U^n=\frac{U^{n+1}-U^n}{\Delta t}.
+\end{align*}
+Using this approximation in the equation \ref{eq:time_disc}, we find
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}=MU^n+F^n.
+\end{align*}
+Now we solve this expression for the solution for the next time step, which
+would be $U^{n+1}$. We find that the equation for $U^{n+1}$ becomes
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}&=MU^n+F^n\\
+  \frac{1}{\Delta t}GU^{n+1}&=MU^n+\frac{1}{\Delta t}GU^n+F^n\\
+  GU^{n+1}&=\left(\Delta tM+G\right)U^n+\Delta tF^n.
+\end{align*}
+One can then define a matrix $Q^n$ to make this expression into the
+recognizable form of $AU=F$, which can easily be solved. For this case
+\begin{align*}
+  Q^n\equiv\left(\Delta tM+G\right)U^n+\Delta tF^n.
+\end{align*}
+
+This is the forward Euler method for the approximation.
+
+\subsection{Backward Euler Method}%
+\label{sub:backward_euler_method}
+
+The backward Euler method uses very similar methods to the forward method, with
+one difference. The values on the right hand side of the expression for the
+forward method, were all of the current time iteration $n$. The backward method
+utilizes the updates values for the next time iteration $n+1$. Thus the
+expression becomes
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}=MU^{n+1}+F^{n+1}.
+\end{align*}
+
+We once again solve for the solution for the next time step
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}&=MU^{n+1}+F^{n+1}\\
+  GU^{n+1}-GU^n&=\Delta tMU^{n+1}+\Delta tF^n\\
+  \left(G-\Delta tM\right)U^{n+1}&=GU^n+\Delta tF^n.
+\end{align*}
+Then similarly to the forward iteration, we construct a matrix $Q^n$ and a
+matrix $\wt{A}$, to construct the form that we can numerically solve. For this
+case
+\begin{align*}
+  \wt{A}&\equiv G-\Delta tM\\
+  Q^n&\equiv GU^n+\Delta tF^n.
+\end{align*}
+
+This is the concept for the backward Euler method for the approximation.
+
+\subsection{Crank-Nicolson}%
+\label{sub:crank_nicolson}
+
+The key concept of the Crank Nicolson method, is to combine both the forward
+and backward Euler methods. That means that instead of using the old values or
+the new values on the right hand side of the equation, we will use the average
+of the old and the new values.
+
+This means that the expression takes the form
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}=M\frac{U^{n+1}+U^n}{2}+\frac{F^{n+1}+F^n}{2}.
+\end{align*}
+
+We now solve this expression for the solution to the next time step
+\begin{align*}
+  G\frac{U^{n+1}-U^n}{\Delta t}&=M\frac{U^{n+1}+U^n}{2}+\frac{F^{n+1}+F^n}{2}\\
+  GU^{n+1}-GU^n&=\frac{\Delta t}{2}MU^{n+1}+\frac{\Delta t}{2}MU^n+\Delta
+  t\frac{F^{n+1}+F^n}{2}\\
+  \left(G+\frac{\Delta t}{2}M\right)U^{n+1}&=\left(G-\frac{\Delta
+    t}{2}M\right)U^n+\Delta t\left(\frac{F^{n+1}+F^n}{2}\right).
+\end{align*}
+To simplify this expression we will define three new matrices to be
+\begin{align*}
+  \wt{A}&\equiv G+\frac{\Delta t}{2}M\\
+  \wt{B}&\equiv G-\frac{\Delta t}{2}M\\
+  \wt{C}^n&\equiv \Delta t\frac{F^{n+1}+F^n}{2}.
+\end{align*}
+Using these new matrices in the expression, we find that it simplifies to
+\begin{align*}
+  \wt{A}U^{n+1}=\wt{B}U^n+\wt{C}^n.
+\end{align*}
+For a final time, we will define a $Q^n$ matrix to construct the solvable form
+of the expression. For our implementation we find
+\begin{align*}
+  Q^n\equiv\wt{B}U^n+\wt{C}^n.
+\end{align*}
+
+Thus the expression for the temporal approximation becomes
+\begin{align*}
+  \wt{A}U^{n+1}=Q^n.
+\end{align*}
+This is the expression for the temporal discretization of the problem, provided
+by the Crank-Nicolson method. This is what will be used for any time dependent
+expression to iterate through the time steps that are specified by the user.
 
 \end{document}
