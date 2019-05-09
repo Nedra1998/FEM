@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{mesh} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}../pslg/circ.poly\PYGZdq{}}
+\PYG{n}{mesh\PYGZus{}angle} \PYG{o}{=} \PYG{l+m+mi}{20}
+\PYG{n}{mesh\PYGZus{}area} \PYG{o}{=} \PYG{l+m+mf}{0.25}
+
+\PYG{n}{A} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZob{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{\PYGZcb{},} \PYG{p}{\PYGZob{}}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{}\PYGZcb{}}
+\PYG{n}{B} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{\PYGZcb{}}
+\PYG{n}{C} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{n}{bndry} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+
+\PYG{k+kr}{function} \PYG{n+nf}{force}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+  \PYG{k+kr}{return} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n+nb}{math.sin}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{o}{*}\PYG{n+nb}{math.sin}\PYG{p}{(}\PYG{n}{y}\PYG{p}{)}
+\PYG{k+kr}{end}
+\end{Verbatim}

@@ -67,12 +67,15 @@ script below.
 
 \code{lua}{snippets/r1.lua}
 
+The exact source code for the different settings can be found in the
+appendix (Appendix \ref{app:example_source_code}).
+
 \subsection{Unit Square}%
 \label{sub:unit_square}
 
 First, we provide the findings on the unit square. We will compare the results
 of the unit square on four different mesh resolutions. These resolutions are
-$0.05$, $0.01$, $0.005$, $0.001$. Recall that the mesh resolution is the maximum
+$0.25$, $0.1683$, $0.0866$, $0.005$. Recall that the mesh resolution is the maximum
 area of the individual triangles of the mesh. We will denote the mesh
 resolution using $\mu$. The results of the computations are provided below.
 
@@ -80,23 +83,23 @@ resolution using $\mu$. The results of the computations are provided below.
   \centering
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/r1a/tri.png}
-    \caption{$\mu=0.05$, $n=77$}
+    \includegraphics[width=0.8\linewidth]{figures/r1/tri.png}
+    \caption{$\mu=0.25$, $n=13$}
   \end{subfigure}
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/r1b/tri.png}
-    \caption{$\mu=0.01$, $n=338$}
+    \includegraphics[width=0.8\linewidth]{figures/r2/tri.png}
+    \caption{$\mu=0.1683$, $n=25$}
   \end{subfigure}
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/r1c/tri.png}
+    \includegraphics[width=0.8\linewidth]{figures/r3/tri.png}
+    \caption{$\mu=0.0866$, $n=46$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r4/tri.png}
     \caption{$\mu=0.005$, $n=666$}
-  \end{subfigure}
-  \begin{subfigure}{0.4\textwidth}
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/r1d/tri.png}
-    \caption{$\mu=0.001$, $n=6249$}
   \end{subfigure}
   \caption{Triangular meshes of $\Box^2$ used for solving the problem.}
   \label{fig:b2_mesh}
@@ -106,38 +109,39 @@ resolution using $\mu$. The results of the computations are provided below.
   \centering
   \begin{subfigure}{0.5\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/r1a/func.png}
+    \includegraphics[width=0.8\linewidth]{figures/r1/func.png}
     \caption{Analytical Solution}
   \end{subfigure}
 
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/r1a/approx.png}
-    \caption{$\mu=0.05$}
+    \includegraphics[width=0.8\linewidth]{figures/r1/approx.png}
+    \caption{$\mu=0.25$}
   \end{subfigure}
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/r1b/approx.png}
-    \caption{$\mu=0.01$}
+    \includegraphics[width=0.8\linewidth]{figures/r2/approx.png}
+    \caption{$\mu=0.1683$}
   \end{subfigure}
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/r1c/approx.png}
+    \includegraphics[width=0.8\linewidth]{figures/r3/approx.png}
+    \caption{$\mu=0.0866$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/r4/approx.png}
     \caption{$\mu=0.005$}
-  \end{subfigure}
-  \begin{subfigure}{0.4\textwidth}
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/r1d/approx.png}
-    \caption{$\mu=0.001$}
   \end{subfigure}
   \caption{Side by side comparison of the analytical and numerical solutions.}
   \label{fig:r1_soln}
 \end{figure}
 
 It can clearly be seen in figure \ref{fig:r1_soln}, that there is little to no
-difference, between the analytical and the numerical solutions. The
-quantitative comparisons of the different methods are provided in table
-\ref{tab:r1}.
+difference, between the analytical and the numerical solutions, when we have a
+higher number of triangles. The very low resolution mesh produces a poor
+approximation of the solution. The quantitative comparisons of the different
+methods are provided in table \ref{tab:r1}.
 
 \begin{table}[htpb]
   \centering
@@ -145,46 +149,46 @@ quantitative comparisons of the different methods are provided in table
   \label{tab:r1}
   \begin{tabular}{c c}
     \begin{tabular}{r l}
-      \multicolumn{2}{c}{$\mu=0.05$}\\\hline\hline
-      Stage & Time (HH:MM:SS)\\\hline
-      Mesh & 00:00:00.002735\\
-      Matrices & 00:00:00.558476\\
-      Forcing & 00:00:00.008525\\
-      Solving & 00:00:00.059320\\\hline
-      Total & 00:00:00.629056\\
-      Error & 0.111038\\\hline
+      \multicolumn{2}{c}{$\mu=0.25$}\\\hline\hline
+      Stage & Time\\\hline
+      Mesh & 0.002955\\
+      Matrices & 0.076755\\
+      Forcing & 0.001223\\
+      Solving & 0.000310\\\hline
+      Total & 0.081243\\
+      Error & 0.378112\\\hline
     \end{tabular}
     &
     \begin{tabular}{r l}
-      \multicolumn{2}{c}{$\mu=0.01$}\\\hline\hline
-      Stage & Time (HH:MM:SS)\\\hline
-      Mesh & 00:00:00.007338\\
-      Matrices & 00:00:02.785410\\
-      Forcing & 00:00:00.047460\\
-      Solving & 00:00:05.320913\\\hline
-      Total & 00:00:08.161121\\
-      Error & 0.027810\\\hline
+      \multicolumn{2}{c}{$\mu=0.1683$}\\\hline\hline
+      Stage & Time\\\hline
+      Mesh & 0.004742\\
+      Matrices & 0.171679\\
+      Forcing & 0.002330\\
+      Solving & 0.001908\\\hline
+      Total & 0.180689\\
+      Error & 0.355618\\\hline
     \end{tabular}\\[2cm]
     \begin{tabular}{r l}
-      \multicolumn{2}{c}{$\mu=0.005$}\\\hline\hline
-      Stage & Time (HH:MM:SS)\\\hline
-      Mesh & 00:00:00.026886\\
-      Matrices & 00:00:05.753090\\
-      Forcing & 00:00:00.084677\\
-      Solving & 00:00:44.845096\\\hline
-      Total & 00:00:50.709749\\
-      Error & 0.010363\\\hline
+      \multicolumn{2}{c}{$\mu=0.0866$}\\\hline\hline
+      Stage & Time\\\hline
+      Mesh & 0.002942\\
+      Matrices & 0.328250\\
+      Forcing & 0.005008\\
+      Solving & 0.012522\\\hline
+      Total & 0.348722\\
+      Error & 0.135833\\\hline
     \end{tabular}
     &
     \begin{tabular}{r l}
-      \multicolumn{2}{c}{$\mu=0.001$}\\\hline\hline
-      Stage & Time (HH:MM:SS)\\\hline
-      Mesh & 00:00:00.048287\\
-      Matrices & 00:00:31.228624\\
-      Forcing & 00:00:00.454135\\
-      Solving & 01:21:50.405917\\\hline
-      Total & 01:22:22.136963\\
-      Error & 0.002487\\\hline
+      \multicolumn{2}{c}{$\mu=0.005$}\\\hline\hline
+      Stage & Time\\\hline
+      Mesh & 0.014961\\
+      Matrices & 5.650480\\
+      Forcing & 0.082520\\
+      Solving & 41.652458\\\hline
+      Total & 47.400419\\
+      Error & 0.010363\\\hline
     \end{tabular}
   \end{tabular}
 \end{table}
@@ -192,31 +196,35 @@ quantitative comparisons of the different methods are provided in table
 \subsection{Unit Disk}%
 \label{sub:unit_disk}
 
-Now we provide the findings on the unit disk. We will compare the results on
-the unit disk using the same changes that we made for the unit square. The
-results of the computations are provided below.
+Now we provide the findings on the unit disk. For the solution on the unit
+disk, we decided to impose that the boundary conditions should be zero. This
+means that we do not have an analytical solution for this problem, but it
+demonstrates the ability for this implementation to handle the boundary
+conditions that are imposed. We will compare the results on the unit disk using
+the same changes that we made for the unit square. The results of the
+computations are provided below.
 
 \begin{figure}[htpb]
   \centering
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/c1a/tri.png}
-    \caption{$\mu=0.05$, $n=93$}
+    \includegraphics[width=0.8\linewidth]{figures/c1/tri.png}
+    \caption{$\mu=0.25$, $n=78$}
   \end{subfigure}
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/c1b/tri.png}
-    \caption{$\mu=0.01$, $n=273$}
+    \includegraphics[width=0.8\linewidth]{figures/c2/tri.png}
+    \caption{$\mu=0.1683$, $n=80$}
   \end{subfigure}
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/c1c/tri.png}
+    \includegraphics[width=0.8\linewidth]{figures/c3/tri.png}
+    \caption{$\mu=0.0866$, $n=84$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c4/tri.png}
     \caption{$\mu=0.005$, $n=525$}
-  \end{subfigure}
-  \begin{subfigure}{0.4\textwidth}
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/c1d/tri.png}
-    \caption{$\mu=0.001$, $n=2501$}
   \end{subfigure}
   \caption{Triangular meshes of $D^2$ used for solving the problem.}
   \label{fig:d2_mesh}
@@ -224,31 +232,25 @@ results of the computations are provided below.
 
 \begin{figure}[htpb]
   \centering
-  \begin{subfigure}{0.5\textwidth}
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/c1a/func.png}
-    \caption{Analytical Solution}
-  \end{subfigure}
-
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/c1a/approx.png}
-    \caption{$\mu=0.05$}
+    \includegraphics[width=0.8\linewidth]{figures/c1/approx.png}
+    \caption{$\mu=0.25$}
   \end{subfigure}
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/c1b/approx.png}
-    \caption{$\mu=0.01$}
+    \includegraphics[width=0.8\linewidth]{figures/c2/approx.png}
+    \caption{$\mu=0.1683$}
   \end{subfigure}
   \begin{subfigure}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/c1c/approx.png}
+    \includegraphics[width=0.8\linewidth]{figures/c3/approx.png}
+    \caption{$\mu=0.0866$}
+  \end{subfigure}
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/c4/approx.png}
     \caption{$\mu=0.005$}
-  \end{subfigure}
-  \begin{subfigure}{0.4\textwidth}
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/c1d/approx.png}
-    \caption{$\mu=0.001$}
   \end{subfigure}
   \caption{Side by side comparison of the analytical and numerical solutions.}
   \label{fig:d1_soln}
@@ -266,46 +268,42 @@ comparisons of the different methods are provided in table
   \label{tab:c1}
   \begin{tabular}{c c}
     \begin{tabular}{r l}
-      \multicolumn{2}{c}{$\mu=0.05$}\\\hline\hline
-      Stage & Time (HH:MM:SS)\\\hline
-      Mesh & 00:00:00.002921\\
-      Matrices & 00:00:01.177174\\
-      Forcing & 00:00:00.019072\\
-      Solving & 00:00:00.139923\\\hline
-      Total & 00:00:01.33909\\
-      Error & 0.016088\\\hline
+      \multicolumn{2}{c}{$\mu=0.25$}\\\hline\hline
+      Stage & Time\\\hline
+      Mesh & 0.002221\\
+      Matrices & 0.470592\\
+      Forcing & 0.006835\\
+      Solving & 0.053815\\\hline
+      Total & 0.533463\\\hline
     \end{tabular}
     &
     \begin{tabular}{r l}
-      \multicolumn{2}{c}{$\mu=0.01$}\\\hline\hline
-      Stage & Time (HH:MM:SS)\\\hline
-      Mesh & 00:00:00.004376\\
-      Matrices & 00:00:03.800784\\
-      Forcing & 00:00:00.058017\\
-      Solving & 00:00:4.476645\\\hline
-      Total & 00:00:08.379206\\
-      Error & 0.003888\\\hline
+      \multicolumn{2}{c}{$\mu=0.1683$}\\\hline\hline
+      Stage & Time\\\hline
+      Mesh & 0.005639\\
+      Matrices & 0.492630\\
+      Forcing & 0.007343\\
+      Solving & 0.059259\\\hline
+      Total & 0.564871\\\hline
     \end{tabular}\\[2cm]
     \begin{tabular}{r l}
-      \multicolumn{2}{c}{$\mu=0.005$}\\\hline\hline
-      Stage & Time (HH:MM:SS)\\\hline
-      Mesh & 00:00:00.006625\\
-      Matrices & 00:00:07.717563\\
-      Forcing & 00:00:00.116296\\
-      Solving & 00:00:32.456541\\\hline
-      Total & 00:00:40.29665\\
-      Error & 0.002074\\\hline
+      \multicolumn{2}{c}{$\mu=0.0866$}\\\hline\hline
+      Stage & Time\\\hline
+      Mesh & 0.002169\\
+      Matrices & 0.539801\\
+      Forcing & 0.007560\\
+      Solving & 0.067315\\\hline
+      Total & 0.616845\\\hline
     \end{tabular}
     &
     \begin{tabular}{r l}
-      \multicolumn{2}{c}{$\mu=0.001$}\\\hline\hline
-      Stage & Time (HH:MM:SS)\\\hline
-      Mesh & 00:00:00.025953\\
-      Matrices & 00:00:38.557897\\
-      Forcing & 00:00:00.587212\\
-      Solving & 01:02:43.771275\\\hline
-      Total & 01:03:22.942397\\
-      Error & 0.000509\\\hline
+      \multicolumn{2}{c}{$\mu=0.005$}\\\hline\hline
+      Stage & Time\\\hline
+      Mesh & 0.005591\\
+      Matrices & 4.446052\\
+      Forcing & 0.064099\\
+      Solving & 20.156721\\\hline
+      Total & 24.672463\\\hline
     \end{tabular}
   \end{tabular}
 \end{table}
@@ -324,11 +322,32 @@ number of vertices in the mesh, and is on the order of $\sim N^3$. This means
 that a small decrease in mesh size means that the time will grow greatly,
 making the approximation take significantly longer to compute.
 
-Finally, we notice that the error decreases almost linearly. This will greatly
-depend on the problem that is being computed. For this problem, the
-approximation was already very accurate, and so the increase in mesh
-refinement did not provide much of a benefit in the error from the analytical
-solution.
+Finally, we note that the Error term began decreasing slowly, then decreased
+very rapidly. If we were to continue with finer meshes, we would see that the
+error term would continue to decrease, but the rate at which it would do so
+would also be decreasing. We can approximate a graph of what one might expect
+of the error term with respect to the number of vertices in the mesh in Figure
+\ref{fig:error_decrease}.
+
+\begin{figure}[htpb]
+\begin{center}
+\begin{tikzpicture}[scale=1, transform shape]
+  \begin{axis}[axis lines=middle, xmin=-0.1, xmax=10.1, ymin=-0.1, ymax=1.1,
+    yticklabels={,,}, xticklabels={,,}, xlabel=$\mu$, ylabel=$E$]
+    \plot[domain=-0.1:10.1]{1/(1+exp(-x+6))};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{Plot of potential error term.}
+\label{fig:error_decrease}
+\end{figure}
+
+The shape of the error plot in figure \ref{fig:error_decrease}, can be
+considered to be a very generalized shape. As the value of $\mu\rightarrow 0$,
+then the error term converges to zero. This means that if one were to use an
+indignantly small mesh, then the solution would be exact. The demonstrates that
+our implementation is valid, and the error decreases in a manner which we
+expect it to.
 
 With this analysis of the implementation, it is clear that larger meshes should
 be avoided as much as possible, as they result in drastically longer computation

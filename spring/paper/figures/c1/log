@@ -1,0 +1,11 @@
+[1;36m[VESION ]<11:05:11>(main:29) ARTA V.3.4[0m
+[1;32m[SUCCESS]<11:05:11>(load_script:29) Loaded script file "../examples/c1.lua"[0m
+[1;33m[STATUS ]<11:05:11>(load_script:306) Script Load: 0.000183[0m
+[1;37m[INFO   ]<11:05:11>(construct_mesh:148) Executing "../triangle -pzn -a0.250000 -q20.000000 ../pslg/circ.poly >/dev/null"[0m
+[1;37m[INFO   ]<11:05:11>(load_mesh:344) Verts: 78 Tris: 105[0m
+[1;33m[STATUS ]<11:05:11>(load_mesh:346) Mesh Gen/Load: 0.002221[0m
+[1;33m[STATUS ]<11:05:12>(construct_matrices:91) Construct Matricies: 0.470592[0m
+[1;33m[STATUS ]<11:05:12>(construct_forcing:120) Construct Forcing: 0.006835[0m
+[1;33m[STATUS ]<11:05:12>(solve_time_indep:183) Solving Time Indep: 0.053815[0m
+[1;32m[SUCCESS]<11:05:13>(main:67) DONE[0m
+[1;32m[SUCCESS]<11:05:13>(close_script:37) Closed script file "../examples/c1.lua"[0m
