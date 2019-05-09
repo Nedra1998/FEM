@@ -371,6 +371,8 @@ INPUT figures/delaunay_2.tex
 INPUT figures/delaunay_2.tex
 INPUT pt2/assembly.tex
 INPUT pt2/assembly.tex
+INPUT pt2/boundary.tex
+INPUT pt2/boundary.tex
 INPUT pt2/linear.tex
 INPUT pt2/linear.tex
 INPUT pt2/approximation.tex

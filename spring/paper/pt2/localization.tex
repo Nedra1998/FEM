@@ -4,13 +4,13 @@
 \section{Localization}%
 \label{sec:localization}
 
-While is is ocassionaly possible to find the elements of the matricies in
+While it is occasionally possible to find the elements of the matrices in
 equation \ref{eq:matrix_simp} on the global domain, this proves to be
 exceedingly difficult in most if not all cases. To remediate this issue, we
 implement a generalizable method that will work for any domain and and
-functions that are being considered. Since we have the abbility to select any
-arbitrary baseis functions as per our definition of the approximation to the
-solution, then it is possible to selece a basis wuch that it it becomse
+functions that are being considered. Since we have the ability to select any
+arbitrary basis functions as per our definition of the approximation to the
+solution, then it is possible to select a basis such that it becomes
 possible to split the domain into a finite number of subdomains.
 
 We first discretize the domain $\Omega$ into $N$ mutually exclusive subdomains.
@@ -34,7 +34,7 @@ sizes. This becomes more difficult because integrating over each element would
 require entirely different process each time to account for the differences in
 shape and size. To resolve this issue, we construct a master space, which is
 possible to transition to from any element, and back to each element. Thus we
-only need determine a method to integrate over our master element.
+only need to determine a method to integrate over our master element.
 
 \subsection{Master Space}%
 \label{sub:master_space}
@@ -68,7 +68,7 @@ The master element utilizes what is called a Barycentric coordinate system. The
 barycentric coordinates are demonstrated by each vertex being its own
 dimension, so if the element were to be quadrangles, then the barycentric
 coordinates would be in $\R^4$ instead of $\R^3$ as they are for triangles. The
-conversion between the global coordinates, and the Barycentric coordinates can
+conversion between the global coordinates and the Barycentric coordinates can
 be done using the following equations
 \begin{align*}
   \lambda_1&=\frac{(Y_2-Y_3)(x-X_3)+(X_3-X_2)(y-Y_3)}{(Y_2-Y_3)(X_1-X_3)+(X_3-X_2)(Y_1-Y_3)}\\
@@ -87,7 +87,7 @@ coordinates to the global coordinates uses the following equations
 \subsection{Local Basis}%
 \label{sub:local_basis}
 
-The first step is to construct a local basis function, that are only defined
+The first step is to construct a local basis function, that is only defined
 for the current element under consideration. There should be a basis element
 for every vertex in the element, so for triangular element, there will be three
 local basis functions. The notation for the local basis functions is
@@ -106,7 +106,7 @@ task. Thus the definition of the local basis functions are
   \end{split}
 \end{align}
 
-Thus for every element there exists three local basis functions. A plot of
+Thus for every element, there exist three local basis functions. A plot of
 these local basis functions is shown in figure \ref{fig:local_basis} on an
 arbitrary triangular element.
 
@@ -142,7 +142,7 @@ at the associated vertex, and $0$ at all other vertices in the mesh.
 
 In order to achieve this, the global basis function can be constructed as a
 piecewise combination of $k$ different local basis functions, where $k$ is the
-number of element that share a given vertex. The exact formulation of the
+number of elements that share a given vertex. The exact formulation of the
 global basis functions is dependent on the triangular mesh, and the current
 vertex index. An example of what a global basis function could be like is
 depicted in figure \ref{fig:global_basis}. One can intuitively think of the
@@ -178,8 +178,8 @@ global basis functions on a limited portion of a triangular mesh.}
 
 Using the definition of local basis functions that were constructed in section
 \ref{sub:local_basis}, the construction of an element-specific system of
-equations is preformed. The system of equations is identical to the global
-system, but is simply specified to a single element. Thus the local system of
+equations is performed. The system of equations is identical to the global
+system but is simply specified to a single element. Thus the local system of
 equations in matrix form is
 \begin{align*}
   G^\e\partial_t U^\e=\left(\wb{A}^\e+\wb{B}^\e+\wb{C}^\e\right)U^\e+F^\e.

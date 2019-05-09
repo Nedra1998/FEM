@@ -4,23 +4,23 @@
 \section{Mesh Generation}%
 \label{sec:mesh_generation}
 
-For the implementation of finite element methods it is required to first
+For the implementation of finite element methods, it is required to first
 discretize the global domain into a set of finite subdomains. Each subdomain is
 called an element. It is then possible to compute the values of the local
 system of equations with respect to a given element, then to combine these
 values to construct the global system. The first step is to discretize the
 global domain into a set of finite elements.
 
-These elements can be of the form of an $N$ sided polygon, not that it will not
+These elements can be of the form of a $N$ sided polygon, not that it will not
 be regular each side will have different lengths. This paper will utilize
-triangular meshes, but many implementations also implement quadrangle, and
+triangular meshes, but many implementations also implement quadrangle and
 hexagonal meshes. Since the construction of meshes with elements with more than
 three sides is considerably more difficult, we will limit this paper to only
 discussing the triangular mesh construction.
 
 Constructing the triangular mesh is the most generalized method, as any polygon
 with more edges can be constructed by several triangles. Thus the mesh of
-polygons with more than three sides, can be derived from the triangular mesh,
+polygons with more than three sides can be derived from the triangular mesh,
 without significant difficulty.
 
 The process that will be used for the construction of the triangular mesh is
@@ -33,7 +33,7 @@ acceptable quality.
 \label{sub:delaunay_triangulation}
 
 Delaunay triangulation is the straight line dual of the Voronoi diagram. The
-Delaunay triangulation of a domain is commonly used in may different
+Delaunay triangulation of a domain is commonly used in many different
 situations, including for the purpose of mesh generation for finite element
 analysis.
 
@@ -41,7 +41,7 @@ The key property of Delaunay triangulation is that no point may lie within the
 circumcircle of any other triangle.
 
 \begin{definition}[Circumcircle]
-  The circumcircle of a triangle, is the circle is defined by having all three
+  The circumcircle of a triangle is the circle is defined by having all three
   vertices of the triangle on the circle. For any given triangle there is only
   one such circle that satisfies this. In figure \ref{fig:circumcircle}, a
   depiction of the circumcircle for a provided triangle is given.
@@ -68,21 +68,21 @@ circumcircle of any other triangle.
   \centering
   \input{figures/delaunay_def.tex}
   \caption{Demonstration of the circumcircle definition of Delaunay
-  triangulation. This shows how the circumcircle of each triangles does not
+  triangulation. This shows how the circumcircle of each triangle does not
 contain any vertex from any other triangles.}
-  \label{fig:}
+\label{fig:circumcircle}
 \end{figure}
 
 By this definition of the Delaunay triangulation, the triangulation is unique
-for most set of points $S$. The only exception to this rule is when a set of
-four points construct the square. For the square there are two equally valid
+for most sets of points $S$. The only exception to this rule is when a set of
+four points construct the square. For the square, there are two equally valid
 triangulations, and dependent on the implementation one or the other must be
 selected.
 
 A major advantage of the Delaunay triangulation for mesh generation is that it
 inherently avoids triangles with small included angles, as the circumcircles of
 these triangles would be very large, and would likely include other vertices.
-This avoidance is extremely useful in finite element analysis, and will produce
+This avoidance is extremely useful in finite element analysis and will produce
 more accurate approximations of the solution to the partial differential
 equation.
 
@@ -110,7 +110,7 @@ modifications from a Delaunay triangulation in order to enforce the constrained
 edges to construct the constrained Delaunay triangulation.
 
 The constrained edges are most commonly utilized for the purpose of defining
-boundaries of the domain, or enforcing a location of a medium change. Since the
+boundaries of the domain or enforcing a location of a medium change. Since the
 result of the unconstrained Delaunay triangulation will have a strictly convex
 shape. This makes it necessary to apply the edge constraints for all domains
 that do not have a strictly convex outer hull.
@@ -119,7 +119,7 @@ There are a number of methods for the construction of the constrained Delaunay
 triangulation. A few of these implementations enforce the constraints during
 the initial construction of the triangulation. However, more commonly the
 constraints are enforced upon an already constructed triangulation. The details
-on the implementation of these algorithms is discussed in section
+on the implementation of these algorithms are discussed in section
 \ref{sec:mesh_generation2}.
 
 \begin{figure}[htpb]
@@ -136,12 +136,12 @@ on the implementation of these algorithms is discussed in section
 The direct output of the constrained Delaunay triangulation algorithms may be
 sufficient in a few situations, but for most cases, it would result in
 suboptimal meshes. For generalizability, we discuss the methods that are utilized
-to refine the generated mesh, thus improving upon the quality of the meshes.
+to refine the generated mesh, thus improving the quality of the meshes.
 
-Mesh refinement is almost always required, because along constrained edges,
+Mesh refinement is almost always required, because, along constrained edges,
 there may only be a single element. This element is forced to have one of its
-edges be the entity of the constrained edge. This tends to lead to skinny
-triangles, ones who's minimum interior angle is very small. There are frequently
+edges to be the entity of the constrained edge. This tends to lead to skinny
+triangles, ones whos minimum interior angle is very small. There are frequently
 undesirable in the final mesh. We denote that these triangles are not
 \textit{well-shaped}.
 
@@ -154,18 +154,17 @@ undesirable in the final mesh. We denote that these triangles are not
 It is also possible that all the elements in the mesh are well-shaped, but they
 could all be very large. A finer mesh will always result in more accurate
 approximations, as will be made clear later. Thus we may also want to define a
-notion of \textit{well-sized} triangles, so that it is possible to refine the
+notion of \textit{well-sized} triangles so that it is possible to refine the
 element size in the mesh.
 
 \begin{definition}[Well-Sized] \label{def:well_sized}
-  A triangle is well-sized if the area of the triangle satisfies some user
-  defined grading function $g$ (commonly $g=\text{const}$). This function can
+  A triangle is well-sized if the area of the triangle satisfies some user-defined grading function $g$ (commonly $g=\text{const}$). This function can
   use any criteria for determining if a triangle satisfies it, as long as there
   exists a value $\delta>0$ such that any well-shaped triangle that fits within
   a circle of radius $\delta$ would satisfy the grading function.
 \end{definition}
 
-This definition of the well-sized triangles, describes that any function can be
+This definition of the well-sized triangles describes that any function can be
 used in order to define when a triangle is well-sized. This is very important
 in constructing meshes that are very fine around specified features, and the
 coarser in the unimportant regions. The one restriction of the grading function
@@ -182,7 +181,7 @@ We will now define what it means for a triangle to be ``nice''.
 
 Using these definitions for how to classify the elements of a mesh, it becomes
 possible to implement algorithms in order to refine any mesh. The
-technicalities of the mesh refinement algorithms is discussed in
+technicalities of the mesh refinement algorithms are discussed in
 \ref{sub:mesh_refinement2}.
 
 \begin{figure}[htpb]

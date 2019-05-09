@@ -4,5 +4,82 @@
 \section{Imposing Boundary Conditions}%
 \label{sec:imposing_boundary_conditions}
 
+So far in the process of the construction of the global system of equations, we
+have not taken into consideration the conditions on the boundary. As we
+introduced previously, we will first construct the approximation using the
+basis elements that are supported only on the interior of the domain. However,
+the process so far has constructed the matrices, including the basis elements
+that are on the boundary. At this stage, we need to remove these basis elements
+from the approximation. We can do this in conjunction with the construction of
+the $b$ function, which satisfies the boundary conditions.
+
+First, we will deal with removing the basis function on the boundary of the
+domain. We consider the general form of the matrix expression that we will be
+considering to be
+\begin{align*}
+   Au=b.
+\end{align*}
+We write this expression explicitly as
+\begin{align*}
+   \begin{bmatrix}
+     A_{11} & A_{12} & \cdots & A_{1N}\\
+     A_{21} & A_{22} & \cdots & A_{2N}\\\
+     \vdots & \vdots & \ddots & \vdots\\
+     A_{N1} & A_{N2} & \cdots & A_{NN}
+   \end{bmatrix}
+   \begin{bmatrix}
+      u_1\\u_2\\\vdots\\u_N
+   \end{bmatrix}=
+   \begin{bmatrix}
+      b_1\\b_2\\\vdots\\b_N
+   \end{bmatrix}.
+\end{align*}
+
+As we know what the value of the function is defined as at the boundary
+conditions, then we also are able to determine what the value of the function
+is at any vertex of the mesh that lies on the boundary.
+
+Consider a vertex $\vec{x}_i$ on the boundary of the mesh.  We modify the
+system of equations by overwriting the equations associated with the $u_i$
+value, to satisfy the conditions. This can be done by use of the expressions
+\begin{align*}
+  A_{ij}&=\delta_{ij}\quad j=1,\ldots,N\\
+  b_i&=\partial u(\vec{x}_i)
+\end{align*}
+where $\delta_{ij}$ is the Kronecker delta function
+\begin{align*}
+  \delta_{ij}=
+  \begin{cases}
+    0 & j\neq i\\
+    1 & j= 0
+  \end{cases}.
+\end{align*}
+
+This modification must be performed for all vertices of the mesh that lie on
+the boundary of the domain. This process will present a matrix expression that
+will be of
+the form
+\begin{align*}
+   \begin{bmatrix}
+     A_{11} & A_{12} & \cdots & A_{1N}\\
+     0 & 1 & \cdots & 0\\\
+     \vdots & \vdots & \ddots & \vdots\\
+     A_{N1} & A_{N2} & \cdots & A_{NN}
+   \end{bmatrix}
+   \begin{bmatrix}
+      u_1\\u_2\\\vdots\\u_N
+   \end{bmatrix}=
+   \begin{bmatrix}
+     b_1\\\partial u(\vec{x}_2)\\\vdots\\b_N
+   \end{bmatrix}.
+\end{align*}
+This example demonstrates a matrix where the second vertex lies on the
+boundary, and so that equation has been rewritten. The same process would have
+been done for any other vertex that lies on the boundary.
+
+This process has enforced the requirements of the boundary conditions, by
+forcing $u_2=\partial u(\vec{x}_2)$. This process incorporates the $b$ function
+directly into the approximation of the solution, so we need not worry about
+that.
 
 \end{document}

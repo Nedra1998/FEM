@@ -14,7 +14,7 @@ approximation $u(n\Delta t, x)$ to be
 \end{align*}
 
 Recall that $n$ is the current time step, and $\Delta t$ is the size of each
-time step, and that $N$ is the number of vertices in the mesh.
+time step and that $N$ is the number of vertices in the mesh.
 
 This is the expression for the approximation at a single given time of
 $t=n\Delta t$. For the solution at earlier times, one must look at previously
@@ -27,7 +27,7 @@ time value of $\frac{1}{2}n\Delta t$, then we are unable to provide a solution.
 To work around this, we can consider that the solutions are continuous
 temporally, and so if the time steps are small enough, we can consider the
 solution to change linearly with time between each time step. This means that
-we are able to construct a solution at any time, if we are given the
+we are able to construct a solution at any time if we are given the
 coefficients in the form of the $U^n$ and $U^{n+1}$ vectors.
 
 \end{document}

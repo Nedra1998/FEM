@@ -5,7 +5,7 @@
 \label{sec:assembly_of_the_global_system}
 
 Although it is possible to directly compute the elements of the global
-matrices, it is ineffective and not practical for any non trivial problems.
+matrices, it is ineffective and not practical for any nontrivial problems.
 Thus we will not consider the explanation of how to construct the global
 matrices directly.
 
@@ -33,7 +33,7 @@ global system of equations. The general method is to add each local matrix
 element to the associated global matrix element, where the association is done
 using the $node$ function. This can be viewed as
 \begin{align*}
-  A_{node(e,I)node(e,J)}=A_{node(e,I)node(e,J)}+A^\e_{IJ}\quad I,J=1,2,3.
+  M_{node(e,I)node(e,J)}=M_{node(e,I)node(e,J)}+M^\e_{IJ}\quad I,J=1,2,3.
 \end{align*}
 This is done for all of the elements in the mesh, and all of the local matrix
 elements for each mesh element.
@@ -41,14 +41,14 @@ elements for each mesh element.
 More specifics of the algorithm for the global matrix construction are
 discussed in section \ref{sec:incremental_construction}.
 
-For the time independent problem statements, this is the extent of what needs
+For the time-independent problem statements, this is the extent of what needs
 to be done for the assembly of the global system of equations. It provides us
-with an expresion of the form
+with an expression of the form
 \begin{align*}
    MU=F.
 \end{align*}
 
-So far in the construction we have neglected the boundary basis functions, and
+So far in the construction, we have neglected the boundary basis functions, and
 that causes this matrix to be unsolvable. Fixing this is the next step of the
 process.
 

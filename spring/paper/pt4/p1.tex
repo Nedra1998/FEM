@@ -7,7 +7,7 @@
 \subsection{Setup}%
 \label{sub:setup}
 
-For this problem we consider the matrices that define the $L$ operator to be
+For this problem, we consider the matrices that define the $L$ operator to be
 \begin{align*}
   A=\begin{bmatrix}
     1 & 0\\ 0 & 1
@@ -62,7 +62,7 @@ Thus we have proven that a solution to this problem is $u=\sin(2x)\sin(2y)$.
 
 We have constructed the finite element analysis, to accept a \texttt{Lua}
 script file. The Lua script defines all of the necessary information for the
-finite element analysis to proceed. For this problem we define the problem Lua
+finite element analysis to proceed. For this problem, we define the problem Lua
 script below.
 
 \code{lua}{snippets/r1.lua}
@@ -70,7 +70,7 @@ script below.
 \subsection{Unit Square}%
 \label{sub:unit_square}
 
-First we provide the findings on the unit square. We will compare the results
+First, we provide the findings on the unit square. We will compare the results
 of the unit square on four different mesh resolutions. These resolutions are
 $0.05$, $0.01$, $0.005$, $0.001$. Recall that the mesh resolution is the maximum
 area of the individual triangles of the mesh. We will denote the mesh
@@ -136,7 +136,7 @@ resolution using $\mu$. The results of the computations are provided below.
 
 It can clearly be seen in figure \ref{fig:r1_soln}, that there is little to no
 difference, between the analytical and the numerical solutions. The
-quantitative comparisons of the different methods is provided in table
+quantitative comparisons of the different methods are provided in table
 \ref{tab:r1}.
 
 \begin{table}[htpb]
@@ -192,7 +192,7 @@ quantitative comparisons of the different methods is provided in table
 \subsection{Unit Disk}%
 \label{sub:unit_disk}
 
-Now we provide the findings on the unite disk. We will compare the results on
+Now we provide the findings on the unit disk. We will compare the results on
 the unit disk using the same changes that we made for the unit square. The
 results of the computations are provided below.
 
@@ -257,7 +257,7 @@ results of the computations are provided below.
 It can clearly be seen in figure \ref{fig:d1_soln}, that there is little to no
 difference, between the analytical and the numerical solutions. This is
 especially true for the higher refinement of the mesh. The quantitative
-comparisons of the different methods is provided in table
+comparisons of the different methods are provided in table
 \ref{tab:c1}.
 
 \begin{table}[htpb]
@@ -315,26 +315,26 @@ analysis works extremely well, and quickly for smaller numbers of triangles.
 
 For both of these case increasing the mesh refinement, greatly increased the
 number of vertices. The number of vertices is on the order
-of$\sim\frac{3}{\mu}$. This means that as $\mu$ is decreases the number of
+of$\sim\frac{3}{\mu}$. This means that as $\mu$ is decreased the number of
 vertices explodes. This will indicate that the time required for computation
 will also explode.
 
 We observe that the time of computation does indeed directly correlate the
 number of vertices in the mesh, and is on the order of $\sim N^3$. This means
-that a small decrease in mesh size, means that the time will grow greatly,
+that a small decrease in mesh size means that the time will grow greatly,
 making the approximation take significantly longer to compute.
 
-Finally we notice that the error decreases almost linearly. This will greatly
+Finally, we notice that the error decreases almost linearly. This will greatly
 depend on the problem that is being computed. For this problem, the
 approximation was already very accurate, and so the increase in mesh
-refinement, did not provide much of a benefit in the error from the analytical
+refinement did not provide much of a benefit in the error from the analytical
 solution.
 
 With this analysis of the implementation, it is clear that larger meshes should
 be avoided as much as possible, as they result in drastically longer computation
 times. For problems with few changes are very well handled by this method, and
 do not require a very fine mesh. However, problems with many changes will be
-handled poorly, and will require extremely small mesh triangles. This can be
+handled poorly and will require extremely small mesh triangles. This can be
 considered in reference to a 2D example.
 
 Consider $\sin(x)$ and $\sin(10x)$, because of the higher frequency of

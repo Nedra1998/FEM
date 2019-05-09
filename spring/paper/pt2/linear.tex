@@ -4,21 +4,21 @@
 \section{Linear Systems}%
 \label{sec:linear_systems}
 
-Using finite element methods, constructs a system of equations on the order of
-$N\times N$, where $N$ is the number of verticies in the triangulation. With
+Using finite element methods constructs a system of equations on the order of
+$N\times N$, where $N$ is the number of vertices in the triangulation. With
 finer meshes will produce a finer approximation of the solution to the partial
 differential equation. Because of this, most implementation will have highly
-refined meshes, ones that would have $\sim 10^4$ verticies. Because of this one
+refined meshes, ones that would have $\sim 10^4$ vertices. Because of this, one
 must develop a more efficient method for computing solutions to systems of
-linear equations. Most is this process is discuessed further in the
-section \ref{sec:solving_linear_systems_of_equations}. However we will
+linear equations. Most is this process is discussed further in the
+section \ref{sec:solving_linear_systems_of_equations}. However, we will
 introduce some mathematical
-concepts that are heavily used in the computational methods.
+concepts that are heavily used in computational methods.
 
 \subsection{Krylov Subspace}%
 \label{sub:krylov_subspace}
 
-An extreamly useful tool for numerical approximation of large systems of
+An extremely useful tool for the numerical approximation of large systems of
 equations is the \textit{Krylov Subspaces}. Krylov subspaces are defined by
 Krylov \cite{KRYLOV} as
 \begin{align*}
@@ -29,13 +29,13 @@ systems of the form $Ax=b$. The subscript $r$ simply defines the point at which
 we limit our approximation, if $r$ is infinite then the Krylov subspace is the
 full space, ans dolutions in that krylov subspace will be exact.
 
-Note that the basis vector in the Krylov subspace are not neccessarily
+Note that the basis vectors in the Krylov subspace are not necessarily
 orthogonal, nor normal.
 
 \subsubsection{Reasoning}%
 \label{ssub:reasoning}
 
-We provide a sort example of the reasoning for the construction of the Krylov
+We provide a short example of the reasoning for the construction of the Krylov
 subspace. We consider the example where we want to solve a system of linear
 equations of the form $Ax=b$. Where $A=I+\ep$.
 \begin{align*}
@@ -44,7 +44,7 @@ equations of the form $Ax=b$. Where $A=I+\ep$.
   x&=(I+\ep)^{-1}b.
 \end{align*}
 
-We construct an approximation for the invers of a matrix-like by geometruc
+We construct an approximation for the inverse of a matrix-like by geometric
 formula
 \begin{align*}
   I+\ep+\ep^2+\ldots+\ep^n&=S\\
@@ -75,7 +75,7 @@ Using this we extract the basis that composes $x$ to be
   \left\{b,Ab,A^2b,A^3b,\ldots\right\}
 \end{align*}
 
-The Krylov subspaces takes this infinite basis and cuts it off at some given
+The Krylov subspaces take this infinite basis and cuts it off at some given
 $r$ values, thus providing us with
 \begin{align*}
   \left\{b,Ab,A^2b,\ldots,A^{r-1}b\right\}.
@@ -83,7 +83,7 @@ $r$ values, thus providing us with
 Which the the Krylov subspaces.
 
 Note that this is not a full proof of the construction of the Krylov subspace,
-but it shoulbe be a sufficient explanation for the uses in the numeric
+but it should be a sufficient explanation for the uses in the numeric
 approximation of systems of linear equations.
 
 \end{document}

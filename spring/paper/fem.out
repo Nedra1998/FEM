@@ -21,37 +21,38 @@
 \BOOKMARK [2][-]{subsection.8.2}{8.2. Constrained Delaunay Triangulation}{section.8}% 21
 \BOOKMARK [2][-]{subsection.8.3}{8.3. Mesh Refinement}{section.8}% 22
 \BOOKMARK [1][-]{section.9}{9. Assembly of the Global System}{part.2}% 23
-\BOOKMARK [1][-]{section.10}{10. Linear Systems}{part.2}% 24
-\BOOKMARK [2][-]{subsection.10.1}{10.1. Krylov Subspace}{section.10}% 25
-\BOOKMARK [1][-]{section.11}{11. Construction of the Approximation}{part.2}% 26
-\BOOKMARK [1][-]{section.12}{12. Temporal Iterations}{part.2}% 27
-\BOOKMARK [0][-]{part.3}{Part 3. Computational}{}% 28
-\BOOKMARK [1][-]{section.13}{13. Mesh Generation}{part.3}% 29
-\BOOKMARK [2][-]{subsection.13.1}{13.1. Edge Flipping}{section.13}% 30
-\BOOKMARK [2][-]{subsection.13.2}{13.2. Mesh Refinement}{section.13}% 31
-\BOOKMARK [2][-]{subsection.13.3}{13.3. Implementation}{section.13}% 32
-\BOOKMARK [1][-]{section.14}{14. Matrix Representation}{part.3}% 33
-\BOOKMARK [1][-]{section.15}{15. Incremental Construction}{part.3}% 34
-\BOOKMARK [1][-]{section.16}{16. Numeric Approximations}{part.3}% 35
-\BOOKMARK [2][-]{subsection.16.1}{16.1. Local Basis Differentiation}{section.16}% 36
-\BOOKMARK [2][-]{subsection.16.2}{16.2. Differentiation}{section.16}% 37
-\BOOKMARK [2][-]{subsection.16.3}{16.3. Integration}{section.16}% 38
-\BOOKMARK [1][-]{section.17}{17. Solving Linear Systems of Equations}{part.3}% 39
-\BOOKMARK [2][-]{subsection.17.1}{17.1. Stationary Iterative Methods}{section.17}% 40
-\BOOKMARK [2][-]{subsection.17.2}{17.2. Nonstationary Iterative Methods}{section.17}% 41
-\BOOKMARK [2][-]{subsection.17.3}{17.3. Cholesky Method}{section.17}% 42
-\BOOKMARK [2][-]{subsection.17.4}{17.4. Issues}{section.17}% 43
-\BOOKMARK [1][-]{section.18}{18. Plotting}{part.3}% 44
-\BOOKMARK [0][-]{part.4}{Part 4. Results}{}% 45
-\BOOKMARK [1][-]{section.19}{19. Introduction}{part.4}% 46
-\BOOKMARK [1][-]{section.20}{20. Problem}{part.4}% 47
-\BOOKMARK [2][-]{subsection.20.1}{20.1. Setup}{section.20}% 48
-\BOOKMARK [2][-]{subsection.20.2}{20.2. Problem Statement}{section.20}% 49
-\BOOKMARK [2][-]{subsection.20.3}{20.3. Analytical}{section.20}% 50
-\BOOKMARK [2][-]{subsection.20.4}{20.4. Implementation}{section.20}% 51
-\BOOKMARK [2][-]{subsection.20.5}{20.5. Unit Square}{section.20}% 52
-\BOOKMARK [2][-]{subsection.20.6}{20.6. Unit Disk}{section.20}% 53
-\BOOKMARK [1][-]{section.21}{21. Conclusion}{part.4}% 54
-\BOOKMARK [1][-]{section*.26}{References}{part.4}% 55
-\BOOKMARK [1][-]{section*.27}{Appendices}{part.4}% 56
-\BOOKMARK [1][-]{Appendix.a.A}{A. Gaussian Quadrature Rule}{part.4}% 57
+\BOOKMARK [1][-]{section.10}{10. Imposing Boundary Conditions}{part.2}% 24
+\BOOKMARK [1][-]{section.11}{11. Linear Systems}{part.2}% 25
+\BOOKMARK [2][-]{subsection.11.1}{11.1. Krylov Subspace}{section.11}% 26
+\BOOKMARK [1][-]{section.12}{12. Construction of the Approximation}{part.2}% 27
+\BOOKMARK [1][-]{section.13}{13. Temporal Iterations}{part.2}% 28
+\BOOKMARK [0][-]{part.3}{Part 3. Computational}{}% 29
+\BOOKMARK [1][-]{section.14}{14. Mesh Generation}{part.3}% 30
+\BOOKMARK [2][-]{subsection.14.1}{14.1. Edge Flipping}{section.14}% 31
+\BOOKMARK [2][-]{subsection.14.2}{14.2. Mesh Refinement}{section.14}% 32
+\BOOKMARK [2][-]{subsection.14.3}{14.3. Implementation}{section.14}% 33
+\BOOKMARK [1][-]{section.15}{15. Matrix Representation}{part.3}% 34
+\BOOKMARK [1][-]{section.16}{16. Incremental Construction}{part.3}% 35
+\BOOKMARK [1][-]{section.17}{17. Numeric Approximations}{part.3}% 36
+\BOOKMARK [2][-]{subsection.17.1}{17.1. Local Basis Differentiation}{section.17}% 37
+\BOOKMARK [2][-]{subsection.17.2}{17.2. Differentiation}{section.17}% 38
+\BOOKMARK [2][-]{subsection.17.3}{17.3. Integration}{section.17}% 39
+\BOOKMARK [1][-]{section.18}{18. Solving Linear Systems of Equations}{part.3}% 40
+\BOOKMARK [2][-]{subsection.18.1}{18.1. Stationary Iterative Methods}{section.18}% 41
+\BOOKMARK [2][-]{subsection.18.2}{18.2. Nonstationary Iterative Methods}{section.18}% 42
+\BOOKMARK [2][-]{subsection.18.3}{18.3. Cholesky Method}{section.18}% 43
+\BOOKMARK [2][-]{subsection.18.4}{18.4. Issues}{section.18}% 44
+\BOOKMARK [1][-]{section.19}{19. Plotting}{part.3}% 45
+\BOOKMARK [0][-]{part.4}{Part 4. Results}{}% 46
+\BOOKMARK [1][-]{section.20}{20. Introduction}{part.4}% 47
+\BOOKMARK [1][-]{section.21}{21. Problem}{part.4}% 48
+\BOOKMARK [2][-]{subsection.21.1}{21.1. Setup}{section.21}% 49
+\BOOKMARK [2][-]{subsection.21.2}{21.2. Problem Statement}{section.21}% 50
+\BOOKMARK [2][-]{subsection.21.3}{21.3. Analytical}{section.21}% 51
+\BOOKMARK [2][-]{subsection.21.4}{21.4. Implementation}{section.21}% 52
+\BOOKMARK [2][-]{subsection.21.5}{21.5. Unit Square}{section.21}% 53
+\BOOKMARK [2][-]{subsection.21.6}{21.6. Unit Disk}{section.21}% 54
+\BOOKMARK [1][-]{section.22}{22. Conclusion}{part.4}% 55
+\BOOKMARK [1][-]{section*.25}{References}{part.4}% 56
+\BOOKMARK [1][-]{section*.26}{Appendices}{part.4}% 57
+\BOOKMARK [1][-]{Appendix.a.A}{A. Gaussian Quadrature Rule}{part.4}% 58

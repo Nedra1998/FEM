@@ -4,9 +4,6 @@
 \section{Spacial Discretization}%
 \label{sec:spacial_discretization}
 
-\todo{Rewrite this section to specify that this is only the spacial
-discretization.}
-
 Now that we have a variational formulation of the partial differential
 equation, we wish to discretize the equation, so that it is possible to apply
 the method of finite elements.
@@ -14,11 +11,11 @@ the method of finite elements.
 In order to discretize the problem, we must have an understanding of the space
 that the solution resides in. It is clear that the solution to the equation
 will be in the Sobolev space $W^{1,2}(\Omega)$. The Sobolev space is the set of
-functions functions that are infinitely differentiable. In this case we can tell
+functions that are infinitely differentiable. In this case, we can tell
 that our solution resides in the specific Sobolev space $W^{1,2}(\Omega)$. It
-is also important to mention that this can be written as $H^1(\Omega)$, because
-this Sobolev space is also a Hilbert space. A Hilbert space is one that possess
-the structure for inner product. Thus we are able to conclude that our solution
+is also important to mention that this can be written as $H^1(\Omega)$ because
+this Sobolev space is also a Hilbert space. A Hilbert space is one that possesses
+the structure for the inner product. Thus we are able to conclude that our solution
 exists in a space that supports inner product, and is infinitely
 differentiable.
 
@@ -36,8 +33,8 @@ To impose those we consider
   \wt{u}=u+b,
 \end{align*}
 where $b$ is any function that satisfies the boundary conditions, and $u$ is
-the approximation with boundaryies of zero. Clearly $\wt{u}$ will also satisfy
-the boundary conditions, and will be an approximation of the solution to the
+the approximation with boundaries of zero. Clearly $\wt{u}$ will also satisfy
+the boundary conditions and will be an approximation of the solution to the
 problem. This is how we will construct the approximation, with the boundary
 conditions.
 
@@ -49,11 +46,11 @@ approximation of the solution lives in, we will call this subspace
 $\wt{V}\subset H^1_0(\Omega)$.
 
 We will construct a finite set of basis functions for the subspace $\wt{V}$ to
-be $\left\{\ph_j\right\}$. For now we will leave these basis functions as
+be $\left\{\ph_j\right\}$. For now, we will leave these basis functions as
 arbitrary functions, but the process for the construction of the basis
 functions will be presented in a later section.
 
-The approximation of $u$ we define as $u$, since the approximation should
+The approximation of $u$ we define as $u$ since the approximation should
 converge to the exact solution, utilizing the same notation does not cause any
 issues. We construct this approximation such that it is an element of the
 subspace of the Sobolev space as we have defined. That is to say
@@ -65,7 +62,7 @@ constructed in $\wt{V}$, then it must be expressible as a linear combination of
 the basis function $\ph_j$ of the finite subspace $\wt{V}$ that $\wt{u}$ is an
 element of. However, for the specifics of the implementation demonstrated in
 Part 2 we will consider $\ph_j\in H^1_0(\Omega)$, although for the mathematics
-this can be ignored. The reason for this, is so that we also construct the $b$
+this can be ignored. The reason for this is so that we also construct the $b$
 function from the same basis elements. Thus we can express $\wt{u}$ as
 \begin{align}\label{eq:approx}
   u=\sum_{j=1}^N u_j(t)\ph_j(\vec{x}),
@@ -113,7 +110,7 @@ as
 \end{align}
 
 Now, since we have not placed any restrictions on $w$, and it can be any
-function, we will chose the basis functions $\ph_i$ as our test functions.
+function, we will choose the basis functions $\ph_i$ as our test functions.
 Substituting that into the expression we obtain the discretized version of the
 variational formulation of the problem.
 \begin{align}\label{eq:var_exp_c}
@@ -181,19 +178,19 @@ of equations becomes
 \end{align}
 
 This matrix representation is how we will continue to consider the problem. For
-most cases this is the system of equations that will be found. However, this
+most cases, this is the system of equations that will be found. However, this
 expression is only sufficient for Dirichlet boundary conditions, as the
 integral over the boundary for other boundary conditions would not be zero.
 Thus there would be additional terms in the system of equations. This is not an
 issue with the Dirichlet boundary conditions, so we do not need to consider any
 additional terms in the matrix representation.
 
-If the problem that is being considered were to be time independent, then the
+If the problem that is being considered were to be time-independent, then the
 matrix formulation of the system of equations would be
 \begin{align*}
    MU=F.
 \end{align*}
-We will continue to consider both the time dependent and the time independent
+We will continue to consider both the time-dependent and the time-independent
 problems, as both are useful in different situations. However, they are solved
 in different ways, some simplifications can be made with one but not the other.
 
